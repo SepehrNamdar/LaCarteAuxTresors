@@ -1,14 +1,14 @@
-#Exercice pratique - La carte aux trésors
+# Exercice pratique - La carte aux trésors
 Guidez les aventuriers en quête de trésors !
 
-##Contexte
+## Contexte
 Le gouvernement péruvien vient d’autoriser les aventuriers en quête de trésors à explorer les 85 182
 km² du département de la Madre de Dios. Vous devez réaliser un système permettant de suivre les
 déplacements et les collectes de trésors effectuées par les aventuriers. Le gouvernement péruvien
 étant très à cheval sur les bonnes pratiques de code, il est important de réaliser un code de qualité,
 lisible, et maintenable !
-##Données du problème
-###La carte
+## Données du problème
+### La carte
 La carte de la Madre de Dios est de forme rectangulaire, chaque case ayant la même taille. On y
 trouve des plaines, des montagnes et des trésors.
 Les dimensions de la carte sont définies dans le fichier d’entrée de l’exercice par la ligne suivante :
@@ -56,7 +56,7 @@ Que l’on peut représenter sous la forme suivante :
 
 T(2) T(1) .
 
-###Les aventuriers
+### Les aventuriers
 Un aventurier est caractérisé par sa position sur la carte et son orientation (nord, sud, ...). Il ne peut
 se déplacer que d’une case à la fois, dans la direction définie par son orientation. Ceci dit, il
 peut changer d’orientation en pivotant de 90° vers la droite ou la gauche. Il débute son
@@ -109,8 +109,8 @@ trésor.
 Il ne peut y avoir qu’un aventurier à la fois sur une même case. Les mouvements des aventuriers sont
 évalués tour par tour. En cas de conflit entre mouvements sur un même tour, c’est l’ordre d’apparition
 de l’aventurier dans le fichier qui donne la priorité des mouvements.
-##Ce qu’il faut réaliser
-###Lire le fichier d’entrée
+## Ce qu’il faut réaliser
+### Lire le fichier d’entrée
 Le programme doit être capable de lire le fichier d’entrée de l’exercice.
 
 Note : une ligne débutant par un ‘#’ est un commentaire et doit être ignorée.
@@ -139,14 +139,14 @@ Que l’on peut représenter sous la forme suivante :
 
 T(2) T(3) .
 
-###Simuler les mouvements des aventuriers
+### Simuler les mouvements des aventuriers
 Le programme doit être capable d’exécuter les mouvements des différents aventuriers en respectant
 les contraintes de l’exercice, de gérer la collecte des trésors et de restituer le résultat final de la
 simulation.
 
 Dans l’exemple précédent, Lara collecte 3 trésors et fini son parcours en (0 - 3).
 
-###Ecrire le fichier de sortie
+### Ecrire le fichier de sortie
 Le programme doit être capable d’écrire un fichier contenant le résultat final de la simulation.
 
 Note : une ligne débutant par un ‘#’ est un commentaire et doit être ignorée.

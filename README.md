@@ -22,6 +22,7 @@ encombre. Les cases sont numérotées d’ouest en est, de nord en sud, en comme
 Les montagnes sont des obstacles infranchissables pour les aventuriers. Chaque montagne de la
 carte de la Madre de Dios est également indiquée dans le fichier d’entrée de l’exercice par la ligne
 suivante :
+
 `# {M comme Montagne} - {Axe horizontal} - {Axe vertical}`
 
 **M** - 1 - 1

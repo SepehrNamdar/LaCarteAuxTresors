@@ -26,8 +26,8 @@ public class CarteShould {
         for (int indexAxeHorizontale = 0; indexAxeHorizontale < NB_CASES_LARGEUR_CARTE; indexAxeHorizontale++) {
             for (int indexAxeVerticale = 0; indexAxeVerticale < NB_CASES_HAUTEUR_CARTE; indexAxeVerticale++) {
                 Axe axe = new Axe(new AxeHorizontale(indexAxeHorizontale), new AxeVerticale(indexAxeVerticale));
-                String aCase = carte.getCase(new Case(axe));
-                assertThat(aCase).isEqualTo(".");
+                TypeCase aCase = carte.getCase(new Case(axe));
+                assertThat(aCase).isEqualTo(TypeCase.PLAINE);
             }
         }
     }

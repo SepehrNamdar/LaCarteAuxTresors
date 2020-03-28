@@ -17,7 +17,7 @@ public class Carte {
         return dimensions.getHauteur();
     }
 
-    public String getCase(Case aCase) {
+    public TypeCase getCase(Case aCase) {
         return plan.getAxe(aCase.getAxe());
     }
 }

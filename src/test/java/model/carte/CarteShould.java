@@ -1,3 +1,5 @@
+package model.carte;
+
 import model.carte.Carte;
 import model.carte.Dimensions;
 import model.carte.Hauteur;

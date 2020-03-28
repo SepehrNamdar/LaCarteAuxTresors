@@ -1,11 +1,10 @@
 package use_case;
 
 import model.aventurier.Aventurier;
-import model.carte.Carte;
-import model.carte.Dimensions;
-import model.carte.Hauteur;
-import model.carte.Largeur;
+import model.carte.*;
 import org.junit.jupiter.api.Test;
+
+import static java.util.Arrays.asList;
 
 public class AventurierPeutTraverserLaCarte {
 
@@ -17,9 +16,9 @@ public class AventurierPeutTraverserLaCarte {
         Largeur largeur = new Largeur(NB_CASES_LARGEUR_CARTE);
         Hauteur hauteur = new Hauteur(NB_CASES_HAUTEUR_CARTE);
         Dimensions dimensions = new Dimensions(largeur, hauteur);
-
-        Carte carte = new Carte(dimensions);
-        Aventurier laura = new Aventurier("Laura");
+        Axe positionDepartLaura = new Axe(new AxeHorizontale(2), new AxeVerticale(1));
+        Aventurier laura = new Aventurier("Laura", positionDepartLaura);
+        Carte carte = new Carte(dimensions, asList(laura));
 
     }
 }

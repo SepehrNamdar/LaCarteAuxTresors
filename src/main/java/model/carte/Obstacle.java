@@ -1,9 +1,10 @@
 package model.carte;
 
-public class Case {
+public abstract class Obstacle {
+
     private Axe axe;
 
-    public Case(Axe axe) {
+    public Obstacle(Axe axe) {
         this.axe = axe;
     }
 

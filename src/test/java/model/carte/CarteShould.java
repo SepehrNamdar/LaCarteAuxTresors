@@ -3,6 +3,7 @@ package model.carte;
 import model.aventurier.Aventurier;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static java.util.Arrays.asList;
@@ -19,7 +20,7 @@ public class CarteShould {
         Hauteur hauteur = new Hauteur(NB_CASES_HAUTEUR_CARTE);
         Dimensions dimensions = new Dimensions(largeur, hauteur);
 
-        Carte carte = new Carte(dimensions, Collections.emptyList());
+        Carte carte = new Carte(dimensions, Collections.emptyList(), Collections.emptyList());
 
         assertThat(carte.getLargeur()).isEqualTo(largeur);
         assertThat(carte.getHauteur()).isEqualTo(hauteur);
@@ -28,26 +29,62 @@ public class CarteShould {
 
     @Test
     void beCreatedWithAventuriers() {
+        Dimensions dimensions = getCarteDimensions();
+        Aventurier laura = getAventurier("Laura", 0, 0);
+        Aventurier tom = getAventurier("Tom", 1, 2);
+
+        Carte carte = new Carte(dimensions, asList(laura, tom), Collections.emptyList());
+
+        assertThat(carte.getAxe(0, 0)).isEqualTo(TypeAxe.AVENTURIER);
+        assertThat(carte.getAxe(1, 2)).isEqualTo(TypeAxe.AVENTURIER);
+    }
+
+    @Test
+    void beCreatedWithObstacles() {
+        Dimensions dimensions = getCarteDimensions();
+        Obstacle montagne_1 = getMontagne(0, 0);
+        Obstacle montagne_2 = getMontagne(1, 2);
+        Carte carte = new Carte(dimensions, Collections.emptyList(), Arrays.asList(montagne_1, montagne_2));
+
+        assertThat(carte.getAxe(0, 0)).isEqualTo(TypeAxe.OBSTACLE);
+        assertThat(carte.getAxe(1, 2)).isEqualTo(TypeAxe.OBSTACLE);
+    }
+
+    @Test
+    void beCreatedWithAventuriersAndMontagnes() {
+        Dimensions dimensions = getCarteDimensions();
+        Obstacle montagne_1 = getMontagne(0, 0);
+        Obstacle montagne_2 = getMontagne(1, 2);
+        Aventurier laura = getAventurier("Laura", 1, 1);
+        Aventurier tom = getAventurier("Tom", 2, 1);
+
+        Carte carte = new Carte(dimensions, asList(laura, tom), Arrays.asList(montagne_1, montagne_2));
+
+        assertThat(carte.getAxe(0, 0)).isEqualTo(TypeAxe.OBSTACLE);
+        assertThat(carte.getAxe(1, 2)).isEqualTo(TypeAxe.OBSTACLE);
+        assertThat(carte.getAxe(1, 1)).isEqualTo(TypeAxe.AVENTURIER);
+        assertThat(carte.getAxe(2, 1)).isEqualTo(TypeAxe.AVENTURIER);
+    }
+
+    private Aventurier getAventurier(String nom, int axeHorizontale, int axeVerticale) {
+        return new Aventurier(nom, new Axe(new AxeHorizontale(axeHorizontale), new AxeVerticale(axeVerticale)));
+    }
+
+    private Montagne getMontagne(int axeHorizontale, int axeVerticale) {
+        return new Montagne(new Axe(new AxeHorizontale(axeHorizontale), new AxeVerticale(axeVerticale)));
+    }
+
+    private Dimensions getCarteDimensions() {
         Largeur largeur = new Largeur(NB_CASES_LARGEUR_CARTE);
         Hauteur hauteur = new Hauteur(NB_CASES_HAUTEUR_CARTE);
-        Dimensions dimensions = new Dimensions(largeur, hauteur);
-        Axe positionDepartLaura = new Axe(new AxeHorizontale(0), new AxeVerticale(0));
-        Aventurier laura = new Aventurier("Laura", positionDepartLaura);
-        Axe positionDepartTom = new Axe(new AxeHorizontale(1), new AxeVerticale(2));
-        Aventurier tom = new Aventurier("Tom", positionDepartTom);
-
-        Carte carte = new Carte(dimensions, asList(laura, tom));
-
-        assertThat(carte.getCase(new Case(positionDepartLaura))).isEqualTo(TypeCase.AVENTURIER);
-        assertThat(carte.getCase(new Case(positionDepartTom))).isEqualTo(TypeCase.AVENTURIER);
+        return new Dimensions(largeur, hauteur);
     }
 
     private void assertThatAllCasesArePlaine(Carte carte) {
         for (int indexAxeHorizontale = 0; indexAxeHorizontale < NB_CASES_LARGEUR_CARTE; indexAxeHorizontale++) {
             for (int indexAxeVerticale = 0; indexAxeVerticale < NB_CASES_HAUTEUR_CARTE; indexAxeVerticale++) {
-                Axe axe = new Axe(new AxeHorizontale(indexAxeHorizontale), new AxeVerticale(indexAxeVerticale));
-                TypeCase aCase = carte.getCase(new Case(axe));
-                assertThat(aCase).isEqualTo(TypeCase.PLAINE);
+                TypeAxe aCase = carte.getAxe(indexAxeHorizontale, indexAxeVerticale);
+                assertThat(aCase).isEqualTo(TypeAxe.PLAINE);
             }
         }
     }

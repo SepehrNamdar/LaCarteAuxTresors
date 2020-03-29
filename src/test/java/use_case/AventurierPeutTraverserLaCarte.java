@@ -4,7 +4,9 @@ import model.aventurier.Aventurier;
 import model.carte.*;
 import org.junit.jupiter.api.Test;
 
-import static java.util.Arrays.asList;
+import java.util.Collections;
+
+import static java.util.Collections.singletonList;
 
 public class AventurierPeutTraverserLaCarte {
 
@@ -18,7 +20,7 @@ public class AventurierPeutTraverserLaCarte {
         Dimensions dimensions = new Dimensions(largeur, hauteur);
         Axe positionDepartLaura = new Axe(new AxeHorizontale(2), new AxeVerticale(1));
         Aventurier laura = new Aventurier("Laura", positionDepartLaura);
-        Carte carte = new Carte(dimensions, asList(laura));
+        Carte carte = new Carte(dimensions, singletonList(laura), Collections.emptyList());
 
     }
 }

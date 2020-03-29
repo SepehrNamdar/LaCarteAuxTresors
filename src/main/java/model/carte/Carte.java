@@ -6,27 +6,41 @@ import java.util.List;
 
 public class Carte {
     private Dimensions dimensions;
-    private TypeCase[][] plan;
+    private TypeAxe[][] plan;
 
-    public Carte(Dimensions dimensions, List<Aventurier> aventuriers) {
+    public Carte(Dimensions dimensions, List<Aventurier> aventuriers, List<Obstacle> obstacles) {
         this.dimensions = dimensions;
         int nbCasesLargeur = dimensions.getLargeur().getNbCases();
         int nbCasesHauteur = dimensions.getHauteur().getNbCases();
-        plan = new TypeCase[nbCasesLargeur][nbCasesHauteur];
-        for (int indexAxeHorizontale = 0; indexAxeHorizontale < nbCasesLargeur; indexAxeHorizontale++) {
-            for (int indexAxeVerticale = 0; indexAxeVerticale < nbCasesHauteur; indexAxeVerticale++) {
-                plan[indexAxeHorizontale][indexAxeVerticale] = TypeCase.PLAINE;
-            }
-        }
-        placer(aventuriers);
+        initPlan(nbCasesLargeur, nbCasesHauteur);
+        placerAventuriers(aventuriers);
+        placerObstacles(obstacles);
     }
 
-    private void placer(List<Aventurier> aventuriers) {
+    private void initPlan(int nbCasesLargeur, int nbCasesHauteur) {
+        plan = new TypeAxe[nbCasesLargeur][nbCasesHauteur];
+        for (int indexAxeHorizontale = 0; indexAxeHorizontale < nbCasesLargeur; indexAxeHorizontale++) {
+            for (int indexAxeVerticale = 0; indexAxeVerticale < nbCasesHauteur; indexAxeVerticale++) {
+                plan[indexAxeHorizontale][indexAxeVerticale] = TypeAxe.PLAINE;
+            }
+        }
+    }
+
+    private void placerObstacles(List<Obstacle> obstacles) {
+        obstacles.forEach(obstacle ->
+        {
+            int positionDepartVerticale = obstacle.getAxe().getAxeVerticale().getNumCase();
+            int positionDepartHorizontale = obstacle.getAxe().getAxeHorizontale().getNumCase();
+            plan[positionDepartHorizontale][positionDepartVerticale] = TypeAxe.OBSTACLE;
+        });
+    }
+
+    private void placerAventuriers(List<Aventurier> aventuriers) {
         aventuriers.forEach(aventurier ->
         {
             int positionDepartVerticale = aventurier.getPositionDepart().getAxeVerticale().getNumCase();
             int positionDepartHorizontale = aventurier.getPositionDepart().getAxeHorizontale().getNumCase();
-            plan[positionDepartHorizontale][positionDepartVerticale] = TypeCase.AVENTURIER;
+            plan[positionDepartHorizontale][positionDepartVerticale] = TypeAxe.AVENTURIER;
         });
     }
 
@@ -38,7 +52,7 @@ public class Carte {
         return dimensions.getHauteur();
     }
 
-    public TypeCase getCase(Case aCase) {
-        return plan[aCase.getAxe().getAxeHorizontale().getNumCase()][aCase.getAxe().getAxeVerticale().getNumCase()];
+    public TypeAxe getAxe(int axeHorizontale, int axeVerticale) {
+        return plan[axeHorizontale][axeVerticale];
     }
 }

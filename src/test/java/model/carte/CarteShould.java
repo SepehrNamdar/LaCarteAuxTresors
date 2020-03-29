@@ -1,6 +1,6 @@
 package model.carte;
 
-import model.aventurier.Aventurier;
+import model.element.Aventurier;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -28,8 +28,8 @@ public class CarteShould {
     @Test
     void beCreatedWithAventuriers() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
-        Element laura = getAventurier("Laura", 0, 0);
-        Element tom = getAventurier("Tom", 1, 2);
+        Element laura = new Aventurier("Laura", new Axe(0, 0));
+        Element tom = new Aventurier("Tom", new Axe(1, 2));
 
         Carte carte = new Carte(dimensions, asList(laura, tom));
 
@@ -40,8 +40,9 @@ public class CarteShould {
     @Test
     void beCreatedWithObstacles() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
-        Element montagne_1 = getMontagne(0, 0);
-        Element montagne_2 = getMontagne(1, 2);
+        Element montagne_1 = new Montagne(new Axe(0, 0));
+        Element montagne_2 = new Montagne(new Axe(1, 2));
+
         Carte carte = new Carte(dimensions, asList(montagne_1, montagne_2));
 
         assertThat(carte.getAxe(0, 0)).isEqualTo(TypeAxe.MONTAGNE);
@@ -49,12 +50,12 @@ public class CarteShould {
     }
 
     @Test
-    void beCreatedWithAventuriersAndMontagnes() {
+    void beCreatedWithAllElementsType() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
-        Element montagne_1 = getMontagne(0, 0);
-        Element montagne_2 = getMontagne(1, 2);
-        Element laura = getAventurier("Laura", 1, 1);
-        Element tom = getAventurier("Tom", 2, 1);
+        Element montagne_1 = new Montagne(new Axe(0, 0));
+        Element montagne_2 = new Montagne(new Axe(1, 2));
+        Element laura = new Aventurier("Laura", new Axe(1, 1));
+        Element tom = new Aventurier("Tom", new Axe(2, 1));
 
         Carte carte = new Carte(dimensions, asList(laura, tom, montagne_1, montagne_2));
 
@@ -67,8 +68,8 @@ public class CarteShould {
     @Test
     void notBeCreatedWhenAxesAreInConflict() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
-        Element montagne = getMontagne(0, 0);
-        Element laura = getAventurier("Laura", 0, 0);
+        Element montagne = new Montagne(new Axe(0, 0));
+        Element laura = new Aventurier("Laura", new Axe(0, 0));
 
         assertThatExceptionOfType(CanNotPlaceElementInMap.class)
                 .isThrownBy(() -> new Carte(dimensions, asList(laura, montagne)));
@@ -78,14 +79,6 @@ public class CarteShould {
                 .isThrownBy(() -> new Carte(dimensions, asList(laura, laura)));
         assertThatExceptionOfType(CanNotPlaceElementInMap.class)
                 .isThrownBy(() -> new Carte(dimensions, asList(montagne, montagne)));
-    }
-
-    private Element getAventurier(String nom, int axeHorizontale, int axeVerticale) {
-        return new Aventurier(nom, new Axe(axeHorizontale, axeVerticale));
-    }
-
-    private Element getMontagne(int axeHorizontale, int axeVerticale) {
-        return new Montagne(new Axe(axeHorizontale, axeVerticale));
     }
 
     private void assertThatAllCasesArePlaine(Carte carte) {

@@ -1,6 +1,6 @@
 package use_case;
 
-import model.aventurier.Aventurier;
+import model.element.Aventurier;
 import model.carte.*;
 import org.junit.jupiter.api.Test;
 

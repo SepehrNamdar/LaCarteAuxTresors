@@ -1,4 +1,4 @@
-package model.aventurier;
+package model.element;
 
 import model.carte.Axe;
 import model.carte.Element;

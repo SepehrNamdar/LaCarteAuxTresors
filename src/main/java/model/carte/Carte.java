@@ -8,8 +8,8 @@ public class Carte {
 
     public Carte(Dimensions dimensions, List<Element> elements) {
         this.dimensions = dimensions;
-        int nbCasesLargeur = dimensions.getLargeur().getNbCases();
-        int nbCasesHauteur = dimensions.getHauteur().getNbCases();
+        int nbCasesLargeur = dimensions.getLargeur();
+        int nbCasesHauteur = dimensions.getHauteur();
         initPlan(nbCasesLargeur, nbCasesHauteur);
         placer(elements);
     }
@@ -26,8 +26,8 @@ public class Carte {
     private void placer(List<Element> elements) {
         elements.forEach(element ->
         {
-            int positionDepartVerticale = element.getAxe().getAxeVerticale().getNumCase();
-            int positionDepartHorizontale = element.getAxe().getAxeHorizontale().getNumCase();
+            int positionDepartVerticale = element.getAxe().getAxeVerticale();
+            int positionDepartHorizontale = element.getAxe().getAxeHorizontale();
             TypeAxe occupyingAxe = plan[positionDepartHorizontale][positionDepartVerticale];
             TypeAxe eltToPlaceType = element.getType();
             if (occupyingAxe == TypeAxe.PLAINE) {
@@ -39,11 +39,11 @@ public class Carte {
         });
     }
 
-    public Largeur getLargeur() {
+    public int getLargeur() {
         return dimensions.getLargeur();
     }
 
-    public Hauteur getHauteur() {
+    public int getHauteur() {
         return dimensions.getHauteur();
     }
 

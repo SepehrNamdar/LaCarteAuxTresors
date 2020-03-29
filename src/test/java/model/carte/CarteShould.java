@@ -11,25 +11,23 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class CarteShould {
 
-    public static final int NB_CASES_LARGEUR_CARTE = 3;
-    public static final int NB_CASES_HAUTEUR_CARTE = 4;
+    public static final int LARGEUR_CARTE = 3;
+    public static final int HAUTEUR_CARTE = 4;
 
     @Test
     void beCreated() {
-        Largeur largeur = new Largeur(NB_CASES_LARGEUR_CARTE);
-        Hauteur hauteur = new Hauteur(NB_CASES_HAUTEUR_CARTE);
-        Dimensions dimensions = new Dimensions(largeur, hauteur);
+        Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
 
         Carte carte = new Carte(dimensions, Collections.emptyList());
 
-        assertThat(carte.getLargeur()).isEqualTo(largeur);
-        assertThat(carte.getHauteur()).isEqualTo(hauteur);
+        assertThat(carte.getLargeur()).isEqualTo(LARGEUR_CARTE);
+        assertThat(carte.getHauteur()).isEqualTo(HAUTEUR_CARTE);
         assertThatAllCasesArePlaine(carte);
     }
 
     @Test
     void beCreatedWithAventuriers() {
-        Dimensions dimensions = getCarteDimensions();
+        Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Element laura = getAventurier("Laura", 0, 0);
         Element tom = getAventurier("Tom", 1, 2);
 
@@ -41,7 +39,7 @@ public class CarteShould {
 
     @Test
     void beCreatedWithObstacles() {
-        Dimensions dimensions = getCarteDimensions();
+        Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Element montagne_1 = getMontagne(0, 0);
         Element montagne_2 = getMontagne(1, 2);
         Carte carte = new Carte(dimensions, asList(montagne_1, montagne_2));
@@ -52,7 +50,7 @@ public class CarteShould {
 
     @Test
     void beCreatedWithAventuriersAndMontagnes() {
-        Dimensions dimensions = getCarteDimensions();
+        Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Element montagne_1 = getMontagne(0, 0);
         Element montagne_2 = getMontagne(1, 2);
         Element laura = getAventurier("Laura", 1, 1);
@@ -68,7 +66,7 @@ public class CarteShould {
 
     @Test
     void notBeCreatedWhenAxesAreInConflict() {
-        Dimensions dimensions = getCarteDimensions();
+        Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Element montagne = getMontagne(0, 0);
         Element laura = getAventurier("Laura", 0, 0);
 
@@ -83,22 +81,16 @@ public class CarteShould {
     }
 
     private Element getAventurier(String nom, int axeHorizontale, int axeVerticale) {
-        return new Aventurier(nom, new Axe(new AxeHorizontale(axeHorizontale), new AxeVerticale(axeVerticale)));
+        return new Aventurier(nom, new Axe(axeHorizontale, axeVerticale));
     }
 
     private Element getMontagne(int axeHorizontale, int axeVerticale) {
-        return new Montagne(new Axe(new AxeHorizontale(axeHorizontale), new AxeVerticale(axeVerticale)));
-    }
-
-    private Dimensions getCarteDimensions() {
-        Largeur largeur = new Largeur(NB_CASES_LARGEUR_CARTE);
-        Hauteur hauteur = new Hauteur(NB_CASES_HAUTEUR_CARTE);
-        return new Dimensions(largeur, hauteur);
+        return new Montagne(new Axe(axeHorizontale, axeVerticale));
     }
 
     private void assertThatAllCasesArePlaine(Carte carte) {
-        for (int indexAxeHorizontale = 0; indexAxeHorizontale < NB_CASES_LARGEUR_CARTE; indexAxeHorizontale++) {
-            for (int indexAxeVerticale = 0; indexAxeVerticale < NB_CASES_HAUTEUR_CARTE; indexAxeVerticale++) {
+        for (int indexAxeHorizontale = 0; indexAxeHorizontale < LARGEUR_CARTE; indexAxeHorizontale++) {
+            for (int indexAxeVerticale = 0; indexAxeVerticale < HAUTEUR_CARTE; indexAxeVerticale++) {
                 TypeAxe typeAxe = carte.getAxe(indexAxeHorizontale, indexAxeVerticale);
                 assertThat(typeAxe).isEqualTo(TypeAxe.PLAINE);
             }

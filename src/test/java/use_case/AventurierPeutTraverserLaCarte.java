@@ -13,10 +13,8 @@ public class AventurierPeutTraverserLaCarte {
 
     @Test
     void pleine() {
-        Largeur largeur = new Largeur(NB_CASES_LARGEUR_CARTE);
-        Hauteur hauteur = new Hauteur(NB_CASES_HAUTEUR_CARTE);
-        Dimensions dimensions = new Dimensions(largeur, hauteur);
-        Axe axeDepart = new Axe(new AxeHorizontale(2), new AxeVerticale(1));
+        Dimensions dimensions = new Dimensions(NB_CASES_LARGEUR_CARTE, NB_CASES_HAUTEUR_CARTE);
+        Axe axeDepart = new Axe(2, 1);
         Aventurier laura = new Aventurier("Laura", axeDepart);
         Carte carte = new Carte(dimensions, singletonList(laura));
 

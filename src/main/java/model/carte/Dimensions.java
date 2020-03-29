@@ -1,19 +1,19 @@
 package model.carte;
 
 public class Dimensions {
-    private Largeur largeur;
-    private Hauteur hauteur;
+    private int largeur;
+    private int hauteur;
 
-    public Dimensions(Largeur largeur, Hauteur hauteur) {
+    public Dimensions(int largeur, int hauteur) {
         this.largeur = largeur;
         this.hauteur = hauteur;
     }
 
-    public Largeur getLargeur() {
+    public int getLargeur() {
         return largeur;
     }
 
-    public Hauteur getHauteur() {
+    public int getHauteur() {
         return hauteur;
     }
 }

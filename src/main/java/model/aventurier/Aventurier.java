@@ -1,22 +1,20 @@
 package model.aventurier;
 
 import model.carte.Axe;
+import model.carte.Element;
+import model.carte.TypeAxe;
 
-public class Aventurier {
+public class Aventurier extends Element {
 
     private String name;
-    private Axe positionDepart;
 
     public Aventurier(String name, Axe positionDepart) {
+        super(positionDepart);
         this.name = name;
-        this.positionDepart = positionDepart;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Axe getPositionDepart() {
-        return positionDepart;
+    @Override
+    public TypeAxe getType() {
+        return TypeAxe.AVENTURIER;
     }
 }

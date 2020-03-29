@@ -1,14 +1,9 @@
 package model.carte;
 
-public abstract class Obstacle {
-
-    private Axe axe;
+public abstract class Obstacle extends Element {
 
     public Obstacle(Axe axe) {
-        this.axe = axe;
+        super(axe);
     }
 
-    public Axe getAxe() {
-        return axe;
-    }
 }

@@ -1,20 +1,17 @@
 package model.carte;
 
-import model.aventurier.Aventurier;
-
 import java.util.List;
 
 public class Carte {
     private Dimensions dimensions;
     private TypeAxe[][] plan;
 
-    public Carte(Dimensions dimensions, List<Aventurier> aventuriers, List<Obstacle> obstacles) {
+    public Carte(Dimensions dimensions, List<Element> elements) {
         this.dimensions = dimensions;
         int nbCasesLargeur = dimensions.getLargeur().getNbCases();
         int nbCasesHauteur = dimensions.getHauteur().getNbCases();
         initPlan(nbCasesLargeur, nbCasesHauteur);
-        placerAventuriers(aventuriers);
-        placerObstacles(obstacles);
+        placer(elements);
     }
 
     private void initPlan(int nbCasesLargeur, int nbCasesHauteur) {
@@ -26,21 +23,19 @@ public class Carte {
         }
     }
 
-    private void placerObstacles(List<Obstacle> obstacles) {
-        obstacles.forEach(obstacle ->
+    private void placer(List<Element> elements) {
+        elements.forEach(element ->
         {
-            int positionDepartVerticale = obstacle.getAxe().getAxeVerticale().getNumCase();
-            int positionDepartHorizontale = obstacle.getAxe().getAxeHorizontale().getNumCase();
-            plan[positionDepartHorizontale][positionDepartVerticale] = TypeAxe.OBSTACLE;
-        });
-    }
-
-    private void placerAventuriers(List<Aventurier> aventuriers) {
-        aventuriers.forEach(aventurier ->
-        {
-            int positionDepartVerticale = aventurier.getPositionDepart().getAxeVerticale().getNumCase();
-            int positionDepartHorizontale = aventurier.getPositionDepart().getAxeHorizontale().getNumCase();
-            plan[positionDepartHorizontale][positionDepartVerticale] = TypeAxe.AVENTURIER;
+            int positionDepartVerticale = element.getAxe().getAxeVerticale().getNumCase();
+            int positionDepartHorizontale = element.getAxe().getAxeHorizontale().getNumCase();
+            TypeAxe occupyingAxe = plan[positionDepartHorizontale][positionDepartVerticale];
+            TypeAxe eltToPlaceType = element.getType();
+            if (occupyingAxe == TypeAxe.PLAINE) {
+                plan[positionDepartHorizontale][positionDepartVerticale] = eltToPlaceType;
+            } else {
+                throw new CanNotPlaceElementInMap(
+                        eltToPlaceType, positionDepartHorizontale, positionDepartVerticale, occupyingAxe);
+            }
         });
     }
 

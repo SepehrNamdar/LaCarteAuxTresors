@@ -1,9 +1,13 @@
 package model.carte;
 
 import model.element.Aventurier;
+import model.element.Montagne;
+import model.element.Tresor;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,43 +30,13 @@ public class CarteShould {
     }
 
     @Test
-    void beCreatedWithAventuriers() {
-        Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
-        Element laura = new Aventurier("Laura", new Axe(0, 0));
-        Element tom = new Aventurier("Tom", new Axe(1, 2));
-
-        Carte carte = new Carte(dimensions, asList(laura, tom));
-
-        assertThat(carte.getAxe(0, 0)).isEqualTo(TypeAxe.AVENTURIER);
-        assertThat(carte.getAxe(1, 2)).isEqualTo(TypeAxe.AVENTURIER);
-    }
-
-    @Test
-    void beCreatedWithObstacles() {
-        Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
-        Element montagne_1 = new Montagne(new Axe(0, 0));
-        Element montagne_2 = new Montagne(new Axe(1, 2));
-
-        Carte carte = new Carte(dimensions, asList(montagne_1, montagne_2));
-
-        assertThat(carte.getAxe(0, 0)).isEqualTo(TypeAxe.MONTAGNE);
-        assertThat(carte.getAxe(1, 2)).isEqualTo(TypeAxe.MONTAGNE);
-    }
-
-    @Test
     void beCreatedWithAllElementsType() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
-        Element montagne_1 = new Montagne(new Axe(0, 0));
-        Element montagne_2 = new Montagne(new Axe(1, 2));
-        Element laura = new Aventurier("Laura", new Axe(1, 1));
-        Element tom = new Aventurier("Tom", new Axe(2, 1));
+        List<Element> elementsToPlaceOnCarte = getAllTypeElements();
 
-        Carte carte = new Carte(dimensions, asList(laura, tom, montagne_1, montagne_2));
+        Carte carte = new Carte(dimensions, elementsToPlaceOnCarte);
 
-        assertThat(carte.getAxe(0, 0)).isEqualTo(TypeAxe.MONTAGNE);
-        assertThat(carte.getAxe(1, 2)).isEqualTo(TypeAxe.MONTAGNE);
-        assertThat(carte.getAxe(1, 1)).isEqualTo(TypeAxe.AVENTURIER);
-        assertThat(carte.getAxe(2, 1)).isEqualTo(TypeAxe.AVENTURIER);
+        assertThatAllElementsAreWellPlacedOnCarte(carte);
     }
 
     @Test
@@ -70,6 +44,7 @@ public class CarteShould {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Element montagne = new Montagne(new Axe(0, 0));
         Element laura = new Aventurier("Laura", new Axe(0, 0));
+        Element tresor = new Tresor(new Axe(0, 0));
 
         assertThatExceptionOfType(CanNotPlaceElementInMap.class)
                 .isThrownBy(() -> new Carte(dimensions, asList(laura, montagne)));
@@ -79,6 +54,8 @@ public class CarteShould {
                 .isThrownBy(() -> new Carte(dimensions, asList(laura, laura)));
         assertThatExceptionOfType(CanNotPlaceElementInMap.class)
                 .isThrownBy(() -> new Carte(dimensions, asList(montagne, montagne)));
+        assertThatExceptionOfType(CanNotPlaceElementInMap.class)
+                .isThrownBy(() -> new Carte(dimensions, asList(tresor, laura)));
     }
 
     private void assertThatAllCasesArePlaine(Carte carte) {
@@ -88,5 +65,25 @@ public class CarteShould {
                 assertThat(typeAxe).isEqualTo(TypeAxe.PLAINE);
             }
         }
+    }
+
+    private List<Element> getAllTypeElements() {
+        List<Element> elements = new ArrayList<>();
+        elements.add(new Montagne(new Axe(0, 0)));
+        elements.add(new Montagne(new Axe(1, 2)));
+        elements.add(new Aventurier("Laura", new Axe(1, 1)));
+        elements.add(new Aventurier("Tom", new Axe(2, 1)));
+        elements.add(new Tresor(new Axe(2, 2)));
+        elements.add(new Tresor(new Axe(1, 3)));
+        return elements;
+    }
+
+    private void assertThatAllElementsAreWellPlacedOnCarte(Carte carte) {
+        assertThat(carte.getAxe(0, 0)).isEqualTo(TypeAxe.MONTAGNE);
+        assertThat(carte.getAxe(1, 2)).isEqualTo(TypeAxe.MONTAGNE);
+        assertThat(carte.getAxe(1, 1)).isEqualTo(TypeAxe.AVENTURIER);
+        assertThat(carte.getAxe(2, 1)).isEqualTo(TypeAxe.AVENTURIER);
+        assertThat(carte.getAxe(2, 2)).isEqualTo(TypeAxe.TRESOR);
+        assertThat(carte.getAxe(1, 3)).isEqualTo(TypeAxe.TRESOR);
     }
 }

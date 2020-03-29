@@ -1,5 +1,5 @@
 package model.carte;
 
 public enum TypeAxe {
-    AVENTURIER, MONTAGNE, PLAINE
+    AVENTURIER, MONTAGNE, TRESOR, PLAINE
 }

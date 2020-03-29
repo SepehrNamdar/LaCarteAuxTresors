@@ -1,4 +1,8 @@
-package model.carte;
+package model.element;
+
+import model.carte.Axe;
+import model.carte.Obstacle;
+import model.carte.TypeAxe;
 
 public class Montagne extends Obstacle {
 

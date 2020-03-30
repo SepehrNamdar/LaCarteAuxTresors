@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -56,6 +57,24 @@ public class CarteShould {
                 .isThrownBy(() -> new Carte(dimensions, asList(montagne, montagne)));
         assertThatExceptionOfType(CanNotPlaceElementInMap.class)
                 .isThrownBy(() -> new Carte(dimensions, asList(tresor, laura)));
+    }
+
+    @Test
+    void notBeCreatedWhenAnElementIsPlacedOutOfCarte() {
+        Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
+        Element montagne = new Montagne(new Axe(LARGEUR_CARTE + 1, 0));
+        Element laura = new Aventurier("Laura", new Axe(0, HAUTEUR_CARTE + 1));
+        Element tresor = new Tresor(new Axe(-1, 0));
+        Element tom = new Aventurier("Tom", new Axe(0, -1));
+
+        assertThatExceptionOfType(CanNotPlaceElementInMap.class)
+                .isThrownBy(() -> new Carte(dimensions, singletonList(laura)));
+        assertThatExceptionOfType(CanNotPlaceElementInMap.class)
+                .isThrownBy(() -> new Carte(dimensions, singletonList(montagne)));
+        assertThatExceptionOfType(CanNotPlaceElementInMap.class)
+                .isThrownBy(() -> new Carte(dimensions, singletonList(tresor)));
+        assertThatExceptionOfType(CanNotPlaceElementInMap.class)
+                .isThrownBy(() -> new Carte(dimensions, singletonList(tom)));
     }
 
     private void assertThatAllCasesArePlaine(Carte carte) {

@@ -13,5 +13,4 @@ public abstract class Element {
 
     public abstract TypeAxe getType();
 
-    public abstract void avancer();
 }

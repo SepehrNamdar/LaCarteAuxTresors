@@ -63,8 +63,8 @@ public class CarteShould {
     @Test
     void notBeCreatedWhenAnElementIsPlacedOutOfCarte() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
-        Element montagne = new Montagne(new Axe(LARGEUR_CARTE + 1, 0));
-        Element laura = new Aventurier("Laura", new Axe(0, HAUTEUR_CARTE + 1), Orinetation.SUD);
+        Element montagne = new Montagne(new Axe(LARGEUR_CARTE, 0));
+        Element laura = new Aventurier("Laura", new Axe(0, HAUTEUR_CARTE), Orinetation.SUD);
         Element tresor = new Tresor(new Axe(-1, 0));
         Element tom = new Aventurier("Tom", new Axe(0, -1), Orinetation.SUD);
 

@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Carte {
     private Dimensions dimensions;
-
     private TypeAxe[][] plan;
+
     public Carte(Dimensions dimensions, List<Element> elements) {
         this.dimensions = dimensions;
         initPlan();
@@ -48,8 +48,8 @@ public class Carte {
     }
 
     private boolean isOutOfCarte(Axe axe) {
-        return axe.getAxeVerticale() > dimensions.getHauteur() ||
-                axe.getAxeHorizontale() > dimensions.getLargeur() ||
+        return axe.getAxeVerticale() >= dimensions.getHauteur() ||
+                axe.getAxeHorizontale() >= dimensions.getLargeur() ||
                 axe.getAxeHorizontale() < 0 || axe.getAxeVerticale() < 0;
     }
 
@@ -65,9 +65,13 @@ public class Carte {
         return dimensions.getHauteur();
     }
 
-    public void avancer(Element element) {
-        plan[element.getAxe().getAxeHorizontale()][element.getAxe().getAxeVerticale()] = TypeAxe.PLAINE;
-        element.avancer();
-        plan[element.getAxe().getAxeHorizontale()][element.getAxe().getAxeVerticale()] = element.getType();
+    public void avancer(Aventurier aventurier) {
+        int axeHorizontaleBeforeMovement = aventurier.getAxe().getAxeHorizontale();
+        int axeVerticaleBeforeMovement = aventurier.getAxe().getAxeVerticale();
+        aventurier.move();
+        if (!isOutOfCarte(aventurier.getAxe())) {
+            plan[axeHorizontaleBeforeMovement][axeVerticaleBeforeMovement] = TypeAxe.PLAINE;
+            plan[aventurier.getAxe().getAxeHorizontale()][aventurier.getAxe().getAxeVerticale()] = aventurier.getType();
+        }
     }
 }

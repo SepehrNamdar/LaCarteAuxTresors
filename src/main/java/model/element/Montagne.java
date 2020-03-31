@@ -14,4 +14,5 @@ public class Montagne extends Obstacle {
     public TypeAxe getType() {
         return TypeAxe.MONTAGNE;
     }
+
 }

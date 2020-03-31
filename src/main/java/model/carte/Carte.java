@@ -1,5 +1,7 @@
 package model.carte;
 
+import model.element.Aventurier;
+
 import java.util.List;
 
 public class Carte {
@@ -61,5 +63,11 @@ public class Carte {
 
     public int getHauteur() {
         return dimensions.getHauteur();
+    }
+
+    public void avancer(Element element) {
+        plan[element.getAxe().getAxeHorizontale()][element.getAxe().getAxeVerticale()] = TypeAxe.PLAINE;
+        element.avancer();
+        plan[element.getAxe().getAxeHorizontale()][element.getAxe().getAxeVerticale()] = element.getType();
     }
 }

@@ -2,6 +2,7 @@ package model.carte;
 
 import model.element.Aventurier;
 import model.element.Montagne;
+import model.element.Orinetation;
 import model.element.Tresor;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +45,7 @@ public class CarteShould {
     void notBeCreatedWhenAxesAreInConflict() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Element montagne = new Montagne(new Axe(0, 0));
-        Element laura = new Aventurier("Laura", new Axe(0, 0));
+        Element laura = new Aventurier("Laura", new Axe(0, 0), Orinetation.SUD);
         Element tresor = new Tresor(new Axe(0, 0));
 
         assertThatExceptionOfType(CanNotPlaceElementInMap.class)
@@ -63,9 +64,9 @@ public class CarteShould {
     void notBeCreatedWhenAnElementIsPlacedOutOfCarte() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Element montagne = new Montagne(new Axe(LARGEUR_CARTE + 1, 0));
-        Element laura = new Aventurier("Laura", new Axe(0, HAUTEUR_CARTE + 1));
+        Element laura = new Aventurier("Laura", new Axe(0, HAUTEUR_CARTE + 1), Orinetation.SUD);
         Element tresor = new Tresor(new Axe(-1, 0));
-        Element tom = new Aventurier("Tom", new Axe(0, -1));
+        Element tom = new Aventurier("Tom", new Axe(0, -1), Orinetation.SUD);
 
         assertThatExceptionOfType(CanNotPlaceElementInMap.class)
                 .isThrownBy(() -> new Carte(dimensions, singletonList(laura)));
@@ -90,8 +91,8 @@ public class CarteShould {
         List<Element> elements = new ArrayList<>();
         elements.add(new Montagne(new Axe(0, 0)));
         elements.add(new Montagne(new Axe(1, 2)));
-        elements.add(new Aventurier("Laura", new Axe(1, 1)));
-        elements.add(new Aventurier("Tom", new Axe(2, 1)));
+        elements.add(new Aventurier("Laura", new Axe(1, 1), Orinetation.SUD));
+        elements.add(new Aventurier("Tom", new Axe(2, 1), Orinetation.SUD));
         elements.add(new Tresor(new Axe(2, 2)));
         elements.add(new Tresor(new Axe(1, 3)));
         return elements;

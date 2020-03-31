@@ -6,4 +6,9 @@ public abstract class Obstacle extends Element {
         super(axe);
     }
 
+    @Override
+    public void avancer() {
+
+    }
+
 }

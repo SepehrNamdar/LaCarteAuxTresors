@@ -14,4 +14,9 @@ public class Tresor extends Element {
     public TypeAxe getType() {
         return TypeAxe.TRESOR;
     }
+
+    @Override
+    public void avancer() {
+
+    }
 }

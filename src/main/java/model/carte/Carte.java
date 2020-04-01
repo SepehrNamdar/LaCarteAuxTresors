@@ -10,6 +10,8 @@ public class Carte {
 
     public Carte(Dimensions dimensions, List<Element> elements) {
         this.dimensions = dimensions;
+        // TODO : this.elements = elements
+        // TODO : à chaque movement on met à jour la liste des elements et on les replace sur la carte
         initPlan();
         placer(elements);
     }
@@ -66,12 +68,17 @@ public class Carte {
     }
 
     public void avancer(Aventurier aventurier) {
-        int axeHorizontaleBeforeMovement = aventurier.getAxe().getAxeHorizontale();
-        int axeVerticaleBeforeMovement = aventurier.getAxe().getAxeVerticale();
+        Axe initialAventurierAxe = aventurier.getAxe();
         aventurier.move();
-        if (!isOutOfCarte(aventurier.getAxe())) {
-            plan[axeHorizontaleBeforeMovement][axeVerticaleBeforeMovement] = TypeAxe.PLAINE;
+        if (!isOutOfCarte(aventurier.getAxe()) && !isObstacle(aventurier.getAxe())) {
+            plan[initialAventurierAxe.getAxeHorizontale()][initialAventurierAxe.getAxeVerticale()] = TypeAxe.PLAINE;
             plan[aventurier.getAxe().getAxeHorizontale()][aventurier.getAxe().getAxeVerticale()] = aventurier.getType();
+        } else {
+            // FIXME mettre la position de l'aventurier à sa valeur initiale
         }
+    }
+
+    private boolean isObstacle(Axe axe) {
+        return plan[axe.getAxeHorizontale()][axe.getAxeVerticale()] == TypeAxe.MONTAGNE;
     }
 }

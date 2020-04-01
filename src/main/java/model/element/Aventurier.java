@@ -7,9 +7,9 @@ import model.carte.TypeAxe;
 public class Aventurier extends Element implements CanMove {
 
     private String name;
-    private Orinetation orientationDepart;
+    private Orientation orientationDepart;
 
-    public Aventurier(String name, Axe positionDepart, Orinetation orientationDepart) {
+    public Aventurier(String name, Axe positionDepart, Orientation orientationDepart) {
         super(positionDepart);
         this.name = name;
         this.orientationDepart = orientationDepart;
@@ -22,8 +22,10 @@ public class Aventurier extends Element implements CanMove {
 
     @Override
     public void move() {
-        if (orientationDepart == Orinetation.SUD) {
+        if (orientationDepart == Orientation.SUD) {
             axe = new Axe(axe.getAxeHorizontale(), axe.getAxeVerticale() + 1);
+        } else if (orientationDepart == Orientation.NORD) {
+            axe = new Axe(axe.getAxeHorizontale(), axe.getAxeVerticale() - 1);
         }
     }
 
@@ -37,4 +39,11 @@ public class Aventurier extends Element implements CanMove {
 
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Orientation getOrientation() {
+        return orientationDepart;
+    }
 }

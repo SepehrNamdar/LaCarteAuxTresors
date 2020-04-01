@@ -39,11 +39,7 @@ public class Aventurier extends Element implements CanMove {
 
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Orientation getOrientation() {
-        return orientationDepart;
+    public void setAxe(Axe lastAxe) {
+        super.axe = lastAxe;
     }
 }

@@ -74,7 +74,7 @@ public class Carte {
             plan[initialAventurierAxe.getAxeHorizontale()][initialAventurierAxe.getAxeVerticale()] = TypeAxe.PLAINE;
             plan[aventurier.getAxe().getAxeHorizontale()][aventurier.getAxe().getAxeVerticale()] = aventurier.getType();
         } else {
-            // FIXME mettre la position de l'aventurier à sa valeur initiale
+            aventurier.setAxe(initialAventurierAxe);
         }
     }
 

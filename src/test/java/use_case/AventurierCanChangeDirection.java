@@ -39,4 +39,28 @@ public class AventurierCanChangeDirection {
         assertThat(laura.getCurrentOrientation()).isEqualTo(NORD);
         assertThat(laura.getAxe()).isEqualTo(axeDepart);
     }
+
+    @Test
+    void toRight() {
+        Dimensions dimensions = new Dimensions(NB_CASES_LARGEUR_CARTE, NB_CASES_HAUTEUR_CARTE);
+        Axe axeDepart = new Axe(1, 1);
+        Aventurier laura = new Aventurier("Laura", axeDepart, NORD);
+        Carte carte = new Carte(dimensions, singletonList(laura));
+
+        carte.turnRight(laura);
+        assertThat(laura.getCurrentOrientation()).isEqualTo(EST);
+        assertThat(laura.getAxe()).isEqualTo(axeDepart);
+
+        carte.turnRight(laura);
+        assertThat(laura.getCurrentOrientation()).isEqualTo(SUD);
+        assertThat(laura.getAxe()).isEqualTo(axeDepart);
+
+        carte.turnRight(laura);
+        assertThat(laura.getCurrentOrientation()).isEqualTo(OUEST);
+        assertThat(laura.getAxe()).isEqualTo(axeDepart);
+
+        carte.turnRight(laura);
+        assertThat(laura.getCurrentOrientation()).isEqualTo(NORD);
+        assertThat(laura.getAxe()).isEqualTo(axeDepart);
+    }
 }

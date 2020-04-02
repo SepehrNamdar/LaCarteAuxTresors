@@ -48,7 +48,15 @@ public class Aventurier extends Element implements CanMove {
 
     @Override
     public void turnRight() {
-
+        if (currentOrientation == NORD) {
+            currentOrientation = EST;
+        } else if (currentOrientation == EST) {
+            currentOrientation = SUD;
+        } else if (currentOrientation == SUD)  {
+            currentOrientation = OUEST;
+        } else if (currentOrientation == OUEST) {
+            currentOrientation = NORD;
+        }
     }
 
     public void setAxe(Axe lastAxe) {

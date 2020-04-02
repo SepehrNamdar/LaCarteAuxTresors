@@ -94,4 +94,8 @@ public class Carte {
     public void turnLeft(Aventurier aventurier) {
         aventurier.turnLeft();
     }
+
+    public void turnRight(Aventurier laura) {
+        laura.turnRight();
+    }
 }

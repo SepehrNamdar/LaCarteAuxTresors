@@ -8,6 +8,7 @@ import static model.carte.TypeAxe.*;
 
 public class Carte {
     private Dimensions dimensions;
+
     private TypeAxe[][] plan;
 
     public Carte(Dimensions dimensions, List<Element> elements) {
@@ -80,7 +81,7 @@ public class Carte {
     private void updatePlan(Aventurier aventurier, Axe initialAventurierAxe) {
         plan[initialAventurierAxe.getAxeHorizontale()][initialAventurierAxe.getAxeVerticale()] = PLAINE;
         Axe aventurierAxe = aventurier.getAxe();
-        if (!getAxe(aventurierAxe.getAxeHorizontale(), aventurierAxe.getAxeVerticale()).equals(TypeAxe.TRESOR)) {
+        if (!getAxe(aventurierAxe.getAxeHorizontale(), aventurierAxe.getAxeVerticale()).equals(TRESOR)) {
             plan[aventurierAxe.getAxeHorizontale()][aventurierAxe.getAxeVerticale()] = aventurier.getType();
         }
     }

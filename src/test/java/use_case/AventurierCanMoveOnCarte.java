@@ -5,8 +5,8 @@ import model.carte.*;
 import org.junit.jupiter.api.Test;
 
 import static java.util.Collections.singletonList;
-import static common.TestUtils.NB_CASES_HAUTEUR_CARTE;
-import static common.TestUtils.NB_CASES_LARGEUR_CARTE;
+import static common.TestUtils.LARGEUR_CARTE;
+import static common.TestUtils.HAUTEUR_CARTE;
 import static model.carte.TypeAxe.AVENTURIER;
 import static model.carte.TypeAxe.PLAINE;
 import static model.element.Orientation.SUD;
@@ -16,7 +16,7 @@ public class AventurierCanMoveOnCarte {
 
     @Test
     void plaine() {
-        Dimensions dimensions = new Dimensions(NB_CASES_LARGEUR_CARTE, NB_CASES_HAUTEUR_CARTE);
+        Dimensions dimensions = new Dimensions(HAUTEUR_CARTE, LARGEUR_CARTE);
         Axe axeDepart = new Axe(2, 1);
         Aventurier laura = new Aventurier("Laura", axeDepart, SUD);
         Carte carte = new Carte(dimensions, singletonList(laura));

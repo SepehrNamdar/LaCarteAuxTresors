@@ -4,8 +4,7 @@ import model.element.Aventurier;
 
 import java.util.List;
 
-import static model.carte.TypeAxe.MONTAGNE;
-import static model.carte.TypeAxe.PLAINE;
+import static model.carte.TypeAxe.*;
 
 public class Carte {
     private Dimensions dimensions;
@@ -80,7 +79,10 @@ public class Carte {
 
     private void updatePlan(Aventurier aventurier, Axe initialAventurierAxe) {
         plan[initialAventurierAxe.getAxeHorizontale()][initialAventurierAxe.getAxeVerticale()] = PLAINE;
-        plan[aventurier.getAxe().getAxeHorizontale()][aventurier.getAxe().getAxeVerticale()] = aventurier.getType();
+        Axe aventurierAxe = aventurier.getAxe();
+        if (!getAxe(aventurierAxe.getAxeHorizontale(), aventurierAxe.getAxeVerticale()).equals(TypeAxe.TRESOR)) {
+            plan[aventurierAxe.getAxeHorizontale()][aventurierAxe.getAxeVerticale()] = aventurier.getType();
+        }
     }
 
     private boolean isMoved(Aventurier aventurier) {

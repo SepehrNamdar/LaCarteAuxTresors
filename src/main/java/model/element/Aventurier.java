@@ -7,7 +7,7 @@ import model.carte.TypeAxe;
 import static model.carte.TypeAxe.AVENTURIER;
 import static model.element.Orientation.*;
 
-public class Aventurier extends Element implements CanMove {
+public class Aventurier extends Element implements CanMove, HavePoints {
 
     private String name;
 
@@ -30,6 +30,10 @@ public class Aventurier extends Element implements CanMove {
             axe = new Axe(axe.getAxeHorizontale(), axe.getAxeVerticale() + 1);
         } else if (currentOrientation == NORD) {
             axe = new Axe(axe.getAxeHorizontale(), axe.getAxeVerticale() - 1);
+        } else if (currentOrientation == EST) {
+            axe = new Axe(axe.getAxeHorizontale() + 1, axe.getAxeVerticale());
+        } else if (currentOrientation == OUEST) {
+            axe = new Axe(axe.getAxeHorizontale() - 1, axe.getAxeVerticale());
         }
     }
 
@@ -65,5 +69,14 @@ public class Aventurier extends Element implements CanMove {
 
     public Orientation getCurrentOrientation() {
         return currentOrientation;
+    }
+
+    public int getNbTresor() {
+        return 0;
+    }
+
+    @Override
+    public void setNbTresor(int nbTresor) {
+
     }
 }

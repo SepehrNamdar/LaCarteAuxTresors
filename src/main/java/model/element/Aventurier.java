@@ -5,12 +5,12 @@ import model.carte.Element;
 import model.carte.TypeAxe;
 
 import static model.carte.TypeAxe.AVENTURIER;
-import static model.element.Orientation.NORD;
-import static model.element.Orientation.SUD;
+import static model.element.Orientation.*;
 
 public class Aventurier extends Element implements CanMove {
 
     private String name;
+
     private Orientation currentOrientation;
 
     public Aventurier(String name, Axe positionDepart, Orientation orientationDepart) {
@@ -35,15 +35,35 @@ public class Aventurier extends Element implements CanMove {
 
     @Override
     public void turnLeft() {
-
+        if (currentOrientation == NORD) {
+            currentOrientation = OUEST;
+        } else if (currentOrientation == OUEST) {
+            currentOrientation = SUD;
+        } else if (currentOrientation == SUD)  {
+            currentOrientation = EST;
+        } else if (currentOrientation == EST) {
+            currentOrientation = NORD;
+        }
     }
 
     @Override
     public void turnRight() {
-
+        if (currentOrientation == NORD) {
+            currentOrientation = EST;
+        } else if (currentOrientation == EST) {
+            currentOrientation = SUD;
+        } else if (currentOrientation == SUD)  {
+            currentOrientation = OUEST;
+        } else if (currentOrientation == OUEST) {
+            currentOrientation = NORD;
+        }
     }
 
     public void setAxe(Axe lastAxe) {
         super.axe = lastAxe;
+    }
+
+    public Orientation getCurrentOrientation() {
+        return currentOrientation;
     }
 }

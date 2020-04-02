@@ -6,12 +6,11 @@ import model.element.Orientation;
 import org.junit.jupiter.api.Test;
 
 import static java.util.Collections.singletonList;
+import static common.TestUtils.NB_CASES_HAUTEUR_CARTE;
+import static common.TestUtils.NB_CASES_LARGEUR_CARTE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AventurierCanMoveOnCarte {
-
-    public static final int NB_CASES_LARGEUR_CARTE = 3;
-    public static final int NB_CASES_HAUTEUR_CARTE = 4;
 
     @Test
     void plaine() {

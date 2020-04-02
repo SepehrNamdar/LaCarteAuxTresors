@@ -90,4 +90,12 @@ public class Carte {
     private boolean isObstacle(Axe axe) {
         return plan[axe.getAxeHorizontale()][axe.getAxeVerticale()] == MONTAGNE;
     }
+
+    public void turnLeft(Aventurier aventurier) {
+        aventurier.turnLeft();
+    }
+
+    public void turnRight(Aventurier laura) {
+        laura.turnRight();
+    }
 }

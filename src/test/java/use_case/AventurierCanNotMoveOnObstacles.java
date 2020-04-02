@@ -6,15 +6,14 @@ import model.element.Montagne;
 import org.junit.jupiter.api.Test;
 
 import static java.util.Arrays.asList;
+import static common.TestUtils.NB_CASES_HAUTEUR_CARTE;
+import static common.TestUtils.NB_CASES_LARGEUR_CARTE;
 import static model.carte.TypeAxe.AVENTURIER;
 import static model.carte.TypeAxe.MONTAGNE;
 import static model.element.Orientation.NORD;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AventurierCanNotMoveOnObstacles {
-
-    public static final int NB_CASES_LARGEUR_CARTE = 3;
-    public static final int NB_CASES_HAUTEUR_CARTE = 4;
 
     @Test
     void montagne() {

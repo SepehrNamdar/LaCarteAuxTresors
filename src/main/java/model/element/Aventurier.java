@@ -4,26 +4,32 @@ import model.carte.Axe;
 import model.carte.Element;
 import model.carte.TypeAxe;
 
+import static model.carte.TypeAxe.AVENTURIER;
+import static model.element.Orientation.NORD;
+import static model.element.Orientation.SUD;
+
 public class Aventurier extends Element implements CanMove {
 
     private String name;
-    private Orinetation orientationDepart;
+    private Orientation currentOrientation;
 
-    public Aventurier(String name, Axe positionDepart, Orinetation orientationDepart) {
+    public Aventurier(String name, Axe positionDepart, Orientation orientationDepart) {
         super(positionDepart);
         this.name = name;
-        this.orientationDepart = orientationDepart;
+        this.currentOrientation = orientationDepart;
     }
 
     @Override
     public TypeAxe getType() {
-        return TypeAxe.AVENTURIER;
+        return AVENTURIER;
     }
 
     @Override
     public void move() {
-        if (orientationDepart == Orinetation.SUD) {
+        if (currentOrientation == SUD) {
             axe = new Axe(axe.getAxeHorizontale(), axe.getAxeVerticale() + 1);
+        } else if (currentOrientation == NORD) {
+            axe = new Axe(axe.getAxeHorizontale(), axe.getAxeVerticale() - 1);
         }
     }
 
@@ -37,4 +43,7 @@ public class Aventurier extends Element implements CanMove {
 
     }
 
+    public void setAxe(Axe lastAxe) {
+        super.axe = lastAxe;
+    }
 }

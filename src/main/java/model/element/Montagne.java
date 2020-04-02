@@ -3,6 +3,8 @@ package model.element;
 import model.carte.Axe;
 import model.carte.TypeAxe;
 
+import static model.carte.TypeAxe.MONTAGNE;
+
 public class Montagne extends Obstacle {
 
     public Montagne(Axe axe) {
@@ -11,7 +13,7 @@ public class Montagne extends Obstacle {
 
     @Override
     public TypeAxe getType() {
-        return TypeAxe.MONTAGNE;
+        return MONTAGNE;
     }
 
 }

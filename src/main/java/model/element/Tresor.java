@@ -4,6 +4,8 @@ import model.carte.Axe;
 import model.carte.Element;
 import model.carte.TypeAxe;
 
+import static model.carte.TypeAxe.TRESOR;
+
 public class Tresor extends Element {
 
     public Tresor(Axe axe) {
@@ -12,6 +14,6 @@ public class Tresor extends Element {
 
     @Override
     public TypeAxe getType() {
-        return TypeAxe.TRESOR;
+        return TRESOR;
     }
 }

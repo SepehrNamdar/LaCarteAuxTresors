@@ -21,8 +21,8 @@ public class Carte {
         int nbCasesLargeur = dimensions.getLargeur();
         int nbCasesHauteur = dimensions.getHauteur();
         plan = new TypeAxe[nbCasesLargeur][nbCasesHauteur];
-        for (int indexAxeHorizontale = 0; indexAxeHorizontale < nbCasesLargeur; indexAxeHorizontale++) {
-            for (int indexAxeVerticale = 0; indexAxeVerticale < nbCasesHauteur; indexAxeVerticale++) {
+        for (int indexAxeVerticale = 0; indexAxeVerticale < nbCasesHauteur; indexAxeVerticale++) {
+            for (int indexAxeHorizontale = 0; indexAxeHorizontale < nbCasesLargeur; indexAxeHorizontale++) {
                 plan[indexAxeHorizontale][indexAxeVerticale] = PLAINE;
             }
         }

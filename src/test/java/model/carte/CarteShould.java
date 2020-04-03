@@ -1,5 +1,6 @@
 package model.carte;
 
+import common.TestUtils;
 import model.element.Aventurier;
 import model.element.Montagne;
 import model.element.Tresor;
@@ -25,6 +26,7 @@ public class CarteShould {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
 
         Carte carte = new Carte(dimensions, emptyList());
+        TestUtils.tracer(carte);
 
         assertThat(carte.getLargeur()).isEqualTo(LARGEUR_CARTE);
         assertThat(carte.getHauteur()).isEqualTo(HAUTEUR_CARTE);
@@ -37,6 +39,7 @@ public class CarteShould {
         List<Element> elementsToPlaceOnCarte = getAllTypeElements();
 
         Carte carte = new Carte(dimensions, elementsToPlaceOnCarte);
+        TestUtils.tracer(carte);
 
         assertThatAllElementsAreWellPlacedOnCarte(carte);
     }
@@ -83,9 +86,7 @@ public class CarteShould {
             for (int j = 0; j < HAUTEUR_CARTE; j++) {
                 TypeAxe typeAxe = carte.getAxe(i, j);
                 assertThat(typeAxe).isEqualTo(PLAINE);
-                System.out.print(typeAxe + " ");
             }
-            System.out.println();
         }
     }
 

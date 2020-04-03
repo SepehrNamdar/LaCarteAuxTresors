@@ -6,8 +6,8 @@ import model.element.Montagne;
 import org.junit.jupiter.api.Test;
 
 import static java.util.Arrays.asList;
-import static common.TestUtils.LARGEUR_CARTE;
 import static common.TestUtils.HAUTEUR_CARTE;
+import static common.TestUtils.LARGEUR_CARTE;
 import static model.carte.TypeAxe.AVENTURIER;
 import static model.carte.TypeAxe.MONTAGNE;
 import static model.element.Orientation.NORD;
@@ -17,7 +17,7 @@ public class AventurierCanNotMoveOnObstacles {
 
     @Test
     void montagne() {
-        Dimensions dimensions = new Dimensions(HAUTEUR_CARTE, LARGEUR_CARTE);
+        Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Axe axeDepart = new Axe(1, 1);
         Aventurier laura = new Aventurier("Laura", axeDepart, NORD);
         Axe axeMontagne = new Axe(1, 0);

@@ -50,12 +50,6 @@ public class Carte {
         }
     }
 
-    private boolean isOutOfCarte(Axe axe) {
-        return axe.getAxeVerticale() >= dimensions.getHauteur() ||
-                axe.getAxeHorizontale() >= dimensions.getLargeur() ||
-                axe.getAxeHorizontale() < 0 || axe.getAxeVerticale() < 0;
-    }
-
     public TypeAxe getAxe(int axeHorizontale, int axeVerticale) {
         return plan[axeHorizontale][axeVerticale];
     }
@@ -79,7 +73,9 @@ public class Carte {
     }
 
     private void updatePlan(Aventurier aventurier, Axe initialAventurierAxe) {
-        plan[initialAventurierAxe.getAxeHorizontale()][initialAventurierAxe.getAxeVerticale()] = PLAINE;
+        if (!getAxe(initialAventurierAxe.getAxeHorizontale(), initialAventurierAxe.getAxeVerticale()).equals(TRESOR)) {
+            plan[initialAventurierAxe.getAxeHorizontale()][initialAventurierAxe.getAxeVerticale()] = PLAINE;
+        }
         Axe aventurierAxe = aventurier.getAxe();
         if (!getAxe(aventurierAxe.getAxeHorizontale(), aventurierAxe.getAxeVerticale()).equals(TRESOR)) {
             plan[aventurierAxe.getAxeHorizontale()][aventurierAxe.getAxeVerticale()] = aventurier.getType();
@@ -88,6 +84,12 @@ public class Carte {
 
     private boolean isMoved(Aventurier aventurier) {
         return !isOutOfCarte(aventurier.getAxe()) && !isObstacle(aventurier.getAxe());
+    }
+
+    private boolean isOutOfCarte(Axe axe) {
+        return axe.getAxeVerticale() >= dimensions.getHauteur() ||
+                axe.getAxeHorizontale() >= dimensions.getLargeur() ||
+                axe.getAxeHorizontale() < 0 || axe.getAxeVerticale() < 0;
     }
 
     private boolean isObstacle(Axe axe) {

@@ -76,7 +76,7 @@ public class Aventurier extends Element implements CanMove, HavePoints {
     }
 
     @Override
-    public void setNbTresor(int nbTresor) {
+    public void reduceNbTresor() {
 
     }
 }

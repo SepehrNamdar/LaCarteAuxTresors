@@ -4,5 +4,5 @@ public interface HavePoints {
 
     int getNbTresor();
 
-    void setNbTresor(int nbTresor);
+    void reduceNbTresor();
 }

@@ -1,6 +1,7 @@
 package model.carte;
 
 import model.element.Aventurier;
+import model.element.Tresor;
 
 import java.util.List;
 
@@ -8,13 +9,15 @@ import static model.carte.TypeAxe.*;
 
 public class Carte {
     private Dimensions dimensions;
+    private List<Element> elements;
 
     private TypeAxe[][] plan;
 
     public Carte(Dimensions dimensions, List<Element> elements) {
         this.dimensions = dimensions;
+        this.elements = elements;
         initPlan();
-        placer(elements);
+        placer(this.elements);
     }
 
     private void initPlan() {
@@ -79,6 +82,14 @@ public class Carte {
         Axe aventurierAxe = aventurier.getAxe();
         if (!getAxe(aventurierAxe.getAxeHorizontale(), aventurierAxe.getAxeVerticale()).equals(TRESOR)) {
             plan[aventurierAxe.getAxeHorizontale()][aventurierAxe.getAxeVerticale()] = aventurier.getType();
+        } else {
+            for (Element elt : elements) {
+                Axe axe = elt.getAxe();
+                if (!axe.equals(aventurierAxe)) {
+                    Tresor t = (Tresor) elt;
+                    t.reduceNbTresor();
+                }
+            }
         }
     }
 

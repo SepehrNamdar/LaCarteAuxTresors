@@ -26,7 +26,9 @@ public class Tresor extends Element implements HavePoints {
     }
 
     @Override
-    public void setNbTresor(int nbTresor) {
-        this.nbTresor = nbTresor;
+    public void reduceNbTresor() {
+        if (nbTresor > 0) {
+            nbTresor--;
+        }
     }
 }

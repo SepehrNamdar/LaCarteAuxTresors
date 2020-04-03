@@ -1,5 +1,7 @@
 package model.carte;
 
+import java.util.Objects;
+
 public abstract class Element {
     protected Axe axe;
 
@@ -13,4 +15,16 @@ public abstract class Element {
 
     public abstract TypeAxe getType();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Element element = (Element) o;
+        return Objects.equals(axe, element.axe);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(axe);
+    }
 }

@@ -8,9 +8,9 @@ public class TestUtils {
     public static final int HAUTEUR_CARTE = 4;
 
     public static void tracer(Carte carte) {
-        for (int indexAxeVerticale = 0; indexAxeVerticale < HAUTEUR_CARTE; indexAxeVerticale++) {
-            for (int indexAxeHorizontale = 0; indexAxeHorizontale < LARGEUR_CARTE; indexAxeHorizontale++) {
-                TypeAxe typeAxe = carte.getAxe(indexAxeHorizontale, indexAxeVerticale);
+        for (int indexAxeVertical = 0; indexAxeVertical < HAUTEUR_CARTE; indexAxeVertical++) {
+            for (int indexAxeHorizontal = 0; indexAxeHorizontal < LARGEUR_CARTE; indexAxeHorizontal++) {
+                TypeAxe typeAxe = carte.getAxe(indexAxeHorizontal, indexAxeVertical);
                 System.out.print(typeAxe + " ");
             }
             System.out.println();

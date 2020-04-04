@@ -28,13 +28,13 @@ public class Aventurier extends Element implements CanMove {
     @Override
     public void move() {
         if (currentOrientation == SUD) {
-            axe = new Axe(axe.getAxeHorizontale(), axe.getAxeVerticale() + 1);
+            axe = new Axe(axe.getAxeHorizontal(), axe.getAxeVertical() + 1);
         } else if (currentOrientation == NORD) {
-            axe = new Axe(axe.getAxeHorizontale(), axe.getAxeVerticale() - 1);
+            axe = new Axe(axe.getAxeHorizontal(), axe.getAxeVertical() - 1);
         } else if (currentOrientation == EST) {
-            axe = new Axe(axe.getAxeHorizontale() + 1, axe.getAxeVerticale());
+            axe = new Axe(axe.getAxeHorizontal() + 1, axe.getAxeVertical());
         } else if (currentOrientation == OUEST) {
-            axe = new Axe(axe.getAxeHorizontale() - 1, axe.getAxeVerticale());
+            axe = new Axe(axe.getAxeHorizontal() - 1, axe.getAxeVertical());
         }
     }
 

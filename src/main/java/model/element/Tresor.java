@@ -6,7 +6,7 @@ import model.carte.TypeAxe;
 
 import static model.carte.TypeAxe.TRESOR;
 
-public class Tresor extends Element implements HavePoints {
+public class Tresor extends Element {
 
     private int nbTresor;
 
@@ -20,12 +20,10 @@ public class Tresor extends Element implements HavePoints {
         return TRESOR;
     }
 
-    @Override
     public int getNbTresor() {
         return nbTresor;
     }
 
-    @Override
     public void reduceNbTresor() {
         if (nbTresor > 0) {
             nbTresor--;

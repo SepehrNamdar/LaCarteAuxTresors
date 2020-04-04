@@ -7,16 +7,17 @@ import model.carte.TypeAxe;
 import static model.carte.TypeAxe.AVENTURIER;
 import static model.element.Orientation.*;
 
-public class Aventurier extends Element implements CanMove, HavePoints {
+public class Aventurier extends Element implements CanMove {
 
     private String name;
-
+    private int nbTresor;
     private Orientation currentOrientation;
 
     public Aventurier(String name, Axe positionDepart, Orientation orientationDepart) {
         super(positionDepart);
         this.name = name;
         this.currentOrientation = orientationDepart;
+        nbTresor = 0;
     }
 
     @Override
@@ -72,11 +73,10 @@ public class Aventurier extends Element implements CanMove, HavePoints {
     }
 
     public int getNbTresor() {
-        return 0;
+        return nbTresor;
     }
 
-    @Override
-    public void reduceNbTresor() {
-
+    public void increaseNbtresor() {
+        nbTresor++;
     }
 }

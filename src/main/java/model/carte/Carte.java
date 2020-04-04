@@ -88,6 +88,9 @@ public class Carte {
                 if (!axe.equals(aventurierAxe)) {
                     Tresor t = (Tresor) elt;
                     t.reduceNbTresor();
+                    if (t.getNbTresor() > 0) {
+                        aventurier.increaseNbtresor();
+                    }
                 }
             }
         }

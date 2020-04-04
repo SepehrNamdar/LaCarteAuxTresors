@@ -1,19 +1,19 @@
 package model.carte;
 
 public class Axe {
-    private int axeHorizontale;
-    private int axeVerticale;
+    private int axeHorizontal;
+    private int axeVertical;
 
-    public Axe(int axeHorizontale, int axeVerticale) {
-        this.axeHorizontale = axeHorizontale;
-        this.axeVerticale = axeVerticale;
+    public Axe(int axeHorizontal, int axeVertical) {
+        this.axeHorizontal = axeHorizontal;
+        this.axeVertical = axeVertical;
     }
 
-    public int getAxeHorizontale() {
-        return axeHorizontale;
+    public int getAxeHorizontal() {
+        return axeHorizontal;
     }
 
-    public int getAxeVerticale() {
-        return axeVerticale;
+    public int getAxeVertical() {
+        return axeVertical;
     }
 }

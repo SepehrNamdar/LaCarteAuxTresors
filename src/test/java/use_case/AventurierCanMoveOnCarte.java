@@ -2,35 +2,37 @@ package use_case;
 
 import model.element.Aventurier;
 import model.carte.*;
-import model.element.Orientation;
 import org.junit.jupiter.api.Test;
 
 import static java.util.Collections.singletonList;
-import static common.TestUtils.NB_CASES_HAUTEUR_CARTE;
-import static common.TestUtils.NB_CASES_LARGEUR_CARTE;
+import static common.TestUtils.HAUTEUR_CARTE;
+import static common.TestUtils.LARGEUR_CARTE;
+import static model.carte.TypeAxe.AVENTURIER;
+import static model.carte.TypeAxe.PLAINE;
+import static model.element.Orientation.SUD;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AventurierCanMoveOnCarte {
 
     @Test
     void plaine() {
-        Dimensions dimensions = new Dimensions(NB_CASES_LARGEUR_CARTE, NB_CASES_HAUTEUR_CARTE);
+        Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Axe axeDepart = new Axe(2, 1);
-        Aventurier laura = new Aventurier("Laura", axeDepart, Orientation.SUD);
+        Aventurier laura = new Aventurier("Laura", axeDepart, SUD);
         Carte carte = new Carte(dimensions, singletonList(laura));
 
         carte.avancer(laura);
 
-        assertThat(carte.getAxe(2, 1)).isEqualTo(TypeAxe.PLAINE);
-        assertThat(carte.getAxe(2, 2)).isEqualTo(TypeAxe.AVENTURIER);
+        assertThat(carte.getAxe(2, 1)).isEqualTo(PLAINE);
+        assertThat(carte.getAxe(2, 2)).isEqualTo(AVENTURIER);
 
         carte.avancer(laura);
 
-        assertThat(carte.getAxe(2, 2)).isEqualTo(TypeAxe.PLAINE);
-        assertThat(carte.getAxe(2, 3)).isEqualTo(TypeAxe.AVENTURIER);
+        assertThat(carte.getAxe(2, 2)).isEqualTo(PLAINE);
+        assertThat(carte.getAxe(2, 3)).isEqualTo(AVENTURIER);
 
         carte.avancer(laura);
 
-        assertThat(carte.getAxe(2, 3)).isEqualTo(TypeAxe.AVENTURIER);
+        assertThat(carte.getAxe(2, 3)).isEqualTo(AVENTURIER);
     }
 }

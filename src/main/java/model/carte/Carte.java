@@ -1,29 +1,32 @@
 package model.carte;
 
 import model.element.Aventurier;
+import model.element.Element;
+import model.element.Tresor;
 
 import java.util.List;
 
-import static model.carte.TypeAxe.MONTAGNE;
-import static model.carte.TypeAxe.PLAINE;
+import static model.carte.TypeAxe.*;
 
 public class Carte {
     private Dimensions dimensions;
+    private List<Element> elements;
     private TypeAxe[][] plan;
 
     public Carte(Dimensions dimensions, List<Element> elements) {
         this.dimensions = dimensions;
+        this.elements = elements;
         initPlan();
-        placer(elements);
+        placer(this.elements);
     }
 
     private void initPlan() {
-        int nbCasesLargeur = dimensions.getLargeur();
-        int nbCasesHauteur = dimensions.getHauteur();
-        plan = new TypeAxe[nbCasesLargeur][nbCasesHauteur];
-        for (int indexAxeHorizontale = 0; indexAxeHorizontale < nbCasesLargeur; indexAxeHorizontale++) {
-            for (int indexAxeVerticale = 0; indexAxeVerticale < nbCasesHauteur; indexAxeVerticale++) {
-                plan[indexAxeHorizontale][indexAxeVerticale] = PLAINE;
+        int carteLargeur = dimensions.getLargeur();
+        int carteHauteur = dimensions.getHauteur();
+        plan = new TypeAxe[carteLargeur][carteHauteur];
+        for (int indexAxeVertical = 0; indexAxeVertical < carteHauteur; indexAxeVertical++) {
+            for (int indexAxeHorizontal = 0; indexAxeHorizontal < carteLargeur; indexAxeHorizontal++) {
+                plan[indexAxeHorizontal][indexAxeVertical] = PLAINE;
             }
         }
     }
@@ -32,12 +35,12 @@ public class Carte {
         elements.forEach(element ->
         {
             checkElementAxe(element.getAxe());
-            int axeHorizontale = element.getAxe().getAxeHorizontale();
-            int axeVerticale = element.getAxe().getAxeVerticale();
-            TypeAxe occupyingAxe = plan[axeHorizontale][axeVerticale];
+            int axeHorizontal = element.getAxe().getAxeHorizontal();
+            int axeVertical = element.getAxe().getAxeVertical();
+            TypeAxe occupyingAxe = plan[axeHorizontal][axeVertical];
             TypeAxe eltToPlaceType = element.getType();
             if (occupyingAxe == PLAINE) {
-                plan[axeHorizontale][axeVerticale] = eltToPlaceType;
+                plan[axeHorizontal][axeVertical] = eltToPlaceType;
             } else {
                 throw new CanNotPlaceElementInMap(eltToPlaceType, element.getAxe(), eltToPlaceType);
             }
@@ -50,14 +53,8 @@ public class Carte {
         }
     }
 
-    private boolean isOutOfCarte(Axe axe) {
-        return axe.getAxeVerticale() >= dimensions.getHauteur() ||
-                axe.getAxeHorizontale() >= dimensions.getLargeur() ||
-                axe.getAxeHorizontale() < 0 || axe.getAxeVerticale() < 0;
-    }
-
-    public TypeAxe getAxe(int axeHorizontale, int axeVerticale) {
-        return plan[axeHorizontale][axeVerticale];
+    public TypeAxe getAxe(int axeHorizontal, int axeVertical) {
+        return plan[axeHorizontal][axeVertical];
     }
 
     public int getLargeur() {
@@ -69,26 +66,48 @@ public class Carte {
     }
 
     public void avancer(Aventurier aventurier) {
-        Axe initialAventurierAxe = aventurier.getAxe();
+        Axe initialAxeAventurier = aventurier.getAxe();
         aventurier.move();
         if (isMoved(aventurier)) {
-            updatePlan(aventurier, initialAventurierAxe);
+            updatePlan(aventurier, initialAxeAventurier);
         } else {
-            aventurier.setAxe(initialAventurierAxe);
+            aventurier.setAxe(initialAxeAventurier);
         }
     }
 
     private void updatePlan(Aventurier aventurier, Axe initialAventurierAxe) {
-        plan[initialAventurierAxe.getAxeHorizontale()][initialAventurierAxe.getAxeVerticale()] = PLAINE;
-        plan[aventurier.getAxe().getAxeHorizontale()][aventurier.getAxe().getAxeVerticale()] = aventurier.getType();
+        if (!getAxe(initialAventurierAxe.getAxeHorizontal(), initialAventurierAxe.getAxeVertical()).equals(TRESOR)) {
+            plan[initialAventurierAxe.getAxeHorizontal()][initialAventurierAxe.getAxeVertical()] = PLAINE;
+        }
+        Axe aventurierAxe = aventurier.getAxe();
+        if (!getAxe(aventurierAxe.getAxeHorizontal(), aventurierAxe.getAxeVertical()).equals(TRESOR)) {
+            plan[aventurierAxe.getAxeHorizontal()][aventurierAxe.getAxeVertical()] = aventurier.getType();
+        } else {
+            for (Element elt : elements) {
+                Axe axe = elt.getAxe();
+                if (!axe.equals(aventurierAxe)) {
+                    Tresor t = (Tresor) elt;
+                    t.reduceNbTresor();
+                    if (t.getNbTresor() > 0) {
+                        aventurier.increaseNbtresor();
+                    }
+                }
+            }
+        }
     }
 
     private boolean isMoved(Aventurier aventurier) {
         return !isOutOfCarte(aventurier.getAxe()) && !isObstacle(aventurier.getAxe());
     }
 
+    private boolean isOutOfCarte(Axe axe) {
+        return axe.getAxeVertical() >= dimensions.getHauteur() ||
+                axe.getAxeHorizontal() >= dimensions.getLargeur() ||
+                axe.getAxeHorizontal() < 0 || axe.getAxeVertical() < 0;
+    }
+
     private boolean isObstacle(Axe axe) {
-        return plan[axe.getAxeHorizontale()][axe.getAxeVerticale()] == MONTAGNE;
+        return plan[axe.getAxeHorizontal()][axe.getAxeVertical()] == MONTAGNE;
     }
 
     public void turnLeft(Aventurier aventurier) {

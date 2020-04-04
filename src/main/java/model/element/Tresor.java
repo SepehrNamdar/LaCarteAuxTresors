@@ -1,19 +1,31 @@
 package model.element;
 
 import model.carte.Axe;
-import model.carte.Element;
 import model.carte.TypeAxe;
 
 import static model.carte.TypeAxe.TRESOR;
 
 public class Tresor extends Element {
 
-    public Tresor(Axe axe) {
+    private int nbTresor;
+
+    public Tresor(Axe axe, int nbTresor) {
         super(axe);
+        this.nbTresor = nbTresor;
     }
 
     @Override
     public TypeAxe getType() {
         return TRESOR;
+    }
+
+    public int getNbTresor() {
+        return nbTresor;
+    }
+
+    public void reduceNbTresor() {
+        if (nbTresor > 0) {
+            nbTresor--;
+        }
     }
 }

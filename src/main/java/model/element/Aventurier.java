@@ -1,7 +1,6 @@
 package model.element;
 
 import model.carte.Axe;
-import model.carte.Element;
 import model.carte.TypeAxe;
 
 import static model.carte.TypeAxe.AVENTURIER;

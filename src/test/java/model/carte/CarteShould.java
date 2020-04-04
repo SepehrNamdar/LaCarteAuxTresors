@@ -1,6 +1,7 @@
 package model.carte;
 
 import model.element.Aventurier;
+import model.element.Element;
 import model.element.Montagne;
 import model.element.Tresor;
 import org.junit.jupiter.api.Test;

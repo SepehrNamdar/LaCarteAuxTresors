@@ -2,6 +2,7 @@ package use_case;
 
 import model.carte.*;
 import model.element.Aventurier;
+import model.element.Element;
 import model.element.Montagne;
 import org.junit.jupiter.api.Test;
 

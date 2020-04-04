@@ -1,6 +1,7 @@
 package model.carte;
 
 import model.element.Aventurier;
+import model.element.Element;
 import model.element.Tresor;
 
 import java.util.List;

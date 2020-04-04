@@ -1,4 +1,7 @@
-package model.carte;
+package model.element;
+
+import model.carte.Axe;
+import model.carte.TypeAxe;
 
 import java.util.Objects;
 

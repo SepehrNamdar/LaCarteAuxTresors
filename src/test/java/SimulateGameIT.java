@@ -1,12 +1,24 @@
 import application.CarteAuxTresorsGame;
 import application.DimensionDTO;
 import application.ElementDTO;
+import common.TestUtils;
 import exposition.CarteAuxtTresors;
-import org.assertj.core.api.Assertions;
+import model.carte.Axe;
+import model.carte.Carte;
+import model.carte.TypeAxe;
+import model.element.Aventurier;
+import model.element.Montagne;
+import model.element.Orientation;
+import model.element.Tresor;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static model.element.Orientation.*;
+import static model.element.Orientation.EST;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SimulateGameIT {
 
@@ -26,7 +38,28 @@ public class SimulateGameIT {
 
         carteAuxtTresors.play(getDimentions(), getElements());
 
-        Assertions.assertThat(carteAuxtTresors.getCarte()).isEqualTo(getExpectedCarte());
+        assertThat(carteAuxtTresors.getCarte()).isEqualTo(getExpectedCarte());
+        tracer(carteAuxtTresors.getElements());
+    }
+
+
+    public void tracer(List<ElementDTO> elementsDto) {
+        System.out.println("C" + " - " + LARGEUR + " - " + HAUTEUR);
+        for (ElementDTO eltDto : elementsDto) {
+            String type = eltDto.getType();
+            int axeHorizontal = eltDto.getAxeHorizontal();
+            int axeVertical = eltDto.getAxeVertical();
+            if ("M".equals(type)) {
+                System.out.println("M" + " - " + axeHorizontal + " - " + axeVertical);
+            } else {
+                int nbTresor = eltDto.getNbTresor();
+                if ("T".equals(type)) {
+                    System.out.println("T" + " - " + axeHorizontal + " - " + axeVertical + " - " + nbTresor);
+                } else if ("A".equals(type)) {
+                    System.out.println("A" + " - " + eltDto.getNom() + " - " + axeHorizontal + " - " + axeVertical + " - " + eltDto.getOrientation() + " - " + nbTresor);
+                }
+            }
+        }
     }
 
     private String[][] getExpectedCarte() {
@@ -59,11 +92,12 @@ public class SimulateGameIT {
         elementDTOS.add(getMontagne(2, 1));
         elementDTOS.add(getTresor(0, 3, 2));
         elementDTOS.add(getTresor(1, 3, 3));
-        elementDTOS.add(getAventurier(NOM_AVENTURIER, 1, 1, "S", "AADADAGGA"));
+        elementDTOS.add(getAventurier(NOM_AVENTURIER, 1, 1, "S", "AADADAGGA", 0));
         return elementDTOS;
     }
 
-    private ElementDTO getAventurier(String name, int axeHorizontal, int axeVertical, String orientation, String mouvements) {
+    private ElementDTO getAventurier(
+            String name, int axeHorizontal, int axeVertical, String orientation, String mouvements, int nbTresor) {
         ElementDTO aventurier = new ElementDTO();
         aventurier.setType("A");
         aventurier.setName(name);
@@ -71,6 +105,7 @@ public class SimulateGameIT {
         aventurier.setAxeVertical(axeVertical);
         aventurier.setOrientation(orientation);
         aventurier.setMouvements(mouvements);
+        aventurier.setNbTresor(nbTresor);
         return aventurier;
     }
 

@@ -25,6 +25,11 @@ public class Aventurier extends Element implements CanMove {
     }
 
     @Override
+    public int getNbTresor() {
+        return nbTresor;
+    }
+
+    @Override
     public void move() {
         if (currentOrientation == SUD) {
             axe = new Axe(axe.getAxeHorizontal(), axe.getAxeVertical() + 1);
@@ -69,10 +74,6 @@ public class Aventurier extends Element implements CanMove {
 
     public Orientation getCurrentOrientation() {
         return currentOrientation;
-    }
-
-    public int getNbTresor() {
-        return nbTresor;
     }
 
     public void increaseNbtresor() {

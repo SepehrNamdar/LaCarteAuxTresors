@@ -92,4 +92,37 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
         }
         return carte;
     }
+
+    @Override
+    public List<ElementDTO> getElements() {
+        List<ElementDTO> elts= new ArrayList<>();
+        carte.getElements().forEach(elt -> {
+            TypeAxe type = elt.getType();
+            if (MONTAGNE.equals(type)) {
+                ElementDTO montagne = new ElementDTO();
+                montagne.setType("M");
+                montagne.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
+                montagne.setAxeVertical(elt.getAxe().getAxeVertical());
+                elts.add(montagne);
+            } else if (TRESOR.equals(type)) {
+                ElementDTO tresor = new ElementDTO();
+                tresor.setType("T");
+                tresor.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
+                tresor.setAxeVertical(elt.getAxe().getAxeVertical());
+                tresor.setNbTresor(elt.getNbTresor());
+                elts.add(tresor);
+            } else if (AVENTURIER.equals(type)) {
+                ElementDTO aventurier = new ElementDTO();
+                aventurier.setType("A");
+                aventurier.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
+                aventurier.setAxeVertical(elt.getAxe().getAxeVertical());
+                aventurier.setNbTresor(elt.getNbTresor());
+                Aventurier a = (Aventurier) elt;
+                aventurier.setName(a.getName());
+                aventurier.setOrientation(a.getCurrentOrientation().name());
+                elts.add(aventurier);
+            }
+        });
+        return elts;
+    }
 }

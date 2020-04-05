@@ -1,5 +1,15 @@
 package model.element;
 
 public enum Orientation {
-    NORD, OUEST, EST, SUD
+    NORD("N"), OUEST("O"), EST("E"), SUD("S");
+
+    private String name;
+
+    Orientation(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

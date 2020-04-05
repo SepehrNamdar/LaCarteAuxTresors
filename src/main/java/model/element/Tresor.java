@@ -19,6 +19,7 @@ public class Tresor extends Element {
         return TRESOR;
     }
 
+    @Override
     public int getNbTresor() {
         return nbTresor;
     }

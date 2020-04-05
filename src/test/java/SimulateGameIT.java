@@ -1,23 +1,12 @@
 import application.CarteAuxTresorsGame;
 import application.DimensionDTO;
 import application.ElementDTO;
-import common.TestUtils;
 import exposition.CarteAuxtTresors;
-import model.carte.Axe;
-import model.carte.Carte;
-import model.carte.TypeAxe;
-import model.element.Aventurier;
-import model.element.Montagne;
-import model.element.Orientation;
-import model.element.Tresor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static model.element.Orientation.*;
-import static model.element.Orientation.EST;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SimulateGameIT {
@@ -39,27 +28,40 @@ public class SimulateGameIT {
         carteAuxtTresors.play(getDimentions(), getElements());
 
         assertThat(carteAuxtTresors.getCarte()).isEqualTo(getExpectedCarte());
-        tracer(carteAuxtTresors.getElements());
+        assertThat(tracer(carteAuxtTresors.getElements())).isEqualTo(
+                "C - 3 - 4\n" +
+                "M - 1 - 0\n" +
+                "M - 2 - 1\n" +
+                "# {T comme Trésor} - {Axe horizontal} - {Axe vertical} - {Nb. de trésors restants}\n" +
+                "T - 0 - 3 - 0\n" +
+                "# {T comme Trésor} - {Axe horizontal} - {Axe vertical} - {Nb. de trésors restants}\n" +
+                "T - 1 - 3 - 2\n" +
+                "# {A comme Aventurier} - {Nom de l’aventurier} - {Axe horizontal} - {Axe vertical} - {Orientation} - {Nb. trésors ramassés}\n" +
+                "A - Lara - 0 - 3 - SUD - 3\n");
     }
 
 
-    public void tracer(List<ElementDTO> elementsDto) {
-        System.out.println("C" + " - " + LARGEUR + " - " + HAUTEUR);
+    public String tracer(List<ElementDTO> elementsDto) {
+        StringBuilder result = new StringBuilder();
+        result.append("C" + " - " + LARGEUR + " - " + HAUTEUR + "\n");
         for (ElementDTO eltDto : elementsDto) {
             String type = eltDto.getType();
             int axeHorizontal = eltDto.getAxeHorizontal();
             int axeVertical = eltDto.getAxeVertical();
             if ("M".equals(type)) {
-                System.out.println("M" + " - " + axeHorizontal + " - " + axeVertical);
+                result.append("M" + " - ").append(axeHorizontal).append(" - ").append(axeVertical).append("\n");
             } else {
                 int nbTresor = eltDto.getNbTresor();
                 if ("T".equals(type)) {
-                    System.out.println("T" + " - " + axeHorizontal + " - " + axeVertical + " - " + nbTresor);
+                    result.append("# {T comme Trésor} - {Axe horizontal} - {Axe vertical} - {Nb. de trésors restants}").append("\n");
+                    result.append("T" + " - ").append(axeHorizontal).append(" - ").append(axeVertical).append(" - ").append(nbTresor).append("\n");
                 } else if ("A".equals(type)) {
-                    System.out.println("A" + " - " + eltDto.getNom() + " - " + axeHorizontal + " - " + axeVertical + " - " + eltDto.getOrientation() + " - " + nbTresor);
+                    result.append("# {A comme Aventurier} - {Nom de l’aventurier} - {Axe horizontal} - {Axe vertical} - {Orientation} - {Nb. trésors ramassés}").append("\n");
+                    result.append("A" + " - ").append(eltDto.getNom()).append(" - ").append(axeHorizontal).append(" - ").append(axeVertical).append(" - ").append(eltDto.getOrientation()).append(" - ").append(nbTresor).append("\n");
                 }
             }
         }
+        return result.toString();
     }
 
     private String[][] getExpectedCarte() {

@@ -89,7 +89,7 @@ public class Carte {
                 if (elt instanceof Tresor) {
                     Tresor t = (Tresor) elt;
                     t.reduceNbTresor();
-                    if (t.getNbTresor() > 0) {
+                    if (t.getNbTresor() >= 0) {
                         aventurier.increaseNbtresor();
                     }
                 }

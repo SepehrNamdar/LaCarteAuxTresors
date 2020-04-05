@@ -8,4 +8,9 @@ public abstract class Obstacle extends Element {
         super(axe);
     }
 
+    @Override
+    public int getNbTresor() {
+        return 0;
+    }
+
 }

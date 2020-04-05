@@ -18,6 +18,8 @@ public abstract class Element {
 
     public abstract TypeAxe getType();
 
+    public abstract int getNbTresor();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

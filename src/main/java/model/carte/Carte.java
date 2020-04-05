@@ -5,6 +5,7 @@ import model.element.Element;
 import model.element.Tresor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static model.carte.TypeAxe.*;
 
@@ -83,17 +84,21 @@ public class Carte {
         if (!getAxe(aventurierAxe.getAxeHorizontal(), aventurierAxe.getAxeVertical()).equals(TRESOR)) {
             plan[aventurierAxe.getAxeHorizontal()][aventurierAxe.getAxeVertical()] = aventurier.getType();
         } else {
-            for (Element elt : elements) {
-                Axe axe = elt.getAxe();
-                if (!axe.equals(aventurierAxe)) {
+            List<Element> e = getElement(aventurierAxe);
+            for (Element elt : e) {
+                if (elt instanceof Tresor) {
                     Tresor t = (Tresor) elt;
                     t.reduceNbTresor();
-                    if (t.getNbTresor() > 0) {
+                    if (t.getNbTresor() >= 0) {
                         aventurier.increaseNbtresor();
                     }
                 }
             }
         }
+    }
+
+    private List<Element> getElement(Axe axe) {
+        return elements.stream().filter(elt -> elt.getAxe().equals(axe)).collect(Collectors.toList());
     }
 
     private boolean isMoved(Aventurier aventurier) {
@@ -116,5 +121,9 @@ public class Carte {
 
     public void turnRight(Aventurier laura) {
         laura.turnRight();
+    }
+
+    public List<Element> getElements() {
+        return elements;
     }
 }

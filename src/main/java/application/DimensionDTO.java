@@ -1,6 +1,6 @@
 package application;
 
-public class DimentionDTO {
+public class DimensionDTO {
     private int largeur;
     private int hauteur;
 

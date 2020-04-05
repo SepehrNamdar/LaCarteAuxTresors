@@ -78,4 +78,8 @@ public class Aventurier extends Element implements CanMove {
     public void increaseNbtresor() {
         nbTresor++;
     }
+
+    public String getName() {
+        return name;
+    }
 }

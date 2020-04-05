@@ -25,7 +25,7 @@ public class ElementDTO {
         this.nom = nom;
     }
 
-    public int getAxeHorizontale() {
+    public int getAxeHorizontal() {
         return axeHorizontale;
     }
 
@@ -33,7 +33,7 @@ public class ElementDTO {
         this.axeHorizontale = axeHorizontale;
     }
 
-    public int getAxeVerticale() {
+    public int getAxeVertical() {
         return axeVerticale;
     }
 

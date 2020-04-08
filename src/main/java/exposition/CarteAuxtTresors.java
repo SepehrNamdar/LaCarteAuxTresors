@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CarteAuxtTresors {
 
-    void play(DimensionDTO dimenstions, List<ElementDTO> elements);
+    void play(DimensionDTO dimensions, List<ElementDTO> elements);
 
     String[][] getCarte();
 

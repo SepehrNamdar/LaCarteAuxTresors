@@ -5,12 +5,14 @@ import exposition.CarteAuxtTresors;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static java.lang.Integer.parseInt;
+import static java.lang.String.valueOf;
+import static java.nio.file.Files.lines;
+import static java.nio.file.Paths.get;
 
 public class Main {
 
@@ -20,76 +22,196 @@ public class Main {
     public static final String TRESOR = "T";
     public static final String AVENTURIER = "A";
     public static final String END_LINE = "\n";
+    public static final int FIRST = 0;
+    public static final int SECOND = 1;
+    public static final int THIRD = 2;
+    public static final int FOURTH = 3;
+    public static final int FIFTH = 4;
+    public static final int SIXTH = 5;
+    public static final String COMMENT = "#";
 
-    private static int LARGEUR = 0;
-    private static int HAUTEUR = 0;
+    private static DimensionDTO dimensions;
+    private static List<ElementDTO> elementsRequest;
 
     public static void main(String[] args) {
-        String fileName = args[0];
-        try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
-            List<ElementDTO> elementsDTO = new ArrayList<>();
-            DimensionDTO dimensionsDTO = new DimensionDTO();
-            stream.forEach(line -> {
-                String[] lineArgs = line.split(SEPARATOR);
-                if (CARTE.equals(lineArgs[0])) {
-                    int largeur = parseInt(lineArgs[1]);
-                    dimensionsDTO.setLargeur(largeur);
-                    int hauteur = parseInt(lineArgs[2]);
-                    dimensionsDTO.setHauteur(hauteur);
-                    LARGEUR = largeur;
-                    HAUTEUR = hauteur;
-                } else if (MONTAGNE.equals(lineArgs[0])) {
-                    ElementDTO montagne = new ElementDTO();
-                    montagne.setType(MONTAGNE);
-                    montagne.setAxeHorizontal(parseInt(lineArgs[1]));
-                    montagne.setAxeVertical(parseInt(lineArgs[2]));
-                    elementsDTO.add(montagne);
-                } else if (TRESOR.equals(lineArgs[0])) {
-                    ElementDTO tresor = new ElementDTO();
-                    tresor.setType(TRESOR);
-                    tresor.setAxeHorizontal(parseInt(lineArgs[1]));
-                    tresor.setAxeVertical(parseInt(lineArgs[2]));
-                    tresor.setNbTresor(parseInt(lineArgs[3]));
-                    elementsDTO.add(tresor);
-                } else if (AVENTURIER.equals(lineArgs[0])) {
-                    ElementDTO aventurier = new ElementDTO();
-                    aventurier.setType(AVENTURIER);
-                    aventurier.setName(lineArgs[1]);
-                    aventurier.setAxeHorizontal(parseInt(lineArgs[2]));
-                    aventurier.setAxeVertical(parseInt(lineArgs[3]));
-                    aventurier.setOrientation(lineArgs[4]);
-                    aventurier.setMouvements(lineArgs[5]);
-                    aventurier.setNbTresor(0);
-                    elementsDTO.add(aventurier);
-                }
-            });
+        String inputFilePath = args[FIRST];
+        String outPutFilePath = args[SECOND];
+
+        try (Stream<String> lines = lines(get(inputFilePath))) {
+            initCarteDimensionsAndElements(lines);
 
             CarteAuxtTresors carteAuxtTresors = new CarteAuxTresorsGame();
-            carteAuxtTresors.play(dimensionsDTO, elementsDTO);
-            List<ElementDTO> elements = carteAuxtTresors.getElements();
-            Files.write(Paths.get(args[1]), tracer(elements).getBytes());
+            carteAuxtTresors.play(dimensions, elementsRequest);
+            List<ElementDTO> elementsResponse = carteAuxtTresors.getElements();
+
+            write(outPutFilePath, elementsResponse);
         } catch (IOException e) {
+            // FIXME
             e.printStackTrace();
         }
     }
 
-    private static String tracer(List<ElementDTO> elementsDto) {
+    private static void write(String outputFilePath, List<ElementDTO> elements) throws IOException {
+        Files.write(get(outputFilePath), traceElementsOnCarte(elements).getBytes());
+    }
+
+    private static void initCarteDimensionsAndElements(Stream<String> lines) {
+        elementsRequest = new ArrayList<>();
+        lines.forEach(line -> {
+            if (isNotComment(line)) {
+                process(line);
+            }
+        });
+    }
+
+    private static void process(String line) {
+        String[] lineArgs = line.split(SEPARATOR);
+        String firstArg = lineArgs[FIRST];
+        if (isCarte(firstArg)) {
+            initDimensions(lineArgs);
+        } else if (isMontagne(firstArg)) {
+            elementsRequest.add(getMontagne(lineArgs));
+        } else if (isTresor(firstArg)) {
+            elementsRequest.add(getTresor(lineArgs));
+        } else if (isAventurier(firstArg)) {
+            elementsRequest.add(getAventurier(lineArgs));
+        }
+    }
+
+    private static boolean isNotComment(String line) {
+        return !line.isEmpty() && !COMMENT.equals(valueOf(line.charAt(FIRST)));
+    }
+
+    private static boolean isAventurier(String lineArg) {
+        return AVENTURIER.equals(lineArg);
+    }
+
+    private static boolean isTresor(String lineArg) {
+        return TRESOR.equals(lineArg);
+    }
+
+    private static ElementDTO getAventurier(String[] lineArgs) {
+        ElementDTO aventurier = new ElementDTO();
+        aventurier.setType(AVENTURIER);
+        aventurier.setName(lineArgs[SECOND]);
+        aventurier.setAxeHorizontal(parseInt(lineArgs[THIRD]));
+        aventurier.setAxeVertical(parseInt(lineArgs[FOURTH]));
+        aventurier.setOrientation(lineArgs[FIFTH]);
+        aventurier.setMouvements(lineArgs[SIXTH]);
+        return aventurier;
+    }
+
+    private static ElementDTO getTresor(String[] lineArgs) {
+        ElementDTO tresor = new ElementDTO();
+        tresor.setType(TRESOR);
+        tresor.setAxeHorizontal(parseInt(lineArgs[SECOND]));
+        tresor.setAxeVertical(parseInt(lineArgs[THIRD]));
+        tresor.setNbTresor(parseInt(lineArgs[FOURTH]));
+        return tresor;
+    }
+
+    private static ElementDTO getMontagne(String[] lineArgs) {
+        ElementDTO montagne = new ElementDTO();
+        montagne.setType(MONTAGNE);
+        montagne.setAxeHorizontal(parseInt(lineArgs[SECOND]));
+        montagne.setAxeVertical(parseInt(lineArgs[THIRD]));
+        return montagne;
+    }
+
+    private static boolean isMontagne(String lineArg) {
+        return MONTAGNE.equals(lineArg);
+    }
+
+    private static boolean isCarte(String lineArg) {
+        return CARTE.equals(lineArg);
+    }
+
+    private static void initDimensions(String[] lineArgs) {
+        int largeur = getLargeurCarte(lineArgs);
+        int hauteur = getHauteurCarte(lineArgs);
+        dimensions = new DimensionDTO();
+        dimensions.setLargeur(largeur);
+        dimensions.setHauteur(hauteur);
+    }
+
+    private static int getHauteurCarte(String[] lineArgs) {
+        String hauteurCarte = lineArgs[THIRD];
+        return parseInt(hauteurCarte);
+    }
+
+    private static int getLargeurCarte(String[] lineArgs) {
+        String largeurCarte = lineArgs[SECOND];
+        return parseInt(largeurCarte);
+    }
+
+    private static String traceElementsOnCarte(List<ElementDTO> elementsDto) {
         StringBuilder result = new StringBuilder();
-        result.append(CARTE + SEPARATOR).append(LARGEUR).append(SEPARATOR).append(HAUTEUR).append(END_LINE);
+        result.append(CARTE)
+                .append(SEPARATOR)
+                .append(dimensions.getLargeur())
+                .append(SEPARATOR)
+                .append(dimensions.getHauteur())
+                .append(END_LINE);
         for (ElementDTO eltDto : elementsDto) {
             String type = eltDto.getType();
             int axeHorizontal = eltDto.getAxeHorizontal();
             int axeVertical = eltDto.getAxeVertical();
             if (MONTAGNE.equals(type)) {
-                result.append(MONTAGNE + SEPARATOR).append(axeHorizontal).append(SEPARATOR).append(axeVertical).append(END_LINE);
+                result.append(MONTAGNE)
+                        .append(SEPARATOR)
+                        .append(axeHorizontal)
+                        .append(SEPARATOR)
+                        .append(axeVertical)
+                        .append(END_LINE);
             } else {
                 int nbTresor = eltDto.getNbTresor();
                 if (TRESOR.equals(type)) {
-                    result.append("# {T comme Trésor} - {Axe horizontal} - {Axe vertical} - {Nb. de trésors restants}").append(END_LINE);
-                    result.append(TRESOR + SEPARATOR).append(axeHorizontal).append(SEPARATOR).append(axeVertical).append(SEPARATOR).append(nbTresor).append(END_LINE);
+                    result.append(COMMENT)
+                            .append(" {")
+                            .append("T")
+                            .append(" comme Trésor}")
+                            .append(SEPARATOR)
+                            .append("{Axe horizontal}")
+                            .append(SEPARATOR)
+                            .append("{Axe vertical}")
+                            .append(SEPARATOR)
+                            .append("{Nb. de trésors restants}")
+                            .append(END_LINE);
+                    result.append(TRESOR + SEPARATOR)
+                            .append(axeHorizontal)
+                            .append(SEPARATOR)
+                            .append(axeVertical)
+                            .append(SEPARATOR)
+                            .append(nbTresor)
+                            .append(END_LINE);
                 } else if (AVENTURIER.equals(type)) {
-                    result.append("# {A comme Aventurier} - {Nom de l’aventurier} - {Axe horizontal} - {Axe vertical} - {Orientation} - {Nb. trésors ramassés}").append(END_LINE);
-                    result.append(AVENTURIER + SEPARATOR).append(eltDto.getNom()).append(SEPARATOR).append(axeHorizontal).append(SEPARATOR).append(axeVertical).append(SEPARATOR).append(eltDto.getOrientation()).append(SEPARATOR).append(nbTresor).append(END_LINE);
+                    result.append(COMMENT)
+                            .append(" {")
+                            .append(AVENTURIER)
+                            .append(" comme Aventurier}")
+                            .append(SEPARATOR)
+                            .append("Nom de l’aventurier")
+                            .append(SEPARATOR)
+                            .append("{Axe horizontal}")
+                            .append(SEPARATOR)
+                            .append("{Axe vertical}")
+                            .append(SEPARATOR)
+                            .append("{Orientation}")
+                            .append(SEPARATOR)
+                            .append("{Nb. de trésors ramassés}")
+                            .append(END_LINE);
+                    result.append(AVENTURIER)
+                            .append(SEPARATOR)
+                            .append(eltDto.getNom())
+                            .append(SEPARATOR)
+                            .append(axeHorizontal)
+                            .append(SEPARATOR)
+                            .append(axeVertical)
+                            .append(SEPARATOR)
+                            .append(eltDto.getOrientation())
+                            .append(SEPARATOR)
+                            .append(nbTresor)
+                            .append(END_LINE);
                 }
             }
         }

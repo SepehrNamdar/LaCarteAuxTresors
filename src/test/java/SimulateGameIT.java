@@ -40,7 +40,6 @@ public class SimulateGameIT {
                 "A - Lara - 0 - 3 - SUD - 3\n");
     }
 
-
     public String tracer(List<ElementDTO> elementsDto) {
         StringBuilder result = new StringBuilder();
         result.append("C" + " - " + LARGEUR + " - " + HAUTEUR + "\n");

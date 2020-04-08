@@ -7,11 +7,9 @@ import model.carte.Dimensions;
 import model.carte.TypeAxe;
 import model.element.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import static application.ApplicationValidator.validate;
 import static model.carte.TypeAxe.*;
 import static model.element.Orientation.*;
 
@@ -21,7 +19,8 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
     Map<Aventurier, String> aventuriersMovements = new HashMap<>();
 
     @Override
-    public void play(DimensionDTO dimensionsDto, List<ElementDTO> elementsDto) {
+    public void play(final DimensionDTO dimensions, final List<ElementDTO> elementsDto) {
+        validate(dimensions);
         List<Element> elements = new ArrayList<>();
         for (ElementDTO eltDto : elementsDto) {
             String type = eltDto.getType();
@@ -49,7 +48,7 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
             }
         }
 
-        carte = new Carte(new Dimensions(dimensionsDto.getLargeur(), dimensionsDto.getHauteur()), elements);
+        carte = new Carte(new Dimensions(dimensions.getLargeur(), dimensions.getHauteur()), elements);
 
         aventuriersMovements.forEach((aventurier, sequencesMovement) -> {
             String[] movements = sequencesMovement.split("");

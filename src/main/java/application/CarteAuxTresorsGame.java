@@ -9,7 +9,6 @@ import model.element.*;
 
 import java.util.*;
 
-import static application.ApplicationValidator.validate;
 import static model.carte.TypeAxe.*;
 import static model.element.Orientation.*;
 
@@ -20,7 +19,6 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
 
     @Override
     public void play(final DimensionDTO dimensions, final List<ElementDTO> elementsDto) {
-        validate(dimensions);
         List<Element> elements = new ArrayList<>();
         for (ElementDTO eltDto : elementsDto) {
             String type = eltDto.getType();

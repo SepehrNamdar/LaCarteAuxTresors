@@ -7,16 +7,22 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
+import static client.FileHelper.*;
 import static java.nio.file.Paths.get;
 
 public class FileWriter {
 
-    private static DimensionDTO dimensions;
-    private static List<ElementDTO> elements;
+    private DimensionDTO dimensions;
+    private List<ElementDTO> elements;
+    private final String outputFilePath;
 
-    static void write(String outputFilePath, DimensionDTO dimensions, List<ElementDTO> elements) {
-        FileWriter.dimensions = dimensions;
-        FileWriter.elements = elements;
+    public FileWriter(String outputFilePath) {
+        this.outputFilePath = outputFilePath;
+    }
+
+    void write(DimensionDTO dimensions, List<ElementDTO> elements) {
+        this.dimensions = dimensions;
+        this.elements = elements;
         try {
             Files.write(get(outputFilePath), traceElementsOnCarte().getBytes());
         } catch (IOException e) {
@@ -24,77 +30,96 @@ public class FileWriter {
         }
     }
 
-    private static String traceElementsOnCarte() {
+    private String traceElementsOnCarte() {
         StringBuilder result = new StringBuilder();
-        result.append(Main.CARTE)
-                .append(Main.SEPARATOR)
-                .append(dimensions.getLargeur())
-                .append(Main.SEPARATOR)
-                .append(dimensions.getHauteur())
-                .append(Main.END_LINE);
-        for (ElementDTO eltDto : elements) {
-            String type = eltDto.getType();
-            int axeHorizontal = eltDto.getAxeHorizontal();
-            int axeVertical = eltDto.getAxeVertical();
-            if (Main.MONTAGNE.equals(type)) {
-                result.append(Main.MONTAGNE)
-                        .append(Main.SEPARATOR)
-                        .append(axeHorizontal)
-                        .append(Main.SEPARATOR)
-                        .append(axeVertical)
-                        .append(Main.END_LINE);
-            } else {
-                int nbTresor = eltDto.getNbTresor();
-                if (Main.TRESOR.equals(type)) {
-                    result.append(Main.COMMENT)
-                            .append(" {")
-                            .append("T")
-                            .append(" comme Trésor}")
-                            .append(Main.SEPARATOR)
-                            .append("{Axe horizontal}")
-                            .append(Main.SEPARATOR)
-                            .append("{Axe vertical}")
-                            .append(Main.SEPARATOR)
-                            .append("{Nb. de trésors restants}")
-                            .append(Main.END_LINE);
-                    result.append(Main.TRESOR + Main.SEPARATOR)
-                            .append(axeHorizontal)
-                            .append(Main.SEPARATOR)
-                            .append(axeVertical)
-                            .append(Main.SEPARATOR)
-                            .append(nbTresor)
-                            .append(Main.END_LINE);
-                } else if (Main.AVENTURIER.equals(type)) {
-                    result.append(Main.COMMENT)
-                            .append(" {")
-                            .append(Main.AVENTURIER)
-                            .append(" comme Aventurier}")
-                            .append(Main.SEPARATOR)
-                            .append("Nom de l’aventurier")
-                            .append(Main.SEPARATOR)
-                            .append("{Axe horizontal}")
-                            .append(Main.SEPARATOR)
-                            .append("{Axe vertical}")
-                            .append(Main.SEPARATOR)
-                            .append("{Orientation}")
-                            .append(Main.SEPARATOR)
-                            .append("{Nb. de trésors ramassés}")
-                            .append(Main.END_LINE);
-                    result.append(Main.AVENTURIER)
-                            .append(Main.SEPARATOR)
-                            .append(eltDto.getNom())
-                            .append(Main.SEPARATOR)
-                            .append(axeHorizontal)
-                            .append(Main.SEPARATOR)
-                            .append(axeVertical)
-                            .append(Main.SEPARATOR)
-                            .append(eltDto.getOrientation())
-                            .append(Main.SEPARATOR)
-                            .append(nbTresor)
-                            .append(Main.END_LINE);
-                }
+        result.append(carteLine());
+        for (ElementDTO elt : elements) {
+            String eltType = elt.getType();
+            if (MONTAGNE.equals(eltType)) {
+                result.append(montagneLine(elt));
+            } else if (TRESOR.equals(eltType)) {
+                result.append(tresorLine(elt));
+            } else if (AVENTURIER.equals(eltType)) {
+                result.append(aventurierLine(elt));
             }
         }
         return result.toString();
+    }
+
+    private StringBuilder aventurierLine(ElementDTO elt) {
+        StringBuilder result = new StringBuilder();
+        result.append(COMMENT)
+                .append(" {")
+                .append(AVENTURIER)
+                .append(" comme Aventurier}")
+                .append(SEPARATOR)
+                .append("Nom de l’aventurier")
+                .append(SEPARATOR)
+                .append("{Axe horizontal}")
+                .append(SEPARATOR)
+                .append("{Axe vertical}")
+                .append(SEPARATOR)
+                .append("{Orientation}")
+                .append(SEPARATOR)
+                .append("{Nb. de trésors ramassés}")
+                .append(END_LINE);
+        result.append(AVENTURIER)
+                .append(SEPARATOR)
+                .append(elt.getNom())
+                .append(SEPARATOR)
+                .append(elt.getAxeHorizontal())
+                .append(SEPARATOR)
+                .append(elt.getAxeVertical())
+                .append(SEPARATOR)
+                .append(elt.getOrientation())
+                .append(SEPARATOR)
+                .append(elt.getNbTresor())
+                .append(END_LINE);
+        return result;
+    }
+
+    private StringBuilder tresorLine(ElementDTO elt) {
+        StringBuilder result = new StringBuilder();
+        result.append(COMMENT)
+                .append(" {")
+                .append(TRESOR)
+                .append(" comme Trésor}")
+                .append(SEPARATOR)
+                .append("{Axe horizontal}")
+                .append(SEPARATOR)
+                .append("{Axe vertical}")
+                .append(SEPARATOR)
+                .append("{Nb. de trésors restants}")
+                .append(END_LINE);
+        result.append(TRESOR + SEPARATOR)
+                .append(elt.getAxeHorizontal())
+                .append(SEPARATOR)
+                .append(elt.getAxeVertical())
+                .append(SEPARATOR)
+                .append(elt.getNbTresor())
+                .append(END_LINE);
+        return result;
+    }
+
+    private StringBuilder montagneLine(ElementDTO eltDto) {
+        StringBuilder result = new StringBuilder();
+        result.append(MONTAGNE)
+                .append(SEPARATOR)
+                .append(eltDto.getAxeHorizontal())
+                .append(SEPARATOR)
+                .append(eltDto.getAxeVertical())
+                .append(END_LINE);
+        return result;
+    }
+
+    private StringBuilder carteLine() {
+        StringBuilder result = new StringBuilder();
+        result.append(CARTE)
+                .append(SEPARATOR)
+                .append(dimensions.getLargeur())
+                .append(SEPARATOR)
+                .append(dimensions.getHauteur())
+                .append(END_LINE);
+        return result;
     }
 }

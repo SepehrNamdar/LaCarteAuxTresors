@@ -1,6 +1,13 @@
 package application;
 
+import client.AventurierDTO;
+import client.ElementAbstract;
+import client.MontagneDTO;
+import client.TresorDTO;
+
 import java.util.Objects;
+
+import static client.FileHelper.*;
 
 public class ElementDTO {
     private String type;
@@ -10,6 +17,26 @@ public class ElementDTO {
     private int nbTresor;
     private String orientation;
     private String mouvements;
+
+    public static StringBuilder createElementDTO(ElementDTO elt) {
+        String eltType = elt.getType();
+        StringBuilder result = new StringBuilder();
+        switch (eltType) {
+            case MONTAGNE:
+                ElementAbstract montagneDTO = new MontagneDTO();
+                result.append(montagneDTO.getLine(elt));
+                break;
+            case TRESOR:
+                ElementAbstract tresorDTO = new TresorDTO();
+                result.append(tresorDTO.getLine(elt));
+                break;
+            case AVENTURIER:
+                ElementAbstract aventurierDTO = new AventurierDTO();
+                result.append(aventurierDTO.getLine(elt));
+                break;
+        }
+        return result;
+    }
 
     public String getType() {
         return type;

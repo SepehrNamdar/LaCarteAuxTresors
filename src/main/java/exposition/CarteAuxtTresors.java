@@ -1,15 +1,16 @@
 package exposition;
 
 import application.DimensionDTO;
-import application.ElementDTO;
+import application.ElementRequest;
+import application.ElementResponse;
 
 import java.util.List;
 
 public interface CarteAuxtTresors {
 
-    void play(DimensionDTO dimensions, List<ElementDTO> elements);
+    void play(DimensionDTO dimensions, List<ElementRequest> elements);
 
     String[][] getCarte();
 
-    List<ElementDTO> getElements();
+    List<ElementResponse> getElements();
 }

@@ -18,9 +18,9 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
     Map<Aventurier, String> aventuriersMovements = new HashMap<>();
 
     @Override
-    public void play(final DimensionDTO dimensions, final List<ElementDTO> elementsDto) {
+    public void play(final DimensionDTO dimensions, final List<ElementRequest> elementsDto) {
         List<Element> elements = new ArrayList<>();
-        for (ElementDTO eltDto : elementsDto) {
+        for (ElementRequest eltDto : elementsDto) {
             String type = eltDto.getType();
             int axeHorizontal = eltDto.getAxeHorizontal();
             int axeVertical = eltDto.getAxeVertical();
@@ -91,25 +91,25 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
     }
 
     @Override
-    public List<ElementDTO> getElements() {
-        List<ElementDTO> elts= new ArrayList<>();
+    public List<ElementResponse> getElements() {
+        List<ElementResponse> elts= new ArrayList<>();
         carte.getElements().forEach(elt -> {
             TypeAxe type = elt.getType();
             if (MONTAGNE.equals(type)) {
-                ElementDTO montagne = new ElementDTO();
+                ElementResponse montagne = new ElementResponse();
                 montagne.setType("M");
                 montagne.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
                 montagne.setAxeVertical(elt.getAxe().getAxeVertical());
                 elts.add(montagne);
             } else if (TRESOR.equals(type)) {
-                ElementDTO tresor = new ElementDTO();
+                ElementResponse tresor = new ElementResponse();
                 tresor.setType("T");
                 tresor.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
                 tresor.setAxeVertical(elt.getAxe().getAxeVertical());
                 tresor.setNbTresor(elt.getNbTresor());
                 elts.add(tresor);
             } else if (AVENTURIER.equals(type)) {
-                ElementDTO aventurier = new ElementDTO();
+                ElementResponse aventurier = new ElementResponse();
                 aventurier.setType("A");
                 aventurier.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
                 aventurier.setAxeVertical(elt.getAxe().getAxeVertical());

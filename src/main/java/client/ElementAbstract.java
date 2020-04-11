@@ -1,7 +1,7 @@
 package client;
 
-import application.ElementDTO;
+import application.ElementResponse;
 
 public abstract class ElementAbstract {
-    public abstract StringBuilder getLine(ElementDTO elt);
+    public abstract StringBuilder getLine(ElementResponse elt);
 }

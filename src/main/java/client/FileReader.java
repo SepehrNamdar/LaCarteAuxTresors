@@ -1,7 +1,7 @@
 package client;
 
 import application.DimensionDTO;
-import application.ElementDTO;
+import application.ElementRequest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import static java.nio.file.Paths.get;
 public class FileReader {
 
     private DimensionDTO dimensions;
-    private final List<ElementDTO> elementsRequest;
+    private final List<ElementRequest> elementsRequest;
     private final String inputFilePath;
 
     public FileReader(String inputFilePath) {
@@ -76,8 +76,8 @@ public class FileReader {
         return CARTE.equals(lineArg);
     }
 
-    private ElementDTO getAventurier(String[] lineArgs) {
-        ElementDTO aventurier = new ElementDTO();
+    private ElementRequest getAventurier(String[] lineArgs) {
+        ElementRequest aventurier = new ElementRequest();
         aventurier.setType(AVENTURIER);
         aventurier.setName(lineArgs[SECOND]);
         aventurier.setAxeHorizontal(parseInt(lineArgs[THIRD]));
@@ -87,8 +87,8 @@ public class FileReader {
         return aventurier;
     }
 
-    private ElementDTO getTresor(String[] lineArgs) {
-        ElementDTO tresor = new ElementDTO();
+    private ElementRequest getTresor(String[] lineArgs) {
+        ElementRequest tresor = new ElementRequest();
         tresor.setType(TRESOR);
         tresor.setAxeHorizontal(parseInt(lineArgs[SECOND]));
         tresor.setAxeVertical(parseInt(lineArgs[THIRD]));
@@ -96,8 +96,8 @@ public class FileReader {
         return tresor;
     }
 
-    private ElementDTO getMontagne(String[] lineArgs) {
-        ElementDTO montagne = new ElementDTO();
+    private ElementRequest getMontagne(String[] lineArgs) {
+        ElementRequest montagne = new ElementRequest();
         montagne.setType(MONTAGNE);
         montagne.setAxeHorizontal(parseInt(lineArgs[SECOND]));
         montagne.setAxeVertical(parseInt(lineArgs[THIRD]));
@@ -126,7 +126,7 @@ public class FileReader {
         return dimensions;
     }
 
-    public List<ElementDTO> getElementsRequest() {
+    public List<ElementRequest> getElementsRequest() {
         return elementsRequest;
     }
 }

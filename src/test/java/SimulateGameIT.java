@@ -1,6 +1,7 @@
 import application.CarteAuxTresorsGame;
 import application.DimensionDTO;
-import application.ElementDTO;
+import application.ElementRequest;
+import application.ElementResponse;
 import exposition.CarteAuxtTresors;
 import org.junit.jupiter.api.Test;
 
@@ -40,10 +41,10 @@ public class SimulateGameIT {
                 "A - Lara - 0 - 3 - SUD - 3\n");
     }
 
-    public String tracer(List<ElementDTO> elementsDto) {
+    public String tracer(List<ElementResponse> elementsDto) {
         StringBuilder result = new StringBuilder();
         result.append("C" + " - " + LARGEUR + " - " + HAUTEUR + "\n");
-        for (ElementDTO eltDto : elementsDto) {
+        for (ElementResponse eltDto : elementsDto) {
             String type = eltDto.getType();
             int axeHorizontal = eltDto.getAxeHorizontal();
             int axeVertical = eltDto.getAxeVertical();
@@ -87,19 +88,19 @@ public class SimulateGameIT {
         return dimensionDTO;
     }
 
-    private List<ElementDTO> getElements() {
-        ArrayList<ElementDTO> elementDTOS = new ArrayList<>();
-        elementDTOS.add(getMontagne(1, 0));
-        elementDTOS.add(getMontagne(2, 1));
-        elementDTOS.add(getTresor(0, 3, 2));
-        elementDTOS.add(getTresor(1, 3, 3));
-        elementDTOS.add(getAventurier(NOM_AVENTURIER, 1, 1, "S", "AADADAGGA", 0));
-        return elementDTOS;
+    private List<ElementRequest> getElements() {
+        ArrayList<ElementRequest> elementRequests = new ArrayList<>();
+        elementRequests.add(getMontagne(1, 0));
+        elementRequests.add(getMontagne(2, 1));
+        elementRequests.add(getTresor(0, 3, 2));
+        elementRequests.add(getTresor(1, 3, 3));
+        elementRequests.add(getAventurier(NOM_AVENTURIER, 1, 1, "S", "AADADAGGA", 0));
+        return elementRequests;
     }
 
-    private ElementDTO getAventurier(
+    private ElementRequest getAventurier(
             String name, int axeHorizontal, int axeVertical, String orientation, String mouvements, int nbTresor) {
-        ElementDTO aventurier = new ElementDTO();
+        ElementRequest aventurier = new ElementRequest();
         aventurier.setType("A");
         aventurier.setName(name);
         aventurier.setAxeHorizontal(axeHorizontal);
@@ -110,8 +111,8 @@ public class SimulateGameIT {
         return aventurier;
     }
 
-    private ElementDTO getTresor(int axeHorizontal, int axeVertical, int nbTresor) {
-        ElementDTO tresor = new ElementDTO();
+    private ElementRequest getTresor(int axeHorizontal, int axeVertical, int nbTresor) {
+        ElementRequest tresor = new ElementRequest();
         tresor.setType("T");
         tresor.setAxeHorizontal(axeHorizontal);
         tresor.setAxeVertical(axeVertical);
@@ -119,8 +120,8 @@ public class SimulateGameIT {
         return tresor;
     }
 
-    private ElementDTO getMontagne(int axeHorzontal, int axeVertical) {
-        ElementDTO montagne = new ElementDTO();
+    private ElementRequest getMontagne(int axeHorzontal, int axeVertical) {
+        ElementRequest montagne = new ElementRequest();
         montagne.setType("M");
         montagne.setAxeHorizontal(axeHorzontal);
         montagne.setAxeVertical(axeVertical);

@@ -1,12 +1,12 @@
 package client;
 
-import application.ElementDTO;
+import application.ElementResponse;
 
 import static client.FileHelper.*;
 
 public class AventurierDTO extends ElementAbstract {
     @Override
-    public StringBuilder getLine(ElementDTO elt) {
+    public StringBuilder getLine(ElementResponse elt) {
         StringBuilder result = new StringBuilder();
         result.append(COMMENT)
                 .append(" {")

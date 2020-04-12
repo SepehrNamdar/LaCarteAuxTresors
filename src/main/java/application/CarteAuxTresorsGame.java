@@ -4,50 +4,22 @@ import common.dto.DimensionDTO;
 import common.dto.ElementDTO;
 import common.mapper.ElementMapper;
 import exposition.CarteAuxtTresors;
-import model.carte.Axe;
 import model.carte.Carte;
 import model.carte.Dimensions;
 import model.element.*;
 
 import java.util.*;
 
-import static model.carte.TypeAxe.*;
-import static model.element.Orientation.*;
-
 public class CarteAuxTresorsGame implements CarteAuxtTresors {
 
     private Carte carte;
-    private final Map<Aventurier, String> aventuriersMovements = new HashMap<>();
 
     @Override
     public void play(final DimensionDTO dimensionDTO, final List<ElementDTO> elementsDto) {
+        final Map<Element, String> aventuriersMovements = new HashMap<>();
         List<Element> elements = new ArrayList<>();
         for (ElementDTO elt : elementsDto) {
-            String type = elt.getType();
-            int axeHorizontal = elt.getAxeHorizontal();
-            int axeVertical = elt.getAxeVertical();
-            if (MONTAGNE.getName().equals(type)) {
-                elements.add(new Montagne(new Axe(axeHorizontal, axeVertical)));
-            } else if (TRESOR.getName().equals(type)) {
-                elements.add(new Tresor(new Axe(axeHorizontal, axeVertical), elt.getNbTresor()));
-            } else if (AVENTURIER.getName().equals(type)) {
-                Orientation aventurierOrientation = SUD;
-                String orientationDto = elt.getOrientation();
-                if (SUD.getName().equals(orientationDto)) {
-                    aventurierOrientation = SUD;
-                } else if (NORD.getName().equals(orientationDto)) {
-                    aventurierOrientation = NORD;
-                } else if (OUEST.getName().equals(orientationDto)) {
-                    aventurierOrientation = OUEST;
-                } else if (EST.getName().equals(orientationDto)) {
-                    aventurierOrientation = EST;
-                }
-                Axe positionDepart = new Axe(axeHorizontal, axeVertical);
-                Aventurier aventurier =
-                        new Aventurier(elt.getName(), positionDepart, aventurierOrientation);
-                elements.add(aventurier);
-                aventuriersMovements.put(aventurier, elt.getMouvements());
-            }
+            elements.add(ElementMapper.map(aventuriersMovements, elt));
         }
 
         Dimensions dimensions = new Dimensions(dimensionDTO.getLargeur(), dimensionDTO.getHauteur());

@@ -6,9 +6,9 @@ import model.carte.TypeAxe;
 import static model.carte.TypeAxe.AVENTURIER;
 import static model.element.Orientation.*;
 
-public class Aventurier extends Element implements CanMove {
+public class Aventurier extends Element {
 
-    private String name;
+    private final String name;
     private int nbTresor;
     private Orientation currentOrientation;
 
@@ -40,6 +40,11 @@ public class Aventurier extends Element implements CanMove {
         } else if (currentOrientation == OUEST) {
             axe = new Axe(axe.getAxeHorizontal() - 1, axe.getAxeVertical());
         }
+    }
+
+    @Override
+    public boolean canMove() {
+        return true;
     }
 
     @Override

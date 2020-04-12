@@ -24,6 +24,36 @@ public class Tresor extends Element {
         return nbTresor;
     }
 
+    @Override
+    public void move() {
+
+    }
+
+    @Override
+    public boolean canMove() {
+        return false;
+    }
+
+    @Override
+    public void turnLeft() {
+
+    }
+
+    @Override
+    public void turnRight() {
+
+    }
+
+    @Override
+    public void setAxe(Axe axe) {
+
+    }
+
+    @Override
+    public void increaseNbtresor() {
+
+    }
+
     public void reduceNbTresor() {
         if (nbTresor > 0) {
             nbTresor--;

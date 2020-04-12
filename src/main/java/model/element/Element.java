@@ -32,4 +32,16 @@ public abstract class Element {
     public int hashCode() {
         return Objects.hash(axe);
     }
+
+    public abstract void move();
+
+    public abstract boolean canMove();
+
+    public abstract void turnLeft();
+
+    public abstract void turnRight();
+
+    public abstract void setAxe(Axe axe);
+
+    public abstract void increaseNbtresor();
 }

@@ -1,10 +1,10 @@
 package client;
 
-import common.DimensionDTO;
+import common.dto.DimensionDTO;
 import client.reader.AventurierReader;
 import client.reader.MontagneReader;
 import client.reader.TresorReader;
-import common.ElementDTO;
+import common.dto.ElementDTO;
 
 import java.util.ArrayList;
 import java.util.List;

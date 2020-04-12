@@ -1,4 +1,4 @@
-package common;
+package common.dto;
 
 public class ElementDTO {
     private String type;

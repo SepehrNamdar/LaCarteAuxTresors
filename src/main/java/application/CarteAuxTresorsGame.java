@@ -1,7 +1,9 @@
 package application;
 
-import common.DimensionDTO;
-import common.ElementDTO;
+import common.mapper.AventurierMapper;
+import common.dto.DimensionDTO;
+import common.dto.ElementDTO;
+import common.mapper.ElementMapper;
 import exposition.CarteAuxtTresors;
 import model.carte.Axe;
 import model.carte.Carte;
@@ -74,27 +76,21 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
             TypeAxe type = elt.getType();
             if (MONTAGNE.equals(type)) {
                 ElementDTO montagneDTO = new ElementDTO();
-                montagneDTO.setType("M");
+                montagneDTO.setType(MONTAGNE.getName());
                 montagneDTO.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
                 montagneDTO.setAxeVertical(elt.getAxe().getAxeVertical());
                 elts.add(montagneDTO);
             } else if (TRESOR.equals(type)) {
                 ElementDTO tresorDTO = new ElementDTO();
-                tresorDTO.setType("T");
+                tresorDTO.setType(TRESOR.getName());
                 tresorDTO.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
                 tresorDTO.setAxeVertical(elt.getAxe().getAxeVertical());
                 tresorDTO.setNbTresor(elt.getNbTresor());
                 elts.add(tresorDTO);
             } else if (AVENTURIER.equals(type)) {
-                ElementDTO aventurierDTO = new ElementDTO();
-                aventurierDTO.setType("A");
-                aventurierDTO.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
-                aventurierDTO.setAxeVertical(elt.getAxe().getAxeVertical());
-                aventurierDTO.setNbTresor(elt.getNbTresor());
-                Aventurier aventurier = (Aventurier) elt;
-                aventurierDTO.setName(aventurier.getName());
-                aventurierDTO.setOrientation(aventurier.getCurrentOrientation().name());
-                elts.add(aventurierDTO);
+                ElementMapper aventurierMapper = new AventurierMapper();
+                aventurierMapper.map(elt);
+                elts.add(aventurierMapper);
             }
         });
         return elts;

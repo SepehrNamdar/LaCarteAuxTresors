@@ -1,7 +1,7 @@
 import application.CarteAuxTresorsGame;
 import client.ElementWriter;
-import common.DimensionDTO;
-import common.ElementDTO;
+import common.dto.DimensionDTO;
+import common.dto.ElementDTO;
 import exposition.CarteAuxtTresors;
 import org.junit.jupiter.api.Test;
 

@@ -11,6 +11,7 @@ import model.element.*;
 
 import java.util.*;
 
+import static model.carte.TypeAxe.*;
 import static model.element.Orientation.*;
 
 public class CarteAuxTresorsGame implements CarteAuxtTresors {
@@ -25,20 +26,20 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
             String type = elt.getType();
             int axeHorizontal = elt.getAxeHorizontal();
             int axeVertical = elt.getAxeVertical();
-            if ("M".equals(type)) {
+            if (MONTAGNE.getName().equals(type)) {
                 elements.add(new Montagne(new Axe(axeHorizontal, axeVertical)));
-            } else if ("T".equals(type)) {
+            } else if (TRESOR.getName().equals(type)) {
                 elements.add(new Tresor(new Axe(axeHorizontal, axeVertical), elt.getNbTresor()));
-            } else if ("A".equals(type)) {
+            } else if (AVENTURIER.getName().equals(type)) {
                 Orientation aventurierOrientation = SUD;
                 String orientationDto = elt.getOrientation();
-                if ("S".equals(orientationDto)) {
+                if (SUD.getName().equals(orientationDto)) {
                     aventurierOrientation = SUD;
-                } else if ("N".equals(orientationDto)) {
+                } else if (NORD.getName().equals(orientationDto)) {
                     aventurierOrientation = NORD;
-                } else if ("O".equals(orientationDto)) {
+                } else if (OUEST.getName().equals(orientationDto)) {
                     aventurierOrientation = OUEST;
-                } else if ("E".equals(orientationDto)) {
+                } else if (EST.getName().equals(orientationDto)) {
                     aventurierOrientation = EST;
                 }
                 Axe positionDepart = new Axe(axeHorizontal, axeVertical);

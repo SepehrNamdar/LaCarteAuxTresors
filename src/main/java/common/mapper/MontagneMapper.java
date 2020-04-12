@@ -1,6 +1,5 @@
 package common.mapper;
 
-import common.dto.ElementDTO;
 import model.element.Element;
 
 import static model.carte.TypeAxe.MONTAGNE;

@@ -1,6 +1,6 @@
 package client;
 
-import application.DimensionDTO;
+import common.DimensionDTO;
 import client.writer.CanNotWriteOutputFile;
 import common.ElementDTO;
 

@@ -1,6 +1,6 @@
 package client;
 
-import application.DimensionDTO;
+import common.DimensionDTO;
 import client.writer.AventurierWriter;
 import client.writer.MontagneWriter;
 import client.writer.TresorWriter;

@@ -1,6 +1,6 @@
 package client;
 
-import application.DimensionDTO;
+import common.DimensionDTO;
 import client.reader.AventurierReader;
 import client.reader.MontagneReader;
 import client.reader.TresorReader;

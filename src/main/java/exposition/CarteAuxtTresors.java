@@ -1,6 +1,6 @@
 package exposition;
 
-import application.DimensionDTO;
+import common.DimensionDTO;
 import common.ElementDTO;
 
 import java.util.List;

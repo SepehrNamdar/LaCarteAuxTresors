@@ -1,7 +1,7 @@
 package client;
 
 import application.CarteAuxTresorsGame;
-import application.DimensionDTO;
+import common.DimensionDTO;
 import common.ElementDTO;
 import exposition.CarteAuxtTresors;
 

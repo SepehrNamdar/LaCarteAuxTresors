@@ -1,5 +1,6 @@
 package application;
 
+import common.DimensionDTO;
 import common.ElementDTO;
 import exposition.CarteAuxtTresors;
 import model.carte.Axe;

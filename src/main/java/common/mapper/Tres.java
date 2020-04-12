@@ -8,7 +8,7 @@ import static model.carte.TypeAxe.AVENTURIER;
 public class Tres extends ElementMapper {
 
     @Override
-    public void map(Element elt) {
+    public void mapThis(Element elt) {
         super.setType(AVENTURIER.getName());
         super.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
         super.setAxeVertical(elt.getAxe().getAxeVertical());

@@ -7,7 +7,7 @@ import static model.carte.TypeAxe.TRESOR;
 
 public class TresorMapper extends ElementMapper {
     @Override
-    public void map(Element elt) {
+    public void mapThis(Element elt) {
         super.setType(TRESOR.getName());
         super.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
         super.setAxeVertical(elt.getAxe().getAxeVertical());

@@ -4,30 +4,29 @@ import common.dto.ElementDTO;
 import model.carte.TypeAxe;
 import model.element.Element;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static model.carte.TypeAxe.*;
 
 public abstract class ElementMapper extends ElementDTO {
-    protected abstract void map(Element elt);
 
-    public static List<ElementDTO> getMapped(Element elt) {
-        List<ElementDTO> elts = new ArrayList<>();
+    public static ElementDTO map(Element elt) {
+        ElementDTO eltDTO = new ElementDTO();
         TypeAxe type = elt.getType();
         if (MONTAGNE.equals(type)) {
             ElementMapper montagneMapper = new MontagneMapper();
-            montagneMapper.map(elt);
-            elts.add(montagneMapper);
+            montagneMapper.mapThis(elt);
+            eltDTO = montagneMapper;
         } else if (TRESOR.equals(type)) {
             ElementMapper tresorMapper = new TresorMapper();
-            tresorMapper.map(elt);
-            elts.add(tresorMapper);
+            tresorMapper.mapThis(elt);
+            eltDTO = tresorMapper;
         } else if (AVENTURIER.equals(type)) {
             ElementMapper aventurierMapper = new Tres();
-            aventurierMapper.map(elt);
-            elts.add(aventurierMapper);
+            aventurierMapper.mapThis(elt);
+            eltDTO = aventurierMapper;
         }
-        return elts;
+        return eltDTO;
     }
+
+    protected abstract void mapThis(Element elt);
+
 }

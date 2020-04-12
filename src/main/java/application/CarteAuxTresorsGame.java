@@ -1,21 +1,16 @@
 package application;
 
-import common.mapper.MontagneMapper;
-import common.mapper.Tres;
 import common.dto.DimensionDTO;
 import common.dto.ElementDTO;
 import common.mapper.ElementMapper;
-import common.mapper.TresorMapper;
 import exposition.CarteAuxtTresors;
 import model.carte.Axe;
 import model.carte.Carte;
 import model.carte.Dimensions;
-import model.carte.TypeAxe;
 import model.element.*;
 
 import java.util.*;
 
-import static model.carte.TypeAxe.*;
 import static model.element.Orientation.*;
 
 public class CarteAuxTresorsGame implements CarteAuxtTresors {
@@ -74,7 +69,7 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
     @Override
     public List<ElementDTO> getElements() {
         List<ElementDTO> elts = new ArrayList<>();
-        carte.getElements().forEach(elt -> elts.addAll(ElementMapper.getMapped(elt)));
+        carte.getElements().forEach(elt -> elts.add(ElementMapper.map(elt)));
         return elts;
     }
 

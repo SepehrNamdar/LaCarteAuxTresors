@@ -4,11 +4,14 @@ import common.dto.ElementDTO;
 import model.carte.TypeAxe;
 import model.element.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static model.carte.TypeAxe.*;
 
 public abstract class ElementMapper {
+
+    private static final Map<Element, String> sequencesMovement = new HashMap<>();
 
     public static ElementDTO map(Element elt) {
         ElementDTO eltDTO = new ElementDTO();
@@ -26,7 +29,7 @@ public abstract class ElementMapper {
         return eltDTO;
     }
 
-    public static Element map(Map<Element, String> aventuriersMovements, ElementDTO eltDto) {
+    public static Element map(ElementDTO eltDto) {
         Element element = null;
         String type = eltDto.getType();
         if (MONTAGNE.getName().equals(type)) {
@@ -38,7 +41,7 @@ public abstract class ElementMapper {
         } else if (AVENTURIER.getName().equals(type)) {
             ElementMapper aventurierMapper = new AventurierMapper();
             element = aventurierMapper.mapElementDtoToElement(eltDto);
-            aventuriersMovements.put(element, eltDto.getMouvements());
+            sequencesMovement.put(element, eltDto.getMouvements());
         }
         return element;
     }
@@ -46,4 +49,7 @@ public abstract class ElementMapper {
     protected abstract ElementDTO mapElementToElementDto(Element elt);
     protected abstract Element mapElementDtoToElement(ElementDTO eltDto);
 
+    public static Map<Element, String> getSequencesMovement() {
+        return sequencesMovement;
+    }
 }

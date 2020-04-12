@@ -10,30 +10,31 @@ import model.element.*;
 
 import java.util.*;
 
+import static common.mapper.ElementMapper.map;
+
 public class CarteAuxTresorsGame implements CarteAuxtTresors {
 
     private Carte carte;
 
     @Override
     public void play(final DimensionDTO dimensionDTO, final List<ElementDTO> elementsDto) {
-        final Map<Element, String> aventuriersMovements = new HashMap<>();
         List<Element> elements = new ArrayList<>();
-        for (ElementDTO elt : elementsDto) {
-            elements.add(ElementMapper.map(aventuriersMovements, elt));
+        for (ElementDTO eltDto : elementsDto) {
+            elements.add(map(eltDto));
         }
 
         Dimensions dimensions = new Dimensions(dimensionDTO.getLargeur(), dimensionDTO.getHauteur());
         carte = new Carte(dimensions, elements);
 
-        aventuriersMovements.forEach((aventurier, sequencesMovement) -> {
+        ElementMapper.getSequencesMovement().forEach((element, sequencesMovement) -> {
             String[] movements = sequencesMovement.split("");
             for (String movement : movements) {
                 if ("A".equals(movement)) {
-                    carte.avancer(aventurier);
+                    carte.avancer(element);
                 } else if ("D".equals(movement)) {
-                    carte.turnRight(aventurier);
+                    carte.turnRight(element);
                 } else if ("G".equals(movement)) {
-                    carte.turnLeft(aventurier);
+                    carte.turnLeft(element);
                 }
             }
         });
@@ -42,7 +43,9 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
     @Override
     public List<ElementDTO> getElements() {
         List<ElementDTO> elts = new ArrayList<>();
-        carte.getElements().forEach(elt -> elts.add(ElementMapper.map(elt)));
+        if (carte != null) {
+            carte.getElements().forEach(elt -> elts.add(map(elt)));
+        }
         return elts;
     }
 

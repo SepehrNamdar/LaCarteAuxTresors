@@ -1,6 +1,6 @@
 import application.CarteAuxTresorsGame;
 import application.DimensionDTO;
-import application.ElementDTO;
+import common.ElementDTO;
 import exposition.CarteAuxtTresors;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +39,6 @@ public class SimulateGameIT {
                 "# {A comme Aventurier} - {Nom de l’aventurier} - {Axe horizontal} - {Axe vertical} - {Orientation} - {Nb. trésors ramassés}\n" +
                 "A - Lara - 0 - 3 - SUD - 3\n");
     }
-
 
     public String tracer(List<ElementDTO> elementsDto) {
         StringBuilder result = new StringBuilder();

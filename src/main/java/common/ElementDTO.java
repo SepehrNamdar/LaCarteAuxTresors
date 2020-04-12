@@ -1,12 +1,10 @@
-package application;
-
-import java.util.Objects;
+package common;
 
 public class ElementDTO {
     private String type;
     private String nom;
-    private int axeHorizontale;
-    private int axeVerticale;
+    private int axeHorizontal;
+    private int axeVertical;
     private int nbTresor;
     private String orientation;
     private String mouvements;
@@ -28,19 +26,19 @@ public class ElementDTO {
     }
 
     public int getAxeHorizontal() {
-        return axeHorizontale;
+        return axeHorizontal;
     }
 
-    public void setAxeHorizontal(int axeHorizontale) {
-        this.axeHorizontale = axeHorizontale;
+    public void setAxeHorizontal(int axeHorizontal) {
+        this.axeHorizontal = axeHorizontal;
     }
 
     public int getAxeVertical() {
-        return axeVerticale;
+        return axeVertical;
     }
 
-    public void setAxeVertical(int axeVerticale) {
-        this.axeVerticale = axeVerticale;
+    public void setAxeVertical(int axeVertical) {
+        this.axeVertical = axeVertical;
     }
 
     public int getNbTresor() {
@@ -65,20 +63,5 @@ public class ElementDTO {
 
     public void setMouvements(String mouvements) {
         this.mouvements = mouvements;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ElementDTO that = (ElementDTO) o;
-        return axeHorizontale == that.axeHorizontale &&
-                axeVerticale == that.axeVerticale &&
-                nbTresor == that.nbTresor;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(axeHorizontale, axeVerticale, nbTresor);
     }
 }

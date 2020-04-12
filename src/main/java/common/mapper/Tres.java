@@ -5,7 +5,7 @@ import model.element.Element;
 
 import static model.carte.TypeAxe.AVENTURIER;
 
-public class AventurierMapper extends ElementMapper {
+public class Tres extends ElementMapper {
 
     @Override
     public void map(Element elt) {

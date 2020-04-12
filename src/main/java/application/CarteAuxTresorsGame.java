@@ -1,9 +1,11 @@
 package application;
 
-import common.mapper.AventurierMapper;
+import common.mapper.MontagneMapper;
+import common.mapper.Tres;
 import common.dto.DimensionDTO;
 import common.dto.ElementDTO;
 import common.mapper.ElementMapper;
+import common.mapper.TresorMapper;
 import exposition.CarteAuxtTresors;
 import model.carte.Axe;
 import model.carte.Carte;
@@ -71,28 +73,9 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
 
     @Override
     public List<ElementDTO> getElements() {
-        List<ElementDTO> elts= new ArrayList<>();
-        carte.getElements().forEach(elt -> {
-            TypeAxe type = elt.getType();
-            if (MONTAGNE.equals(type)) {
-                ElementDTO montagneDTO = new ElementDTO();
-                montagneDTO.setType(MONTAGNE.getName());
-                montagneDTO.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
-                montagneDTO.setAxeVertical(elt.getAxe().getAxeVertical());
-                elts.add(montagneDTO);
-            } else if (TRESOR.equals(type)) {
-                ElementDTO tresorDTO = new ElementDTO();
-                tresorDTO.setType(TRESOR.getName());
-                tresorDTO.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
-                tresorDTO.setAxeVertical(elt.getAxe().getAxeVertical());
-                tresorDTO.setNbTresor(elt.getNbTresor());
-                elts.add(tresorDTO);
-            } else if (AVENTURIER.equals(type)) {
-                ElementMapper aventurierMapper = new AventurierMapper();
-                aventurierMapper.map(elt);
-                elts.add(aventurierMapper);
-            }
-        });
+        List<ElementDTO> elts = new ArrayList<>();
+        carte.getElements().forEach(elt -> elts.addAll(ElementMapper.getMapped(elt)));
         return elts;
     }
+
 }

@@ -2,7 +2,7 @@ package common;
 
 public class ElementDTO {
     private String type;
-    private String nom;
+    private String name;
     private int axeHorizontal;
     private int axeVertical;
     private int nbTresor;
@@ -17,12 +17,12 @@ public class ElementDTO {
         this.type = type;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
     public void setName(String nom) {
-        this.nom = nom;
+        this.name = nom;
     }
 
     public int getAxeHorizontal() {

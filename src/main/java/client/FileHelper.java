@@ -14,4 +14,6 @@ public class FileHelper {
     public static final int FOURTH = 3;
     public static final int FIFTH = 4;
     public static final int SIXTH = 5;
+    public static final String OPENING_PARANTHESE = "(";
+    public static final String CLOSING_PARANTHESE = ")";
 }

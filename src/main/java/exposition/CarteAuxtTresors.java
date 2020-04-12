@@ -9,7 +9,5 @@ public interface CarteAuxtTresors {
 
     void play(DimensionDTO dimensions, List<ElementDTO> elements);
 
-    String[][] getCarte();
-
     List<ElementDTO> getElements();
 }

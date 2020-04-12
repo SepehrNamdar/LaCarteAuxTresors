@@ -16,23 +16,23 @@ import static model.element.Orientation.*;
 
 public class CarteAuxTresorsGame implements CarteAuxtTresors {
 
-    Carte carte;
-    Map<Aventurier, String> aventuriersMovements = new HashMap<>();
+    private Carte carte;
+    private final Map<Aventurier, String> aventuriersMovements = new HashMap<>();
 
     @Override
-    public void play(final DimensionDTO dimensions, final List<ElementDTO> elementsDto) {
+    public void play(final DimensionDTO dimensionDTO, final List<ElementDTO> elementsDto) {
         List<Element> elements = new ArrayList<>();
-        for (ElementDTO eltDto : elementsDto) {
-            String type = eltDto.getType();
-            int axeHorizontal = eltDto.getAxeHorizontal();
-            int axeVertical = eltDto.getAxeVertical();
+        for (ElementDTO elt : elementsDto) {
+            String type = elt.getType();
+            int axeHorizontal = elt.getAxeHorizontal();
+            int axeVertical = elt.getAxeVertical();
             if ("M".equals(type)) {
                 elements.add(new Montagne(new Axe(axeHorizontal, axeVertical)));
             } else if ("T".equals(type)) {
-                elements.add(new Tresor(new Axe(axeHorizontal, axeVertical), eltDto.getNbTresor()));
+                elements.add(new Tresor(new Axe(axeHorizontal, axeVertical), elt.getNbTresor()));
             } else if ("A".equals(type)) {
                 Orientation aventurierOrientation = SUD;
-                String orientationDto = eltDto.getOrientation();
+                String orientationDto = elt.getOrientation();
                 if ("S".equals(orientationDto)) {
                     aventurierOrientation = SUD;
                 } else if ("N".equals(orientationDto)) {
@@ -42,13 +42,16 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
                 } else if ("E".equals(orientationDto)) {
                     aventurierOrientation = EST;
                 }
-                Aventurier a = new Aventurier(eltDto.getNom(), new Axe(axeHorizontal, axeVertical), aventurierOrientation);
-                elements.add(a);
-                aventuriersMovements.put(a, eltDto.getMouvements());
+                Axe positionDepart = new Axe(axeHorizontal, axeVertical);
+                Aventurier aventurier =
+                        new Aventurier(elt.getName(), positionDepart, aventurierOrientation);
+                elements.add(aventurier);
+                aventuriersMovements.put(aventurier, elt.getMouvements());
             }
         }
 
-        carte = new Carte(new Dimensions(dimensions.getLargeur(), dimensions.getHauteur()), elements);
+        Dimensions dimensions = new Dimensions(dimensionDTO.getLargeur(), dimensionDTO.getHauteur());
+        carte = new Carte(dimensions, elements);
 
         aventuriersMovements.forEach((aventurier, sequencesMovement) -> {
             String[] movements = sequencesMovement.split("");
@@ -65,61 +68,33 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
     }
 
     @Override
-    public String[][] getCarte() {
-        List<Element> elements = this.carte.getElements();
-        int hauteur = this.carte.getHauteur();
-        int largeur = this.carte.getLargeur();
-        String[][] carte = new String[largeur][hauteur];
-        for (int indexAxeVertical = 0; indexAxeVertical < hauteur; indexAxeVertical++) {
-            for (int indexAxeHorizontal = 0; indexAxeHorizontal < largeur; indexAxeHorizontal++) {
-                carte[indexAxeHorizontal][indexAxeVertical] = ".";
-            }
-        }
-        for (Element element : elements) {
-            int axeHorizontal = element.getAxe().getAxeHorizontal();
-            int axeVertical = element.getAxe().getAxeVertical();
-            TypeAxe typeCase = element.getType();
-            if (MONTAGNE.equals(typeCase)) {
-                carte[axeHorizontal][axeVertical] = "M";
-            } else if (TRESOR.equals(typeCase)) {
-                Tresor t = (Tresor) element;
-                carte[axeHorizontal][axeVertical] = "T" + "(" + t.getNbTresor() + ")";
-            } else if (AVENTURIER.equals(typeCase)) {
-                Aventurier a = (Aventurier) element;
-                carte[axeHorizontal][axeVertical] = "A" + "(" + a.getName() + ")";
-            }
-        }
-        return carte;
-    }
-
-    @Override
     public List<ElementDTO> getElements() {
         List<ElementDTO> elts= new ArrayList<>();
         carte.getElements().forEach(elt -> {
             TypeAxe type = elt.getType();
             if (MONTAGNE.equals(type)) {
-                ElementDTO montagne = new ElementDTO();
-                montagne.setType("M");
-                montagne.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
-                montagne.setAxeVertical(elt.getAxe().getAxeVertical());
-                elts.add(montagne);
+                ElementDTO montagneDTO = new ElementDTO();
+                montagneDTO.setType("M");
+                montagneDTO.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
+                montagneDTO.setAxeVertical(elt.getAxe().getAxeVertical());
+                elts.add(montagneDTO);
             } else if (TRESOR.equals(type)) {
-                ElementDTO tresor = new ElementDTO();
-                tresor.setType("T");
-                tresor.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
-                tresor.setAxeVertical(elt.getAxe().getAxeVertical());
-                tresor.setNbTresor(elt.getNbTresor());
-                elts.add(tresor);
+                ElementDTO tresorDTO = new ElementDTO();
+                tresorDTO.setType("T");
+                tresorDTO.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
+                tresorDTO.setAxeVertical(elt.getAxe().getAxeVertical());
+                tresorDTO.setNbTresor(elt.getNbTresor());
+                elts.add(tresorDTO);
             } else if (AVENTURIER.equals(type)) {
-                ElementDTO aventurier = new ElementDTO();
-                aventurier.setType("A");
-                aventurier.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
-                aventurier.setAxeVertical(elt.getAxe().getAxeVertical());
-                aventurier.setNbTresor(elt.getNbTresor());
-                Aventurier a = (Aventurier) elt;
-                aventurier.setName(a.getName());
-                aventurier.setOrientation(a.getCurrentOrientation().name());
-                elts.add(aventurier);
+                ElementDTO aventurierDTO = new ElementDTO();
+                aventurierDTO.setType("A");
+                aventurierDTO.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
+                aventurierDTO.setAxeVertical(elt.getAxe().getAxeVertical());
+                aventurierDTO.setNbTresor(elt.getNbTresor());
+                Aventurier aventurier = (Aventurier) elt;
+                aventurierDTO.setName(aventurier.getName());
+                aventurierDTO.setOrientation(aventurier.getCurrentOrientation().name());
+                elts.add(aventurierDTO);
             }
         });
         return elts;

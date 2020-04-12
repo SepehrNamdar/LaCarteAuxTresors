@@ -9,7 +9,7 @@ import static model.carte.TypeAxe.TRESOR;
 
 public class TresorMapper extends ElementMapper {
     @Override
-    public ElementDTO mapThis(Element elt) {
+    public ElementDTO mapElementToElementDto(Element elt) {
         ElementDTO eltDto = new ElementDTO();
         eltDto.setType(TRESOR.getName());
         eltDto.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
@@ -19,7 +19,7 @@ public class TresorMapper extends ElementMapper {
     }
 
     @Override
-    protected Element mapThis(ElementDTO eltDto) {
+    protected Element mapElementDtoToElement(ElementDTO eltDto) {
         Axe axe = new Axe(eltDto.getAxeHorizontal(), eltDto.getAxeVertical());
         int nbTresor = eltDto.getNbTresor();
         return new Tresor(axe, nbTresor);

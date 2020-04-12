@@ -10,7 +10,7 @@ import static model.carte.TypeAxe.MONTAGNE;
 public class MontagneMapper extends ElementMapper {
 
     @Override
-    public ElementDTO mapThis(Element elt) {
+    public ElementDTO mapElementToElementDto(Element elt) {
         ElementDTO eltDto = new ElementDTO();
         eltDto.setType(MONTAGNE.getName());
         eltDto.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
@@ -19,7 +19,7 @@ public class MontagneMapper extends ElementMapper {
     }
 
     @Override
-    protected Element mapThis(ElementDTO eltDto) {
+    protected Element mapElementDtoToElement(ElementDTO eltDto) {
         Axe axe = new Axe(eltDto.getAxeHorizontal(), eltDto.getAxeVertical());
         return new Montagne(axe);
     }

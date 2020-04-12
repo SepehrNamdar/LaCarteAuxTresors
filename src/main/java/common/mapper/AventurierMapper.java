@@ -13,7 +13,7 @@ import static model.element.Orientation.EST;
 public class AventurierMapper extends ElementMapper {
 
     @Override
-    public ElementDTO mapThis(Element elt) {
+    public ElementDTO mapElementToElementDto(Element elt) {
         ElementDTO eltDto = new ElementDTO();
         eltDto.setType(AVENTURIER.getName());
         eltDto.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
@@ -26,7 +26,7 @@ public class AventurierMapper extends ElementMapper {
     }
 
     @Override
-    protected Element mapThis(ElementDTO eltDto) {
+    protected Element mapElementDtoToElement(ElementDTO eltDto) {
         Orientation aventurierOrientation = SUD;
         String orientationDto = eltDto.getOrientation();
         if (NORD.getName().equals(orientationDto)) {

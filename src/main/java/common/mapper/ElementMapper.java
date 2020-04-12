@@ -15,13 +15,13 @@ public abstract class ElementMapper {
         TypeAxe type = elt.getType();
         if (MONTAGNE.equals(type)) {
             ElementMapper montagneMapper = new MontagneMapper();
-            eltDTO = montagneMapper.mapThis(elt);
+            eltDTO = montagneMapper.mapElementToElementDto(elt);
         } else if (TRESOR.equals(type)) {
             ElementMapper tresorMapper = new TresorMapper();
-            eltDTO = tresorMapper.mapThis(elt);
+            eltDTO = tresorMapper.mapElementToElementDto(elt);
         } else if (AVENTURIER.equals(type)) {
             ElementMapper aventurierMapper = new AventurierMapper();
-            eltDTO = aventurierMapper.mapThis(elt);
+            eltDTO = aventurierMapper.mapElementToElementDto(elt);
         }
         return eltDTO;
     }
@@ -31,19 +31,19 @@ public abstract class ElementMapper {
         String type = eltDto.getType();
         if (MONTAGNE.getName().equals(type)) {
             ElementMapper montagneMapper = new MontagneMapper();
-            element = montagneMapper.mapThis(eltDto);
+            element = montagneMapper.mapElementDtoToElement(eltDto);
         } else if (TRESOR.getName().equals(type)) {
             ElementMapper tresorMapper = new TresorMapper();
-            element = tresorMapper.mapThis(eltDto);
+            element = tresorMapper.mapElementDtoToElement(eltDto);
         } else if (AVENTURIER.getName().equals(type)) {
             ElementMapper aventurierMapper = new AventurierMapper();
-            element = aventurierMapper.mapThis(eltDto);
+            element = aventurierMapper.mapElementDtoToElement(eltDto);
             aventuriersMovements.put(element, eltDto.getMouvements());
         }
         return element;
     }
 
-    protected abstract ElementDTO mapThis(Element elt);
-    protected abstract Element mapThis(ElementDTO eltDto);
+    protected abstract ElementDTO mapElementToElementDto(Element elt);
+    protected abstract Element mapElementDtoToElement(ElementDTO eltDto);
 
 }

@@ -1,7 +1,6 @@
 package application;
 
-import common.ElementRequest;
-import common.ElementResponse;
+import common.ElementDTO;
 import exposition.CarteAuxtTresors;
 import model.carte.Axe;
 import model.carte.Carte;
@@ -20,9 +19,9 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
     Map<Aventurier, String> aventuriersMovements = new HashMap<>();
 
     @Override
-    public void play(final DimensionDTO dimensions, final List<ElementRequest> elementsDto) {
+    public void play(final DimensionDTO dimensions, final List<ElementDTO> elementsDto) {
         List<Element> elements = new ArrayList<>();
-        for (ElementRequest eltDto : elementsDto) {
+        for (ElementDTO eltDto : elementsDto) {
             String type = eltDto.getType();
             int axeHorizontal = eltDto.getAxeHorizontal();
             int axeVertical = eltDto.getAxeVertical();
@@ -93,25 +92,25 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
     }
 
     @Override
-    public List<ElementResponse> getElements() {
-        List<ElementResponse> elts= new ArrayList<>();
+    public List<ElementDTO> getElements() {
+        List<ElementDTO> elts= new ArrayList<>();
         carte.getElements().forEach(elt -> {
             TypeAxe type = elt.getType();
             if (MONTAGNE.equals(type)) {
-                ElementResponse montagne = new ElementResponse();
+                ElementDTO montagne = new ElementDTO();
                 montagne.setType("M");
                 montagne.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
                 montagne.setAxeVertical(elt.getAxe().getAxeVertical());
                 elts.add(montagne);
             } else if (TRESOR.equals(type)) {
-                ElementResponse tresor = new ElementResponse();
+                ElementDTO tresor = new ElementDTO();
                 tresor.setType("T");
                 tresor.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
                 tresor.setAxeVertical(elt.getAxe().getAxeVertical());
                 tresor.setNbTresor(elt.getNbTresor());
                 elts.add(tresor);
             } else if (AVENTURIER.equals(type)) {
-                ElementResponse aventurier = new ElementResponse();
+                ElementDTO aventurier = new ElementDTO();
                 aventurier.setType("A");
                 aventurier.setAxeHorizontal(elt.getAxe().getAxeHorizontal());
                 aventurier.setAxeVertical(elt.getAxe().getAxeVertical());

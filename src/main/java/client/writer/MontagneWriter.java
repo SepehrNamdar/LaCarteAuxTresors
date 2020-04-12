@@ -1,13 +1,13 @@
 package client.writer;
 
-import common.ElementWriter;
-import common.ElementResponse;
+import client.ElementWriter;
+import common.ElementDTO;
 
 import static client.FileHelper.*;
 
-public class MontagneWriter implements ElementWriter {
+public class MontagneWriter extends ElementWriter {
     @Override
-    public StringBuilder getLine(ElementResponse elt) {
+    public StringBuilder getLine(ElementDTO elt) {
         StringBuilder result = new StringBuilder();
         result.append(MONTAGNE)
                 .append(SEPARATOR)

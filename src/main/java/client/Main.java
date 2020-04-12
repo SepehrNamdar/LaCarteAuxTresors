@@ -2,10 +2,7 @@ package client;
 
 import application.CarteAuxTresorsGame;
 import application.DimensionDTO;
-import client.reader.FileReader;
-import client.writer.FileWriter;
-import common.ElementRequest;
-import common.ElementResponse;
+import common.ElementDTO;
 import exposition.CarteAuxtTresors;
 
 import java.util.List;
@@ -19,14 +16,14 @@ public class Main {
         String inputFilePath = args[FIRST];
         String outputFilePath = args[SECOND];
 
-        FileReader inoutFile = new FileReader(inputFilePath);
-        inoutFile.read();
-        DimensionDTO dimensions = inoutFile.getDimensions();
-        List<ElementRequest> elementsRequest = inoutFile.getElementsRequest();
+        FileReader inputFile = new FileReader(inputFilePath);
+        inputFile.read();
+        DimensionDTO dimensions = inputFile.getDimensions();
+        List<ElementDTO> elementsRequest = inputFile.getElements();
 
         CarteAuxtTresors carteAuxtTresors = new CarteAuxTresorsGame();
         carteAuxtTresors.play(dimensions, elementsRequest);
-        List<ElementResponse> elementsResponse = carteAuxtTresors.getElements();
+        List<ElementDTO> elementsResponse = carteAuxtTresors.getElements();
 
         FileWriter gameResult = new FileWriter(outputFilePath);
         gameResult.write(dimensions, elementsResponse);

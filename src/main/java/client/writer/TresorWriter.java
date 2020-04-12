@@ -1,13 +1,13 @@
 package client.writer;
 
-import common.ElementWriter;
-import common.ElementResponse;
+import client.ElementWriter;
+import common.ElementDTO;
 
 import static client.FileHelper.*;
 
-public class TresorWriter implements ElementWriter {
+public class TresorWriter extends ElementWriter {
     @Override
-    public StringBuilder getLine(ElementResponse elt) {
+    public StringBuilder getLine(ElementDTO elt) {
         StringBuilder result = new StringBuilder();
         result.append(COMMENT)
                 .append(" {")

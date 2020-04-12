@@ -1,14 +1,8 @@
 package common;
 
-import client.writer.AventurierWriter;
-import client.writer.MontagneWriter;
-import client.writer.TresorWriter;
-
 import java.util.Objects;
 
-import static client.FileHelper.*;
-
-public class ElementResponse {
+public class ElementDTO {
     private String type;
     private String nom;
     private int axeHorizontal;
@@ -16,26 +10,6 @@ public class ElementResponse {
     private int nbTresor;
     private String orientation;
     private String mouvements;
-
-    public static StringBuilder createElementDTO(ElementResponse elt) {
-        String eltType = elt.getType();
-        StringBuilder result = new StringBuilder();
-        switch (eltType) {
-            case MONTAGNE:
-                ElementWriter montagneDTO = new MontagneWriter();
-                result.append(montagneDTO.getLine(elt));
-                break;
-            case TRESOR:
-                ElementWriter tresorDTO = new TresorWriter();
-                result.append(tresorDTO.getLine(elt));
-                break;
-            case AVENTURIER:
-                ElementWriter aventurierDTO = new AventurierWriter();
-                result.append(aventurierDTO.getLine(elt));
-                break;
-        }
-        return result;
-    }
 
     public String getType() {
         return type;
@@ -97,7 +71,7 @@ public class ElementResponse {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ElementResponse that = (ElementResponse) o;
+        ElementDTO that = (ElementDTO) o;
         return axeHorizontal == that.axeHorizontal &&
                 axeVertical == that.axeVertical &&
                 nbTresor == that.nbTresor;

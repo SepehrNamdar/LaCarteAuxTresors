@@ -1,6 +1,9 @@
 package client;
 
 import application.DimensionDTO;
+import client.reader.AventurierReader;
+import client.reader.MontagneReader;
+import client.reader.TresorReader;
 import common.ElementDTO;
 
 import java.util.ArrayList;
@@ -10,18 +13,23 @@ import static client.FileHelper.*;
 import static java.lang.Integer.parseInt;
 
 public abstract class ElementReader {
+    private static final DimensionDTO dimensions = new DimensionDTO();
+    private static final List<ElementDTO> elements = new ArrayList<>();
 
-    public static List<ElementDTO> processElement(String[] lineArgs) {
-        final List<ElementDTO> elements = new ArrayList<>();
-        String firstArg = lineArgs[FIRST];
-        if (isMontagne(firstArg)) {
-            elements.add(getMontagne(lineArgs));
-        } else if (isTresor(firstArg)) {
-            elements.add(getTresor(lineArgs));
-        } else if (isAventurier(firstArg)) {
-            elements.add(getAventurier(lineArgs));
+    public abstract ElementDTO read(String[] lineArgs);
+
+    public static void processElement(String[] lineArgs) {
+        String eltType = lineArgs[FIRST];
+        if (isMontagne(eltType)) {
+            ElementReader montagneReader = new MontagneReader();
+            elements.add(montagneReader.read(lineArgs));
+        } else if (isTresor(eltType)) {
+            ElementReader tresorReader = new TresorReader();
+            elements.add(tresorReader.read(lineArgs));
+        } else if (isAventurier(eltType)) {
+            ElementReader aventurierReader = new AventurierReader();
+            elements.add(aventurierReader.read(lineArgs));
         }
-        return elements;
     }
 
     private static boolean isAventurier(String lineArg) {
@@ -36,41 +44,11 @@ public abstract class ElementReader {
         return MONTAGNE.equals(lineArg);
     }
 
-    private static ElementDTO getAventurier(String[] lineArgs) {
-        ElementDTO aventurier = new ElementDTO();
-        aventurier.setType(AVENTURIER);
-        aventurier.setName(lineArgs[SECOND]);
-        aventurier.setAxeHorizontal(parseInt(lineArgs[THIRD]));
-        aventurier.setAxeVertical(parseInt(lineArgs[FOURTH]));
-        aventurier.setOrientation(lineArgs[FIFTH]);
-        aventurier.setMouvements(lineArgs[SIXTH]);
-        return aventurier;
-    }
-
-    private static ElementDTO getTresor(String[] lineArgs) {
-        ElementDTO tresor = new ElementDTO();
-        tresor.setType(TRESOR);
-        tresor.setAxeHorizontal(parseInt(lineArgs[SECOND]));
-        tresor.setAxeVertical(parseInt(lineArgs[THIRD]));
-        tresor.setNbTresor(parseInt(lineArgs[FOURTH]));
-        return tresor;
-    }
-
-    private static ElementDTO getMontagne(String[] lineArgs) {
-        ElementDTO montagne = new ElementDTO();
-        montagne.setType(MONTAGNE);
-        montagne.setAxeHorizontal(parseInt(lineArgs[SECOND]));
-        montagne.setAxeVertical(parseInt(lineArgs[THIRD]));
-        return montagne;
-    }
-
-    public static DimensionDTO initDimensions(String[] lineArgs) {
+    public static void processDimensions(String[] lineArgs) {
         int largeur = getLargeurCarte(lineArgs);
         int hauteur = getHauteurCarte(lineArgs);
-        DimensionDTO dimensions = new DimensionDTO();
         dimensions.setLargeur(largeur);
         dimensions.setHauteur(hauteur);
-        return dimensions;
     }
 
     private static int getHauteurCarte(String[] lineArgs) {
@@ -83,4 +61,11 @@ public abstract class ElementReader {
         return parseInt(largeurCarte);
     }
 
+    public static DimensionDTO getDimensions() {
+        return dimensions;
+    }
+
+    public static List<ElementDTO> getElements() {
+        return elements;
+    }
 }

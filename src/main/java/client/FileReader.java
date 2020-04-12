@@ -5,7 +5,6 @@ import client.reader.CanNotReadInputFile;
 import common.ElementDTO;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -17,9 +16,6 @@ import static java.nio.file.Paths.get;
 public class FileReader {
 
     private final String inputFilePath;
-
-    static List<ElementDTO> elements = new ArrayList<>();
-    static DimensionDTO dimensions = new DimensionDTO();
 
     public FileReader(String inputFilePath) {
         this.inputFilePath = inputFilePath;
@@ -44,9 +40,9 @@ public class FileReader {
     public static void process(String line) {
         String[] lineArgs = line.split(SEPARATOR);
         if (isCarte(lineArgs[FIRST])) {
-            dimensions = ElementReader.initDimensions(lineArgs);
+            ElementReader.processDimensions(lineArgs);
         } else {
-            elements = ElementReader.processElement(lineArgs);
+            ElementReader.processElement(lineArgs);
         }
     }
 
@@ -59,10 +55,10 @@ public class FileReader {
     }
 
     public DimensionDTO getDimensions() {
-        return dimensions;
+        return ElementReader.getDimensions();
     }
 
     public List<ElementDTO> getElements() {
-        return elements;
+        return ElementReader.getElements();
     }
 }

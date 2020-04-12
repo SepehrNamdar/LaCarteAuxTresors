@@ -2,8 +2,10 @@ package client;
 
 import application.CarteAuxTresorsGame;
 import application.DimensionDTO;
-import application.ElementRequest;
-import application.ElementResponse;
+import client.reader.FileReader;
+import client.writer.FileWriter;
+import common.ElementRequest;
+import common.ElementResponse;
 import exposition.CarteAuxtTresors;
 
 import java.util.List;

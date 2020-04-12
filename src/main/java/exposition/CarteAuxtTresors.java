@@ -1,8 +1,8 @@
 package exposition;
 
 import application.DimensionDTO;
-import application.ElementRequest;
-import application.ElementResponse;
+import common.ElementRequest;
+import common.ElementResponse;
 
 import java.util.List;
 

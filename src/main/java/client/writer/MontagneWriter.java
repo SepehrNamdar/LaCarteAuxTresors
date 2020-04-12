@@ -1,10 +1,11 @@
-package client;
+package client.writer;
 
-import application.ElementResponse;
+import common.ElementWriter;
+import common.ElementResponse;
 
 import static client.FileHelper.*;
 
-public class MontagneDTO extends ElementAbstract {
+public class MontagneWriter implements ElementWriter {
     @Override
     public StringBuilder getLine(ElementResponse elt) {
         StringBuilder result = new StringBuilder();

@@ -1,7 +1,7 @@
-package client;
+package client.writer;
 
 import application.DimensionDTO;
-import application.ElementResponse;
+import common.ElementResponse;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,13 +20,13 @@ public class FileWriter {
         this.outputFilePath = outputFilePath;
     }
 
-    void write(DimensionDTO dimensions, List<ElementResponse> elements) {
+    public void write(DimensionDTO dimensions, List<ElementResponse> elements) {
         this.dimensions = dimensions;
         this.elements = elements;
         try {
             Files.write(get(outputFilePath), traceElementsOnCarte().getBytes());
         } catch (IOException e) {
-            throw new CanNotReadInputFile(e.getMessage());
+            throw new CanNotWriteOutputFile(e.getMessage());
         }
     }
 

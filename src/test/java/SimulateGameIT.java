@@ -1,7 +1,7 @@
 import application.CarteAuxTresorsGame;
 import application.DimensionDTO;
-import application.ElementRequest;
-import application.ElementResponse;
+import common.ElementRequest;
+import common.ElementResponse;
 import exposition.CarteAuxtTresors;
 import org.junit.jupiter.api.Test;
 

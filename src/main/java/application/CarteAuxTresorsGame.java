@@ -1,5 +1,7 @@
 package application;
 
+import common.ElementRequest;
+import common.ElementResponse;
 import exposition.CarteAuxtTresors;
 import model.carte.Axe;
 import model.carte.Carte;

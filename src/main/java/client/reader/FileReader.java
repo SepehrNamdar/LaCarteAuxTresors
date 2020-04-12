@@ -1,7 +1,8 @@
-package client;
+package client.reader;
 
 import application.DimensionDTO;
-import application.ElementRequest;
+import client.reader.CanNotReadInputFile;
+import common.ElementRequest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class FileReader {
         try (Stream<String> lines = lines(get(inputFilePath))) {
             initCarteDimensionsAndElements(lines);
         } catch (IOException e) {
-            throw new CanNotWriteOutputFile(e.getMessage());
+            throw new CanNotReadInputFile(e.getMessage());
         }
     }
 
@@ -42,12 +43,18 @@ public class FileReader {
         });
     }
 
-    private void process(String line) {
+    public void process(String line) {
         String[] lineArgs = line.split(SEPARATOR);
         String firstArg = lineArgs[FIRST];
         if (isCarte(firstArg)) {
             initDimensions(lineArgs);
-        } else if (isMontagne(firstArg)) {
+        } else {
+            processElement(lineArgs, firstArg);
+        }
+    }
+
+    private void processElement(String[] lineArgs, String firstArg) {
+        if (isMontagne(firstArg)) {
             elementsRequest.add(getMontagne(lineArgs));
         } else if (isTresor(firstArg)) {
             elementsRequest.add(getTresor(lineArgs));

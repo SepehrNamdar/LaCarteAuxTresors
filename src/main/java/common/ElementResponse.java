@@ -1,8 +1,14 @@
-package application;
+package common;
+
+import client.writer.AventurierWriter;
+import client.writer.MontagneWriter;
+import client.writer.TresorWriter;
 
 import java.util.Objects;
 
-public class ElementRequest {
+import static client.FileHelper.*;
+
+public class ElementResponse {
     private String type;
     private String nom;
     private int axeHorizontal;
@@ -10,6 +16,26 @@ public class ElementRequest {
     private int nbTresor;
     private String orientation;
     private String mouvements;
+
+    public static StringBuilder createElementDTO(ElementResponse elt) {
+        String eltType = elt.getType();
+        StringBuilder result = new StringBuilder();
+        switch (eltType) {
+            case MONTAGNE:
+                ElementWriter montagneDTO = new MontagneWriter();
+                result.append(montagneDTO.getLine(elt));
+                break;
+            case TRESOR:
+                ElementWriter tresorDTO = new TresorWriter();
+                result.append(tresorDTO.getLine(elt));
+                break;
+            case AVENTURIER:
+                ElementWriter aventurierDTO = new AventurierWriter();
+                result.append(aventurierDTO.getLine(elt));
+                break;
+        }
+        return result;
+    }
 
     public String getType() {
         return type;
@@ -71,7 +97,7 @@ public class ElementRequest {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ElementRequest that = (ElementRequest) o;
+        ElementResponse that = (ElementResponse) o;
         return axeHorizontal == that.axeHorizontal &&
                 axeVertical == that.axeVertical &&
                 nbTresor == that.nbTresor;

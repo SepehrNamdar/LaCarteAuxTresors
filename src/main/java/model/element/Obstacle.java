@@ -13,4 +13,44 @@ public abstract class Obstacle extends Element {
         return 0;
     }
 
+
+    @Override
+    public void avancer() {
+
+    }
+
+    @Override
+    public boolean canMove() {
+        return false;
+    }
+
+    @Override
+    public void turnLeft() {
+
+    }
+
+    @Override
+    public void turnRight() {
+
+    }
+
+    @Override
+    public void setAxe(Axe axe) {
+
+    }
+
+    @Override
+    public void increaseNbTresor() {
+
+    }
+
+    @Override
+    public String getSequencesMovement() {
+        return "";
+    }
+
+    @Override
+    protected void reduceNbTresor() {
+
+    }
 }

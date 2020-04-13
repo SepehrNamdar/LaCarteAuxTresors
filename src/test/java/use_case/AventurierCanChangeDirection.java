@@ -18,7 +18,7 @@ public class AventurierCanChangeDirection {
     void toLeft() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Axe axeDepart = new Axe(1, 1);
-        Aventurier laura = new Aventurier("Laura", axeDepart, NORD);
+        Aventurier laura = new Aventurier("Laura", axeDepart, NORD, "GGGG");
         Carte carte = new Carte(dimensions, singletonList(laura));
 
         carte.turnLeft(laura);
@@ -42,7 +42,7 @@ public class AventurierCanChangeDirection {
     void toRight() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Axe axeDepart = new Axe(1, 1);
-        Aventurier laura = new Aventurier("Laura", axeDepart, NORD);
+        Aventurier laura = new Aventurier("Laura", axeDepart, NORD, "DDDD");
         Carte carte = new Carte(dimensions, singletonList(laura));
 
         carte.turnRight(laura);

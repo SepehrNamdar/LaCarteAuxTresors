@@ -18,7 +18,7 @@ public class AventurierCanMoveOnCarte {
     void plaine() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Axe axeDepart = new Axe(2, 1);
-        Aventurier laura = new Aventurier("Laura", axeDepart, SUD);
+        Aventurier laura = new Aventurier("Laura", axeDepart, SUD, "AAA");
         Carte carte = new Carte(dimensions, singletonList(laura));
 
         carte.avancer(laura);

@@ -25,7 +25,7 @@ public class Tresor extends Element {
     }
 
     @Override
-    public void move() {
+    public void avancer() {
 
     }
 
@@ -50,10 +50,16 @@ public class Tresor extends Element {
     }
 
     @Override
-    public void increaseNbtresor() {
+    public void increaseNbTresor() {
 
     }
 
+    @Override
+    public String getSequencesMovement() {
+        return "";
+    }
+
+    @Override
     public void reduceNbTresor() {
         if (nbTresor > 0) {
             nbTresor--;

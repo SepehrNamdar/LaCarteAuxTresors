@@ -27,16 +27,18 @@ public class AventurierMapper extends ElementMapper {
 
     @Override
     protected Element mapElementDtoToElement(ElementDTO eltDto) {
-        Orientation aventurierOrientation = SUD;
+        Orientation orienttion = SUD;
         String orientationDto = eltDto.getOrientation();
         if (NORD.getName().equals(orientationDto)) {
-            aventurierOrientation = NORD;
+            orienttion = NORD;
         } else if (OUEST.getName().equals(orientationDto)) {
-            aventurierOrientation = OUEST;
+            orienttion = OUEST;
         } else if (EST.getName().equals(orientationDto)) {
-            aventurierOrientation = EST;
+            orienttion = EST;
         }
         Axe axe = new Axe(eltDto.getAxeHorizontal(), eltDto.getAxeVertical());
-        return new Aventurier(eltDto.getName(), axe, aventurierOrientation);
+        String name = eltDto.getName();
+        String sequencesMouvement = eltDto.getMouvements();
+        return new Aventurier(name, axe, orienttion, sequencesMouvement);
     }
 }

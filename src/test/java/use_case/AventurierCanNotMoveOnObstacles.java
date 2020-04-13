@@ -20,7 +20,7 @@ public class AventurierCanNotMoveOnObstacles {
     void montagne() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Axe axeDepart = new Axe(1, 1);
-        Aventurier laura = new Aventurier("Laura", axeDepart, NORD);
+        Aventurier laura = new Aventurier("Laura", axeDepart, NORD, "A");
         Axe axeMontagne = new Axe(1, 0);
         Element montagne = new Montagne(axeMontagne);
         Carte carte = new Carte(dimensions, asList(laura, montagne));

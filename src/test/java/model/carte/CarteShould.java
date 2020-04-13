@@ -46,7 +46,7 @@ public class CarteShould {
     void notBeCreatedWhenAxesAreInConflict() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Element montagne = new Montagne(new Axe(0, 0));
-        Element laura = new Aventurier("Laura", new Axe(0, 0), SUD);
+        Element laura = new Aventurier("Laura", new Axe(0, 0), SUD, "");
         Element tresor = new Tresor(new Axe(0, 0), 0);
 
         assertThatExceptionOfType(CanNotPlaceElementInMap.class)
@@ -65,9 +65,9 @@ public class CarteShould {
     void notBeCreatedWhenAnElementIsPlacedOutOfCarte() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Element montagne = new Montagne(new Axe(LARGEUR_CARTE, 0));
-        Element laura = new Aventurier("Laura", new Axe(0, HAUTEUR_CARTE), SUD);
+        Element laura = new Aventurier("Laura", new Axe(0, HAUTEUR_CARTE), SUD, "");
         Element tresor = new Tresor(new Axe(-1, 0), 0);
-        Element tom = new Aventurier("Tom", new Axe(0, -1), SUD);
+        Element tom = new Aventurier("Tom", new Axe(0, -1), SUD, "");
 
         assertThatExceptionOfType(CanNotPlaceElementInMap.class)
                 .isThrownBy(() -> new Carte(dimensions, singletonList(laura)));
@@ -92,8 +92,8 @@ public class CarteShould {
         List<Element> elements = new ArrayList<>();
         elements.add(new Montagne(new Axe(0, 0)));
         elements.add(new Montagne(new Axe(1, 2)));
-        elements.add(new Aventurier("Laura", new Axe(1, 1), SUD));
-        elements.add(new Aventurier("Tom", new Axe(2, 1), SUD));
+        elements.add(new Aventurier("Laura", new Axe(1, 1), SUD, ""));
+        elements.add(new Aventurier("Tom", new Axe(2, 1), SUD, ""));
         elements.add(new Tresor(new Axe(2, 2), 2));
         elements.add(new Tresor(new Axe(1, 3), 0));
         return elements;

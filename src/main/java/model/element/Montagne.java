@@ -16,34 +16,4 @@ public class Montagne extends Obstacle {
         return MONTAGNE;
     }
 
-    @Override
-    public void move() {
-
-    }
-
-    @Override
-    public boolean canMove() {
-        return false;
-    }
-
-    @Override
-    public void turnLeft() {
-
-    }
-
-    @Override
-    public void turnRight() {
-
-    }
-
-    @Override
-    public void setAxe(Axe axe) {
-
-    }
-
-    @Override
-    public void increaseNbtresor() {
-
-    }
-
 }

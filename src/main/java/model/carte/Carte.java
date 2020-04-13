@@ -68,7 +68,7 @@ public class Carte {
     public void avancer(Element element) {
         if (element.canMove()) {
             Axe initialAxeAventurier = element.getAxe();
-            element.move();
+            element.avancer();
             if (isMoved(element)) {
                 updatePlan(element, initialAxeAventurier);
             } else {
@@ -91,7 +91,7 @@ public class Carte {
                     Tresor t = (Tresor) elt;
                     t.reduceNbTresor();
                     if (t.getNbTresor() >= 0) {
-                        element.increaseNbtresor();
+                        element.increaseNbTresor();
                     }
                 }
             }

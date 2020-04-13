@@ -11,11 +11,13 @@ public class Aventurier extends Element {
     private final String name;
     private int nbTresor;
     private Orientation currentOrientation;
+    private String sequencesMouvement;
 
-    public Aventurier(String name, Axe positionDepart, Orientation orientationDepart) {
+    public Aventurier(String name, Axe positionDepart, Orientation orientationDepart, String sequencesMouvement) {
         super(positionDepart);
         this.name = name;
         this.currentOrientation = orientationDepart;
+        this.sequencesMouvement = sequencesMouvement;
         nbTresor = 0;
     }
 
@@ -30,7 +32,7 @@ public class Aventurier extends Element {
     }
 
     @Override
-    public void move() {
+    public void avancer() {
         if (currentOrientation == SUD) {
             axe = new Axe(axe.getAxeHorizontal(), axe.getAxeVertical() + 1);
         } else if (currentOrientation == NORD) {
@@ -81,8 +83,18 @@ public class Aventurier extends Element {
         return currentOrientation;
     }
 
-    public void increaseNbtresor() {
+    public void increaseNbTresor() {
         nbTresor++;
+    }
+
+    @Override
+    public String getSequencesMovement() {
+        return sequencesMouvement;
+    }
+
+    @Override
+    protected void reduceNbTresor() {
+
     }
 
     public String getName() {

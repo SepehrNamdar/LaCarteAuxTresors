@@ -1,5 +1,7 @@
 package common.dto;
 
+import java.util.Objects;
+
 public class ElementDTO {
     private String type;
     private String name;
@@ -63,5 +65,24 @@ public class ElementDTO {
 
     public void setMouvements(String mouvements) {
         this.mouvements = mouvements;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ElementDTO that = (ElementDTO) o;
+        return axeHorizontal == that.axeHorizontal &&
+                axeVertical == that.axeVertical &&
+                nbTresor == that.nbTresor &&
+                Objects.equals(type, that.type) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(orientation, that.orientation) &&
+                Objects.equals(mouvements, that.mouvements);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, name, axeHorizontal, axeVertical, nbTresor, orientation, mouvements);
     }
 }

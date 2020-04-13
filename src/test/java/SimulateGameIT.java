@@ -2,7 +2,7 @@ import application.CarteAuxTresorsGame;
 import client.ElementWriter;
 import common.dto.DimensionDTO;
 import common.dto.ElementDTO;
-import exposition.CarteAuxtTresors;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -16,18 +16,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SimulateGameIT {
 
     public static final String AVENTURIER_NAME = "Lara";
+    private static CarteAuxTresorsGame carteAuxtTresors;
 
-    @Test
-    void Scenario_1() {
-        CarteAuxtTresors carteAuxtTresors = new CarteAuxTresorsGame();
-
-        carteAuxtTresors.play(getDimensions(), getElements());
-
-        List<ElementDTO> elements = carteAuxtTresors.getElements();
-        assertThat(getLines(elements)).isEqualTo(getExpectedLines());
+    @BeforeAll
+    static void beforeAll() {
+        carteAuxtTresors = new CarteAuxTresorsGame();
     }
 
-    private String getExpectedLines() {
+    @Test
+    void tresorScenario() {
+        carteAuxtTresors.play(getDimensions(), getElements("AADADAGGA"));
+
+        List<ElementDTO> elements = carteAuxtTresors.getElements();
+        assertThat(getLines(elements)).isEqualTo(getScenarioTresorExpectedLines());
+    }
+
+    @Test
+    void obstacleScenario() {
+        carteAuxtTresors.play(getDimensions(), getElements("DAADAADAA"));
+
+        List<ElementDTO> elements = carteAuxtTresors.getElements();
+        assertThat(getLines(elements)).isEqualTo(getScenarioObstacleExpectedLines());
+    }
+
+    private String getScenarioTresorExpectedLines() {
         return
             "C - 3 - 4\n" +
             "M - 1 - 0\n" +
@@ -38,6 +50,19 @@ public class SimulateGameIT {
             "T - 1 - 3 - 2\n" +
             "# {A comme Aventurier} - {Nom de l’aventurier} - {Axe horizontal} - {Axe vertical} - {Orientation} - {Nb. de trésors ramassés}\n" +
             "A - Lara - 0 - 3 - SUD - 3\n";
+    }
+
+    private String getScenarioObstacleExpectedLines() {
+        return
+            "C - 3 - 4\n" +
+            "M - 1 - 0\n" +
+            "M - 2 - 1\n" +
+            "# {T comme Trésor} - {Axe horizontal} - {Axe vertical} - {Nb. de trésors restants}\n" +
+            "T - 0 - 3 - 2\n" +
+            "# {T comme Trésor} - {Axe horizontal} - {Axe vertical} - {Nb. de trésors restants}\n" +
+            "T - 1 - 3 - 3\n" +
+            "# {A comme Aventurier} - {Nom de l’aventurier} - {Axe horizontal} - {Axe vertical} - {Orientation} - {Nb. de trésors ramassés}\n" +
+            "A - Lara - 0 - 0 - EST - 0\n";
     }
 
     private String getLines(List<ElementDTO> elements) {
@@ -56,13 +81,13 @@ public class SimulateGameIT {
         return dimensionDTO;
     }
 
-    private List<ElementDTO> getElements() {
+    private List<ElementDTO> getElements(final String movements) {
         ArrayList<ElementDTO> elementDTOS = new ArrayList<>();
         elementDTOS.add(getMontagne(1, 0));
         elementDTOS.add(getMontagne(2, 1));
         elementDTOS.add(getTresor(0, 3, 2));
         elementDTOS.add(getTresor(1, 3, 3));
-        elementDTOS.add(getAventurier(AVENTURIER_NAME, 1, 1, "S", "AADADAGGA", 0));
+        elementDTOS.add(getAventurier(AVENTURIER_NAME, 1, 1, "S", movements, 0));
         return elementDTOS;
     }
 

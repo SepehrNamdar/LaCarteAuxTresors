@@ -32,4 +32,8 @@ public class Axe {
     public int hashCode() {
         return Objects.hash(axeHorizontal, axeVertical);
     }
+
+    public boolean isOutOfCarte() {
+        return getAxeVertical() < 0 || getAxeHorizontal() < 0;
+    }
 }

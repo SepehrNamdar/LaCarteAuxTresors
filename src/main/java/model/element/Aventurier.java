@@ -68,19 +68,23 @@ public class Aventurier extends Element {
     }
 
     private void move(final Axe axeToGo) {
-        if (getObstacles().isEmpty()) {
-            axe = axeToGo;
-        } else {
-            moveIfPossible(axeToGo);
+        if (!axeToGo.isOutOfCarte()) {
+            if (getObstacles().isEmpty()) {
+                axe = axeToGo;
+            } else {
+                moveIfThereIsNoObstacle(axeToGo);
+            }
         }
     }
 
-    private void moveIfPossible(final Axe axeToGo) {
-        getObstacles().forEach(obstacle -> {
-            if (!axeToGo.equals(obstacle.getAxe())) {
-                axe = axeToGo;
-            }
-        });
+    private void moveIfThereIsNoObstacle(final Axe axeToGo) {
+        if (isNotAnyObstacle(axeToGo)) {
+            axe = axeToGo;
+        }
+    }
+
+    private boolean isNotAnyObstacle(Axe axeToGo) {
+        return getObstacles().stream().noneMatch(obstacle -> obstacle.getAxe().equals(axeToGo));
     }
 
     @Override

@@ -19,11 +19,8 @@ public class CarteAuxTresorsGame implements CarteAuxtTresors {
     @Override
     public void play(final DimensionDTO dimensionDTO, final List<ElementDTO> elementsDto) {
         List<Element> elements = new ArrayList<>();
-        for (ElementDTO eltDto : elementsDto) {
-            elements.add(map(eltDto));
-        }
-
         Dimensions dimensions = new Dimensions(dimensionDTO.getLargeur(), dimensionDTO.getHauteur());
+        elementsDto.forEach(eltDto -> elements.add(map(eltDto)));
         carte = new Carte(dimensions, elements);
 
         ElementMapper.getSequencesMovement().forEach((element, sequencesMovement) -> {

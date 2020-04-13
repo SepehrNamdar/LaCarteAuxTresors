@@ -3,10 +3,10 @@ package model.carte;
 import java.util.Objects;
 
 public class Axe {
-    private int axeHorizontal;
-    private int axeVertical;
+    private final int axeHorizontal;
+    private final int axeVertical;
 
-    public Axe(int axeHorizontal, int axeVertical) {
+    public Axe(final int axeHorizontal, final int axeVertical) {
         this.axeHorizontal = axeHorizontal;
         this.axeVertical = axeVertical;
     }

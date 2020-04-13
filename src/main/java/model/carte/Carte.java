@@ -15,7 +15,7 @@ public class Carte {
     private static List<Element> aventuriers;
     private static List<Element> obstacles;
 
-    public Carte(Dimensions dimensions, List<Element> elements) {
+    public Carte(final Dimensions dimensions, final List<Element> elements) {
         this.dimensions = dimensions;
         this.elements = elements;
         tresors = new ArrayList<>();
@@ -36,7 +36,7 @@ public class Carte {
         }
     }
 
-    private void placer(List<Element> elements) {
+    private void placer(final List<Element> elements) {
         elements.forEach(element ->
         {
             checkElementAxe(element.getAxe());
@@ -59,7 +59,7 @@ public class Carte {
         });
     }
 
-    private void checkElementAxe(Axe axe) {
+    private void checkElementAxe(final Axe axe) {
         if (isOutOfCarte(axe)) {
             throw new CanNotPlaceElementInMap(axe);
         }
@@ -77,7 +77,7 @@ public class Carte {
         return obstacles;
     }
 
-    public TypeAxe getAxe(int axeHorizontal, int axeVertical) {
+    public TypeAxe getAxe(final int axeHorizontal, final int axeVertical) {
         return plan[axeHorizontal][axeVertical];
     }
 
@@ -89,7 +89,7 @@ public class Carte {
         return dimensions.getHauteur();
     }
 
-    private boolean isOutOfCarte(Axe axe) {
+    private boolean isOutOfCarte(final Axe axe) {
         return axe.getAxeVertical() >= dimensions.getHauteur() ||
                 axe.getAxeHorizontal() >= dimensions.getLargeur() ||
                 axe.getAxeHorizontal() < 0 || axe.getAxeVertical() < 0;

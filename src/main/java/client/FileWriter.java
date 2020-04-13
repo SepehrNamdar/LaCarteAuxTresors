@@ -20,7 +20,7 @@ public class FileWriter {
         this.outputFilePath = outputFilePath;
     }
 
-    public void write(DimensionDTO dimensions, List<ElementDTO> elements) {
+    public void write(final DimensionDTO dimensions, final List<ElementDTO> elements) {
         this.dimensions = dimensions;
         this.elements = elements;
         try {

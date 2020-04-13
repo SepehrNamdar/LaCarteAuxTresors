@@ -9,9 +9,10 @@ import common.dto.ElementDTO;
 import static client.FileHelper.*;
 
 public abstract class ElementWriter {
-    public abstract StringBuilder getLine(ElementDTO elt);
 
-    public static StringBuilder getCarteToWrite(DimensionDTO dimensions) {
+    public abstract StringBuilder getLine(final ElementDTO elt);
+
+    public static StringBuilder getCarteToWrite(final DimensionDTO dimensions) {
         StringBuilder result = new StringBuilder();
         result.append(CARTE)
                 .append(SEPARATOR)
@@ -22,7 +23,7 @@ public abstract class ElementWriter {
         return result;
     }
 
-    public static StringBuilder getElementToWrite(ElementDTO elt) {
+    public static StringBuilder getElementToWrite(final ElementDTO elt) {
         String eltType = elt.getType();
         StringBuilder result = new StringBuilder();
         switch (eltType) {

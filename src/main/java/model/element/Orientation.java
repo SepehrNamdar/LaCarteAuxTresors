@@ -5,7 +5,7 @@ public enum Orientation {
 
     private final String name;
 
-    Orientation(String name) {
+    Orientation(final String name) {
         this.name = name;
     }
 

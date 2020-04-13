@@ -16,9 +16,9 @@ public abstract class ElementReader {
     private static final DimensionDTO dimensions = new DimensionDTO();
     private static final List<ElementDTO> elements = new ArrayList<>();
 
-    public abstract ElementDTO read(String[] lineArgs);
+    public abstract ElementDTO read(final String[] lineArgs);
 
-    public static void processElement(String[] lineArgs) {
+    public static void processElement(final String[] lineArgs) {
         String eltType = lineArgs[FIRST];
         if (isMontagne(eltType)) {
             ElementReader montagneReader = new MontagneReader();
@@ -32,31 +32,31 @@ public abstract class ElementReader {
         }
     }
 
-    private static boolean isAventurier(String lineArg) {
+    private static boolean isAventurier(final String lineArg) {
         return AVENTURIER.equals(lineArg);
     }
 
-    private static boolean isTresor(String lineArg) {
+    private static boolean isTresor(final String lineArg) {
         return TRESOR.equals(lineArg);
     }
 
-    private static boolean isMontagne(String lineArg) {
+    private static boolean isMontagne(final String lineArg) {
         return MONTAGNE.equals(lineArg);
     }
 
-    public static void processDimensions(String[] lineArgs) {
+    public static void processDimensions(final String[] lineArgs) {
         int largeur = getLargeurCarte(lineArgs);
         int hauteur = getHauteurCarte(lineArgs);
         dimensions.setLargeur(largeur);
         dimensions.setHauteur(hauteur);
     }
 
-    private static int getHauteurCarte(String[] lineArgs) {
+    private static int getHauteurCarte(final String[] lineArgs) {
         String hauteurCarte = lineArgs[THIRD];
         return parseInt(hauteurCarte);
     }
 
-    private static int getLargeurCarte(String[] lineArgs) {
+    private static int getLargeurCarte(final String[] lineArgs) {
         String largeurCarte = lineArgs[SECOND];
         return parseInt(largeurCarte);
     }

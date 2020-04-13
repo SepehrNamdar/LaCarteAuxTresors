@@ -4,7 +4,7 @@ import model.carte.Axe;
 
 public abstract class Obstacle extends Element {
 
-    public Obstacle(Axe axe) {
+    public Obstacle(final Axe axe) {
         super(axe);
     }
 
@@ -17,11 +17,6 @@ public abstract class Obstacle extends Element {
     @Override
     public void avancer() {
 
-    }
-
-    @Override
-    public boolean canMove() {
-        return false;
     }
 
     @Override

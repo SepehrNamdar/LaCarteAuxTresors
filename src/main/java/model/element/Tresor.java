@@ -9,7 +9,7 @@ public class Tresor extends Element {
 
     private int nbTresor;
 
-    public Tresor(Axe axe, int nbTresor) {
+    public Tresor(final Axe axe, final int nbTresor) {
         super(axe);
         this.nbTresor = nbTresor;
     }
@@ -27,11 +27,6 @@ public class Tresor extends Element {
     @Override
     public void avancer() {
 
-    }
-
-    @Override
-    public boolean canMove() {
-        return false;
     }
 
     @Override

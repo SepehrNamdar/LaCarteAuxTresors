@@ -8,10 +8,12 @@ import java.util.Objects;
 import static model.element.Movement.*;
 
 public abstract class Element {
+
     public static final String MOVEMENT_SEPARATOR = "";
+
     protected Axe axe;
 
-    public Element(Axe axe) {
+    public Element(final Axe axe) {
         this.axe = axe;
     }
 
@@ -25,13 +27,11 @@ public abstract class Element {
 
     public abstract void avancer();
 
-    public abstract boolean canMove();
-
     public abstract void turnLeft();
 
     public abstract void turnRight();
 
-    public abstract void setAxe(Axe axe);
+    public abstract void setAxe(final Axe axe);
 
     public abstract void increaseNbTresor();
 

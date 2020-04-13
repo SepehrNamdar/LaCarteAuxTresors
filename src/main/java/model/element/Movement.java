@@ -5,7 +5,7 @@ public enum Movement {
 
     private String way;
 
-    Movement(String way) {
+    Movement(final String way) {
         this.way = way;
     }
 

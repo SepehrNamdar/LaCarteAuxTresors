@@ -11,12 +11,15 @@ import static model.element.Orientation.*;
 public class Aventurier extends Element {
 
     private final String name;
+    private final String sequencesMouvement;
     private int nbTresor;
     private Orientation currentOrientation;
-    private final String sequencesMouvement;
 
-    public Aventurier(String name, Axe positionDepart, Orientation orientationDepart, String sequencesMouvement) {
-        super(positionDepart);
+    public Aventurier(final String name,
+                      final Axe axeDepart,
+                      final Orientation orientationDepart,
+                      final String sequencesMouvement) {
+        super(axeDepart);
         this.name = name;
         this.currentOrientation = orientationDepart;
         this.sequencesMouvement = sequencesMouvement;
@@ -35,6 +38,11 @@ public class Aventurier extends Element {
 
     @Override
     public void avancer() {
+        tryToMove();
+        updateNbTresors();
+    }
+
+    private void tryToMove() {
         if (currentOrientation == SUD) {
             Axe axeToGo = new Axe(axe.getAxeHorizontal(), axe.getAxeVertical() + 1);
             move(axeToGo);
@@ -48,7 +56,6 @@ public class Aventurier extends Element {
             Axe axeToGo = new Axe(axe.getAxeHorizontal() - 1, axe.getAxeVertical());
             move(axeToGo);
         }
-        updateNbTresors();
     }
 
     private void updateNbTresors() {
@@ -60,21 +67,20 @@ public class Aventurier extends Element {
         });
     }
 
-    private void move(Axe axeToGo) {
+    private void move(final Axe axeToGo) {
         if (getObstacles().isEmpty()) {
             axe = axeToGo;
         } else {
-            getObstacles().forEach(obstacle -> {
-                if (!axeToGo.equals(obstacle.getAxe())) {
-                    axe = axeToGo;
-                }
-            });
+            moveIfPossible(axeToGo);
         }
     }
 
-    @Override
-    public boolean canMove() {
-        return true;
+    private void moveIfPossible(final Axe axeToGo) {
+        getObstacles().forEach(obstacle -> {
+            if (!axeToGo.equals(obstacle.getAxe())) {
+                axe = axeToGo;
+            }
+        });
     }
 
     @Override
@@ -103,7 +109,7 @@ public class Aventurier extends Element {
         }
     }
 
-    public void setAxe(Axe lastAxe) {
+    public void setAxe(final Axe lastAxe) {
         super.axe = lastAxe;
     }
 

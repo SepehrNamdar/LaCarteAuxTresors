@@ -9,8 +9,8 @@ import model.element.*;
 
 import java.util.*;
 
-import static common.mapper.ElementMapper.getAventuriers;
 import static common.mapper.ElementMapper.map;
+import static model.carte.Carte.getAventuriers;
 
 public class CarteAuxTresorsGame implements CarteAuxtTresors {
 

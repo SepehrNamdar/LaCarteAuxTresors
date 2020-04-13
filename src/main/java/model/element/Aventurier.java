@@ -3,18 +3,23 @@ package model.element;
 import model.carte.Axe;
 import model.carte.TypeAxe;
 
+import static model.carte.Carte.getObstacles;
+import static model.carte.Carte.getTresors;
 import static model.carte.TypeAxe.AVENTURIER;
 import static model.element.Orientation.*;
 
 public class Aventurier extends Element {
 
     private final String name;
+    private final String sequencesMouvement;
     private int nbTresor;
     private Orientation currentOrientation;
-    private String sequencesMouvement;
 
-    public Aventurier(String name, Axe positionDepart, Orientation orientationDepart, String sequencesMouvement) {
-        super(positionDepart);
+    public Aventurier(final String name,
+                      final Axe axeDepart,
+                      final Orientation orientationDepart,
+                      final String sequencesMouvement) {
+        super(axeDepart);
         this.name = name;
         this.currentOrientation = orientationDepart;
         this.sequencesMouvement = sequencesMouvement;
@@ -34,19 +39,49 @@ public class Aventurier extends Element {
     @Override
     public void avancer() {
         if (currentOrientation == SUD) {
-            axe = new Axe(axe.getAxeHorizontal(), axe.getAxeVertical() + 1);
+            Axe axeToGo = new Axe(axe.getAxeHorizontal(), axe.getAxeVertical() + 1);
+            move(axeToGo);
         } else if (currentOrientation == NORD) {
-            axe = new Axe(axe.getAxeHorizontal(), axe.getAxeVertical() - 1);
+            Axe axeToGo = new Axe(axe.getAxeHorizontal(), axe.getAxeVertical() - 1);
+            move(axeToGo);
         } else if (currentOrientation == EST) {
-            axe = new Axe(axe.getAxeHorizontal() + 1, axe.getAxeVertical());
+            Axe axeToGo = new Axe(axe.getAxeHorizontal() + 1, axe.getAxeVertical());
+            move(axeToGo);
         } else if (currentOrientation == OUEST) {
-            axe = new Axe(axe.getAxeHorizontal() - 1, axe.getAxeVertical());
+            Axe axeToGo = new Axe(axe.getAxeHorizontal() - 1, axe.getAxeVertical());
+            move(axeToGo);
         }
     }
 
-    @Override
-    public boolean canMove() {
-        return true;
+    private void move(final Axe axeToGo) {
+        if (!axeToGo.isOutOfCarte()) {
+            if (getObstacles().isEmpty()) {
+                axe = axeToGo;
+                updateNbTresors();
+            } else {
+                moveIfThereIsNoObstacle(axeToGo);
+            }
+        }
+    }
+
+    private void moveIfThereIsNoObstacle(final Axe axeToGo) {
+        if (isNotAnyObstacle(axeToGo)) {
+            axe = axeToGo;
+            updateNbTresors();
+        }
+    }
+
+    private void updateNbTresors() {
+        getTresors().forEach(tresor -> {
+            if (getAxe().equals(tresor.getAxe())) {
+                tresor.reduceNbTresor();
+                this.increaseNbTresor();
+            }
+        });
+    }
+
+    private boolean isNotAnyObstacle(Axe axeToGo) {
+        return getObstacles().stream().noneMatch(obstacle -> obstacle.getAxe().equals(axeToGo));
     }
 
     @Override
@@ -75,7 +110,7 @@ public class Aventurier extends Element {
         }
     }
 
-    public void setAxe(Axe lastAxe) {
+    public void setAxe(final Axe lastAxe) {
         super.axe = lastAxe;
     }
 

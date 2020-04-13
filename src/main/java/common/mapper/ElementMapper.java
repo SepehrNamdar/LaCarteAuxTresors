@@ -11,9 +11,6 @@ import static model.carte.TypeAxe.*;
 
 public abstract class ElementMapper {
 
-    private static final List<Element> tresors = new ArrayList<>();
-    private static final List<Element> aventuriers = new ArrayList<>();
-
     public static ElementDTO map(Element elt) {
         ElementDTO eltDTO = new ElementDTO();
         TypeAxe type = elt.getType();
@@ -39,23 +36,13 @@ public abstract class ElementMapper {
         } else if (TRESOR.getName().equals(type)) {
             ElementMapper tresorMapper = new TresorMapper();
             element = tresorMapper.mapElementDtoToElement(eltDto);
-            tresors.add(element);
         } else if (AVENTURIER.getName().equals(type)) {
             ElementMapper aventurierMapper = new AventurierMapper();
             element = aventurierMapper.mapElementDtoToElement(eltDto);
-            aventuriers.add(element);
         }
         return element;
     }
 
     protected abstract ElementDTO mapElementToElementDto(Element elt);
     protected abstract Element mapElementDtoToElement(ElementDTO eltDto);
-
-    public static List<Element> getTresors() {
-        return tresors;
-    }
-
-    public static List<Element> getAventuriers() {
-        return aventuriers;
-    }
 }

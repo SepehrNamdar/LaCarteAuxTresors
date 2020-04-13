@@ -3,10 +3,10 @@ package model.carte;
 import java.util.Objects;
 
 public class Axe {
-    private int axeHorizontal;
-    private int axeVertical;
+    private final int axeHorizontal;
+    private final int axeVertical;
 
-    public Axe(int axeHorizontal, int axeVertical) {
+    public Axe(final int axeHorizontal, final int axeVertical) {
         this.axeHorizontal = axeHorizontal;
         this.axeVertical = axeVertical;
     }
@@ -31,5 +31,11 @@ public class Axe {
     @Override
     public int hashCode() {
         return Objects.hash(axeHorizontal, axeVertical);
+    }
+
+    public boolean isOutOfCarte() {
+        return getAxeVertical() >= Carte.getHauteur() ||
+                getAxeHorizontal() >= Carte.getLargeur() ||
+                getAxeHorizontal() < 0 || getAxeVertical() < 0;
     }
 }

@@ -1,6 +1,5 @@
 package model.element;
 
-import common.mapper.ElementMapper;
 import model.carte.Axe;
 import model.carte.TypeAxe;
 
@@ -9,9 +8,12 @@ import java.util.Objects;
 import static model.element.Movement.*;
 
 public abstract class Element {
+
+    public static final String MOVEMENT_SEPARATOR = "";
+
     protected Axe axe;
 
-    public Element(Axe axe) {
+    public Element(final Axe axe) {
         this.axe = axe;
     }
 
@@ -25,13 +27,11 @@ public abstract class Element {
 
     public abstract void avancer();
 
-    public abstract boolean canMove();
-
     public abstract void turnLeft();
 
     public abstract void turnRight();
 
-    public abstract void setAxe(Axe axe);
+    public abstract void setAxe(final Axe axe);
 
     public abstract void increaseNbTresor();
 
@@ -40,16 +40,10 @@ public abstract class Element {
     protected abstract void reduceNbTresor();
 
     public void move() {
-        String[] movements = getSequencesMovement().split("");
+        String[] movements = getSequencesMovement().split(MOVEMENT_SEPARATOR);
         for (String movement : movements) {
             if (AVANCER.getWay().equals(movement)) {
                 avancer();
-                ElementMapper.getTresors().forEach(tresor -> {
-                    if (getAxe().equals(tresor.getAxe())) {
-                        tresor.reduceNbTresor();
-                        this.increaseNbTresor();
-                    }
-                });
             } else if (DROITE.getWay().equals(movement)) {
                 turnRight();
             } else if (GAUCHE.getWay().equals(movement)) {

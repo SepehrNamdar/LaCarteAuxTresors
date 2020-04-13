@@ -7,11 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static model.element.Orientation.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static common.TestUtils.HAUTEUR_CARTE;
 import static common.TestUtils.LARGEUR_CARTE;
-import static model.carte.TypeAxe.*;
-import static model.element.Orientation.EST;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class AventurierCanGainTresor {
 
@@ -21,22 +20,39 @@ public class AventurierCanGainTresor {
         Axe axeDepart = new Axe(1, 1);
         Aventurier laura = new Aventurier("Laura", axeDepart, EST, "AADA");
         Tresor tresor = new Tresor(new Axe(2, 1), 2);
-        Carte carte = new Carte(dimensions, Arrays.asList(laura, tresor));
+        new Carte(dimensions, Arrays.asList(laura, tresor));
 
-        carte.avancer(laura);
+        assertThat(laura.getAxe().equals(new Axe(1, 1)));
+        assertThat(EST.equals(laura.getCurrentOrientation()));
+        assertThat(laura.getNbTresor()).isEqualTo(0);
+        assertThat(tresor.getNbTresor()).isEqualTo(2);
 
-        carte.avancer(laura);
+        laura.avancer();
 
-        assertThat(carte.getAxe(1, 1)).isEqualTo(PLAINE);
-        assertThat(carte.getAxe(2, 1)).isEqualTo(TRESOR);
-
-        carte.turnRight(laura);
-
-        carte.avancer(laura);
-
-        assertThat(carte.getAxe(2, 1)).isEqualTo(TRESOR);
-        assertThat(carte.getAxe(2, 2)).isEqualTo(AVENTURIER);
-        assertThat(tresor.getNbTresor()).isEqualTo(1);
+        assertThat(laura.getAxe().equals(new Axe(2, 1)));
+        assertThat(EST.equals(laura.getCurrentOrientation()));
         assertThat(laura.getNbTresor()).isEqualTo(1);
+        assertThat(tresor.getNbTresor()).isEqualTo(1);
+
+        laura.avancer();
+
+        assertThat(laura.getAxe().equals(new Axe(2, 1)));
+        assertThat(EST.equals(laura.getCurrentOrientation()));
+        assertThat(laura.getNbTresor()).isEqualTo(1);
+        assertThat(tresor.getNbTresor()).isEqualTo(1);
+
+        laura.turnRight();
+
+        assertThat(laura.getAxe().equals(new Axe(2, 1)));
+        assertThat(SUD.equals(laura.getCurrentOrientation()));
+        assertThat(laura.getNbTresor()).isEqualTo(1);
+        assertThat(tresor.getNbTresor()).isEqualTo(1);
+
+        laura.avancer();
+
+        assertThat(laura.getAxe().equals(new Axe(2, 2)));
+        assertThat(SUD.equals(laura.getCurrentOrientation()));
+        assertThat(laura.getNbTresor()).isEqualTo(1);
+        assertThat(tresor.getNbTresor()).isEqualTo(1);
     }
 }

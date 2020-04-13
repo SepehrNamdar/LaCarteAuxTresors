@@ -17,7 +17,7 @@ public class FileReader {
 
     private final String inputFilePath;
 
-    public FileReader(String inputFilePath) {
+    public FileReader(final String inputFilePath) {
         this.inputFilePath = inputFilePath;
     }
 
@@ -29,7 +29,7 @@ public class FileReader {
         }
     }
 
-    private void initCarteDimensionsAndElements(Stream<String> lines) {
+    private void initCarteDimensionsAndElements(final Stream<String> lines) {
         lines.forEach(line -> {
             if (isNotComment(line)) {
                 process(line);
@@ -37,7 +37,7 @@ public class FileReader {
         });
     }
 
-    public static void process(String line) {
+    public static void process(final String line) {
         String[] lineArgs = line.split(SEPARATOR);
         if (isCarte(lineArgs[FIRST])) {
             ElementReader.processDimensions(lineArgs);
@@ -46,11 +46,11 @@ public class FileReader {
         }
     }
 
-    private static boolean isCarte(String lineArg) {
+    private static boolean isCarte(final String lineArg) {
         return CARTE.equals(lineArg);
     }
 
-    private boolean isNotComment(String line) {
+    private boolean isNotComment(final String line) {
         return !line.isEmpty() && !COMMENT.equals(valueOf(line.charAt(FIRST)));
     }
 

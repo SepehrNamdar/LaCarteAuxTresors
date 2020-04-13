@@ -38,11 +38,6 @@ public class Aventurier extends Element {
 
     @Override
     public void avancer() {
-        tryToMove();
-        updateNbTresors();
-    }
-
-    private void tryToMove() {
         if (currentOrientation == SUD) {
             Axe axeToGo = new Axe(axe.getAxeHorizontal(), axe.getAxeVertical() + 1);
             move(axeToGo);
@@ -58,19 +53,11 @@ public class Aventurier extends Element {
         }
     }
 
-    private void updateNbTresors() {
-        getTresors().forEach(tresor -> {
-            if (getAxe().equals(tresor.getAxe())) {
-                tresor.reduceNbTresor();
-                this.increaseNbTresor();
-            }
-        });
-    }
-
     private void move(final Axe axeToGo) {
         if (!axeToGo.isOutOfCarte()) {
             if (getObstacles().isEmpty()) {
                 axe = axeToGo;
+                updateNbTresors();
             } else {
                 moveIfThereIsNoObstacle(axeToGo);
             }
@@ -80,7 +67,17 @@ public class Aventurier extends Element {
     private void moveIfThereIsNoObstacle(final Axe axeToGo) {
         if (isNotAnyObstacle(axeToGo)) {
             axe = axeToGo;
+            updateNbTresors();
         }
+    }
+
+    private void updateNbTresors() {
+        getTresors().forEach(tresor -> {
+            if (getAxe().equals(tresor.getAxe())) {
+                tresor.reduceNbTresor();
+                this.increaseNbTresor();
+            }
+        });
     }
 
     private boolean isNotAnyObstacle(Axe axeToGo) {

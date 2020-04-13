@@ -34,6 +34,8 @@ public class Axe {
     }
 
     public boolean isOutOfCarte() {
-        return getAxeVertical() < 0 || getAxeHorizontal() < 0;
+        return getAxeVertical() >= Carte.getHauteur() ||
+                getAxeHorizontal() >= Carte.getLargeur() ||
+                getAxeHorizontal() < 0 || getAxeVertical() < 0;
     }
 }

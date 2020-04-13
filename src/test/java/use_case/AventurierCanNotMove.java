@@ -31,12 +31,33 @@ public class AventurierCanNotMove {
 
     @Test
     void outOfCarte() {
-        Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
+        Dimensions dimensions = new Dimensions(2, 2);
         Axe axeDepart = new Axe(1, 1);
-        Aventurier laura = new Aventurier("Laura", axeDepart, SUD, "DAADAADA");
+        Aventurier laura = new Aventurier("Laura", axeDepart, EST, "ADADAAADAADA");
         Axe axeMontagne = new Axe(1, 0);
         Element montagne = new Montagne(axeMontagne);
         new Carte(dimensions, asList(laura, montagne));
+
+        assertThat(laura.getAxe()).isEqualTo(axeDepart);
+        assertThat(laura.getCurrentOrientation()).isEqualTo(EST);
+        assertThat(laura.getNbTresor()).isEqualTo(0);
+        assertThat(montagne.getAxe()).isEqualTo(axeMontagne);
+
+        laura.avancer();
+
+        assertThat(laura.getAxe()).isEqualTo(axeDepart);
+        assertThat(laura.getCurrentOrientation()).isEqualTo(EST);
+        assertThat(laura.getNbTresor()).isEqualTo(0);
+        assertThat(montagne.getAxe()).isEqualTo(axeMontagne);
+
+        laura.turnRight();
+
+        assertThat(laura.getAxe()).isEqualTo(axeDepart);
+        assertThat(laura.getCurrentOrientation()).isEqualTo(SUD);
+        assertThat(laura.getNbTresor()).isEqualTo(0);
+        assertThat(montagne.getAxe()).isEqualTo(axeMontagne);
+
+        laura.avancer();
 
         assertThat(laura.getAxe()).isEqualTo(axeDepart);
         assertThat(laura.getCurrentOrientation()).isEqualTo(SUD);

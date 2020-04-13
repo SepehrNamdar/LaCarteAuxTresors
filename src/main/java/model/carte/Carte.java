@@ -8,15 +8,15 @@ import java.util.List;
 import static model.carte.TypeAxe.*;
 
 public class Carte {
-    private final Dimensions dimensions;
     private final List<Element> elements;
     private TypeAxe[][] plan;
+    private static Dimensions dimensions;
     private static List<Element> tresors;
     private static List<Element> aventuriers;
     private static List<Element> obstacles;
 
     public Carte(final Dimensions dimensions, final List<Element> elements) {
-        this.dimensions = dimensions;
+        Carte.dimensions = dimensions;
         this.elements = elements;
         tresors = new ArrayList<>();
         aventuriers = new ArrayList<>();
@@ -81,11 +81,11 @@ public class Carte {
         return plan[axeHorizontal][axeVertical];
     }
 
-    public int getLargeur() {
+    public static int getLargeur() {
         return dimensions.getLargeur();
     }
 
-    public int getHauteur() {
+    public static int getHauteur() {
         return dimensions.getHauteur();
     }
 

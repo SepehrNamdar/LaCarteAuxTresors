@@ -3,6 +3,7 @@ package model.carte;
 import model.element.Element;
 import model.element.Tresor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,10 +13,14 @@ public class Carte {
     private final Dimensions dimensions;
     private final List<Element> elements;
     private TypeAxe[][] plan;
+    private static List<Element> tresors;
+    private static List<Element> aventuriers;
 
     public Carte(Dimensions dimensions, List<Element> elements) {
         this.dimensions = dimensions;
         this.elements = elements;
+        tresors = new ArrayList<>();
+        aventuriers = new ArrayList<>();
         initPlan();
         placer(this.elements);
     }
@@ -44,6 +49,11 @@ public class Carte {
             } else {
                 throw new CanNotPlaceElementInMap(eltToPlaceType, element.getAxe(), eltToPlaceType);
             }
+            if (TRESOR.equals(eltToPlaceType)) {
+                tresors.add(element);
+            } else if (AVENTURIER.equals(eltToPlaceType)) {
+                aventuriers.add(element);
+            }
         });
     }
 
@@ -51,6 +61,14 @@ public class Carte {
         if (isOutOfCarte(axe)) {
             throw new CanNotPlaceElementInMap(axe);
         }
+    }
+
+    public static List<Element> getTresors() {
+        return tresors;
+    }
+
+    public static List<Element> getAventuriers() {
+        return aventuriers;
     }
 
     public TypeAxe getAxe(int axeHorizontal, int axeVertical) {

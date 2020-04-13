@@ -1,14 +1,15 @@
 package model.element;
 
-import common.mapper.ElementMapper;
 import model.carte.Axe;
 import model.carte.TypeAxe;
 
 import java.util.Objects;
 
+import static model.carte.Carte.getTresors;
 import static model.element.Movement.*;
 
 public abstract class Element {
+    public static final String MOVEMENT_SEPARATOR = "";
     protected Axe axe;
 
     public Element(Axe axe) {
@@ -40,11 +41,11 @@ public abstract class Element {
     protected abstract void reduceNbTresor();
 
     public void move() {
-        String[] movements = getSequencesMovement().split("");
+        String[] movements = getSequencesMovement().split(MOVEMENT_SEPARATOR);
         for (String movement : movements) {
             if (AVANCER.getWay().equals(movement)) {
                 avancer();
-                ElementMapper.getTresors().forEach(tresor -> {
+                getTresors().forEach(tresor -> {
                     if (getAxe().equals(tresor.getAxe())) {
                         tresor.reduceNbTresor();
                         this.increaseNbTresor();

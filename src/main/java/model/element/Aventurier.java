@@ -11,7 +11,7 @@ public class Aventurier extends Element {
     private final String name;
     private int nbTresor;
     private Orientation currentOrientation;
-    private String sequencesMouvement;
+    private final String sequencesMouvement;
 
     public Aventurier(String name, Axe positionDepart, Orientation orientationDepart, String sequencesMouvement) {
         super(positionDepart);

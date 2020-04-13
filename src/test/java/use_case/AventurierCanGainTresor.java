@@ -19,7 +19,7 @@ public class AventurierCanGainTresor {
     void crossingTresorAxe() {
         Dimensions dimensions = new Dimensions(LARGEUR_CARTE, HAUTEUR_CARTE);
         Axe axeDepart = new Axe(1, 1);
-        Aventurier laura = new Aventurier("Laura", axeDepart, EST);
+        Aventurier laura = new Aventurier("Laura", axeDepart, EST, "AADA");
         Tresor tresor = new Tresor(new Axe(2, 1), 2);
         Carte carte = new Carte(dimensions, Arrays.asList(laura, tresor));
 
@@ -29,6 +29,7 @@ public class AventurierCanGainTresor {
 
         assertThat(carte.getAxe(1, 1)).isEqualTo(PLAINE);
         assertThat(carte.getAxe(2, 1)).isEqualTo(TRESOR);
+
         carte.turnRight(laura);
 
         carte.avancer(laura);

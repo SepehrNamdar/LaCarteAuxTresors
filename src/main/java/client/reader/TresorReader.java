@@ -1,7 +1,7 @@
 package client.reader;
 
 import client.ElementReader;
-import common.ElementDTO;
+import common.dto.ElementDTO;
 
 import static client.FileHelper.*;
 import static client.FileHelper.FOURTH;

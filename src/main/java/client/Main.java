@@ -1,8 +1,8 @@
 package client;
 
 import application.CarteAuxTresorsGame;
-import application.DimensionDTO;
-import common.ElementDTO;
+import common.dto.DimensionDTO;
+import common.dto.ElementDTO;
 import exposition.CarteAuxtTresors;
 
 import java.util.List;

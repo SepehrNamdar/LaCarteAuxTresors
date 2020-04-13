@@ -1,10 +1,10 @@
 package client;
 
-import application.DimensionDTO;
+import common.dto.DimensionDTO;
 import client.writer.AventurierWriter;
 import client.writer.MontagneWriter;
 import client.writer.TresorWriter;
-import common.ElementDTO;
+import common.dto.ElementDTO;
 
 import static client.FileHelper.*;
 

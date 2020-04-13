@@ -1,9 +1,12 @@
 package model.element;
 
+import common.mapper.ElementMapper;
 import model.carte.Axe;
 import model.carte.TypeAxe;
 
 import java.util.Objects;
+
+import static model.element.Movement.*;
 
 public abstract class Element {
     protected Axe axe;
@@ -19,6 +22,41 @@ public abstract class Element {
     public abstract TypeAxe getType();
 
     public abstract int getNbTresor();
+
+    public abstract void avancer();
+
+    public abstract boolean canMove();
+
+    public abstract void turnLeft();
+
+    public abstract void turnRight();
+
+    public abstract void setAxe(Axe axe);
+
+    public abstract void increaseNbTresor();
+
+    public abstract String getSequencesMovement();
+
+    protected abstract void reduceNbTresor();
+
+    public void move() {
+        String[] movements = getSequencesMovement().split("");
+        for (String movement : movements) {
+            if (AVANCER.getWay().equals(movement)) {
+                avancer();
+                ElementMapper.getTresors().forEach(tresor -> {
+                    if (getAxe().equals(tresor.getAxe())) {
+                        tresor.reduceNbTresor();
+                        this.increaseNbTresor();
+                    }
+                });
+            } else if (DROITE.getWay().equals(movement)) {
+                turnRight();
+            } else if (GAUCHE.getWay().equals(movement)) {
+                turnLeft();
+            }
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

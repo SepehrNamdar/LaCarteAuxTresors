@@ -1,4 +1,4 @@
-package application;
+package common.dto;
 
 public class DimensionDTO {
     private int largeur;

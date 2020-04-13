@@ -1,8 +1,8 @@
 package client;
 
-import application.DimensionDTO;
+import common.dto.DimensionDTO;
 import client.writer.CanNotWriteOutputFile;
-import common.ElementDTO;
+import common.dto.ElementDTO;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,6 +1,5 @@
 package model.carte;
 
-import model.element.Aventurier;
 import model.element.Element;
 import model.element.Tresor;
 
@@ -10,8 +9,8 @@ import java.util.stream.Collectors;
 import static model.carte.TypeAxe.*;
 
 public class Carte {
-    private Dimensions dimensions;
-    private List<Element> elements;
+    private final Dimensions dimensions;
+    private final List<Element> elements;
     private TypeAxe[][] plan;
 
     public Carte(Dimensions dimensions, List<Element> elements) {
@@ -66,23 +65,25 @@ public class Carte {
         return dimensions.getHauteur();
     }
 
-    public void avancer(Aventurier aventurier) {
-        Axe initialAxeAventurier = aventurier.getAxe();
-        aventurier.move();
-        if (isMoved(aventurier)) {
-            updatePlan(aventurier, initialAxeAventurier);
-        } else {
-            aventurier.setAxe(initialAxeAventurier);
+    public void avancer(Element element) {
+        if (element.canMove()) {
+            Axe initialAxeAventurier = element.getAxe();
+            element.avancer();
+            if (isMoved(element)) {
+                updatePlan(element, initialAxeAventurier);
+            } else {
+                element.setAxe(initialAxeAventurier);
+            }
         }
     }
 
-    private void updatePlan(Aventurier aventurier, Axe initialAventurierAxe) {
+    private void updatePlan(Element element, Axe initialAventurierAxe) {
         if (!getAxe(initialAventurierAxe.getAxeHorizontal(), initialAventurierAxe.getAxeVertical()).equals(TRESOR)) {
             plan[initialAventurierAxe.getAxeHorizontal()][initialAventurierAxe.getAxeVertical()] = PLAINE;
         }
-        Axe aventurierAxe = aventurier.getAxe();
+        Axe aventurierAxe = element.getAxe();
         if (!getAxe(aventurierAxe.getAxeHorizontal(), aventurierAxe.getAxeVertical()).equals(TRESOR)) {
-            plan[aventurierAxe.getAxeHorizontal()][aventurierAxe.getAxeVertical()] = aventurier.getType();
+            plan[aventurierAxe.getAxeHorizontal()][aventurierAxe.getAxeVertical()] = element.getType();
         } else {
             List<Element> e = getElement(aventurierAxe);
             for (Element elt : e) {
@@ -90,7 +91,7 @@ public class Carte {
                     Tresor t = (Tresor) elt;
                     t.reduceNbTresor();
                     if (t.getNbTresor() >= 0) {
-                        aventurier.increaseNbtresor();
+                        element.increaseNbTresor();
                     }
                 }
             }
@@ -101,7 +102,7 @@ public class Carte {
         return elements.stream().filter(elt -> elt.getAxe().equals(axe)).collect(Collectors.toList());
     }
 
-    private boolean isMoved(Aventurier aventurier) {
+    private boolean isMoved(Element aventurier) {
         return !isOutOfCarte(aventurier.getAxe()) && !isObstacle(aventurier.getAxe());
     }
 
@@ -115,12 +116,12 @@ public class Carte {
         return plan[axe.getAxeHorizontal()][axe.getAxeVertical()] == MONTAGNE;
     }
 
-    public void turnLeft(Aventurier aventurier) {
-        aventurier.turnLeft();
+    public void turnLeft(Element element) {
+        element.turnLeft();
     }
 
-    public void turnRight(Aventurier laura) {
-        laura.turnRight();
+    public void turnRight(Element element) {
+        element.turnRight();
     }
 
     public List<Element> getElements() {

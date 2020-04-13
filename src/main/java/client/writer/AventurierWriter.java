@@ -1,7 +1,7 @@
 package client.writer;
 
 import client.ElementWriter;
-import common.ElementDTO;
+import common.dto.ElementDTO;
 
 import static client.FileHelper.*;
 
@@ -14,7 +14,7 @@ public class AventurierWriter extends ElementWriter {
                 .append(AVENTURIER)
                 .append(" comme Aventurier}")
                 .append(SEPARATOR)
-                .append("Nom de l’aventurier")
+                .append("{Nom de l’aventurier}")
                 .append(SEPARATOR)
                 .append("{Axe horizontal}")
                 .append(SEPARATOR)
@@ -26,7 +26,7 @@ public class AventurierWriter extends ElementWriter {
                 .append(END_LINE);
         result.append(AVENTURIER)
                 .append(SEPARATOR)
-                .append(elt.getNom())
+                .append(elt.getName())
                 .append(SEPARATOR)
                 .append(elt.getAxeHorizontal())
                 .append(SEPARATOR)

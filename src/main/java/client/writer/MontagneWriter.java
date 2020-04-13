@@ -1,7 +1,7 @@
 package client.writer;
 
 import client.ElementWriter;
-import common.ElementDTO;
+import common.dto.ElementDTO;
 
 import static client.FileHelper.*;
 

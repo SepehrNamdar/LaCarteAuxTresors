@@ -1,8 +1,8 @@
 package model.carte;
 
 public class Dimensions {
-    private int largeur;
-    private int hauteur;
+    private final int largeur;
+    private final int hauteur;
 
     public Dimensions(int largeur, int hauteur) {
         this.largeur = largeur;

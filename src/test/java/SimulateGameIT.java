@@ -9,14 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static client.FileHelper.*;
+import static common.TestUtils.HAUTEUR_CARTE;
+import static common.TestUtils.LARGEUR_CARTE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SimulateGameIT {
 
-    public static final int LARGEUR = 3;
-    public static final int HAUTEUR = 4;
-    public static final String CASE_PLAINE = ".";
-    public static final String NOM_AVENTURIER = "Lara";
+    public static final String AVENTURIER_NAME = "Lara";
 
     @Test
     void Scenario_1() {
@@ -25,8 +24,7 @@ public class SimulateGameIT {
         carteAuxtTresors.play(getDimensions(), getElements());
 
         List<ElementDTO> elements = carteAuxtTresors.getElements();
-        assertThat(getCarte(elements)).isEqualTo(getExpectedCarte());
-        assertThat(tracer(elements)).isEqualTo(getExpectedLines());
+        assertThat(getLines(elements)).isEqualTo(getExpectedLines());
     }
 
     private String getExpectedLines() {
@@ -42,31 +40,7 @@ public class SimulateGameIT {
             "A - Lara - 0 - 3 - SUD - 3\n";
     }
 
-    private String[][] getCarte(List<ElementDTO> elements) {
-        String[][] carte = new String[LARGEUR][HAUTEUR];
-        for (int indexAxeVertical = 0; indexAxeVertical < HAUTEUR; indexAxeVertical++) {
-            for (int indexAxeHorizontal = 0; indexAxeHorizontal < LARGEUR; indexAxeHorizontal++) {
-                carte[indexAxeHorizontal][indexAxeVertical] = ".";
-            }
-        }
-        for (ElementDTO elt : elements) {
-            int axeHorizontal = elt.getAxeHorizontal();
-            int axeVertical = elt.getAxeVertical();
-            String typeCase = elt.getType();
-            if (MONTAGNE.equals(typeCase)) {
-                carte[axeHorizontal][axeVertical] = MONTAGNE;
-            } else if (TRESOR.equals(typeCase)) {
-                carte[axeHorizontal][axeVertical] =
-                        TRESOR + OPENING_PARANTHESE + elt.getNbTresor() + CLOSING_PARANTHESE;
-            } else if (AVENTURIER.equals(typeCase)) {
-                carte[axeHorizontal][axeVertical] =
-                        AVENTURIER + OPENING_PARANTHESE + elt.getName() + CLOSING_PARANTHESE;
-            }
-        }
-        return carte;
-    }
-
-    private String tracer(List<ElementDTO> elements) {
+    private String getLines(List<ElementDTO> elements) {
         StringBuilder result = new StringBuilder();
         result.append(ElementWriter.getCarteToWrite(getDimensions()));
         for (ElementDTO elt : elements) {
@@ -75,27 +49,10 @@ public class SimulateGameIT {
         return result.toString();
     }
 
-    private String[][] getExpectedCarte() {
-        String[][] expectedCarte = new String[LARGEUR][HAUTEUR];
-        expectedCarte[0][0] = CASE_PLAINE;
-        expectedCarte[0][1] = CASE_PLAINE;
-        expectedCarte[0][2] = CASE_PLAINE;
-        expectedCarte[0][3] = AVENTURIER + OPENING_PARANTHESE + NOM_AVENTURIER + CLOSING_PARANTHESE;
-        expectedCarte[1][0] = MONTAGNE;
-        expectedCarte[1][1] = CASE_PLAINE;
-        expectedCarte[1][2] = CASE_PLAINE;
-        expectedCarte[1][3] = TRESOR + OPENING_PARANTHESE + 2 + CLOSING_PARANTHESE;
-        expectedCarte[2][0] = CASE_PLAINE;
-        expectedCarte[2][1] = MONTAGNE;
-        expectedCarte[2][2] = CASE_PLAINE;
-        expectedCarte[2][3] = CASE_PLAINE;
-        return expectedCarte;
-    }
-
     private DimensionDTO getDimensions() {
         DimensionDTO dimensionDTO = new DimensionDTO();
-        dimensionDTO.setLargeur(LARGEUR);
-        dimensionDTO.setHauteur(HAUTEUR);
+        dimensionDTO.setLargeur(LARGEUR_CARTE);
+        dimensionDTO.setHauteur(HAUTEUR_CARTE);
         return dimensionDTO;
     }
 
@@ -105,7 +62,7 @@ public class SimulateGameIT {
         elementDTOS.add(getMontagne(2, 1));
         elementDTOS.add(getTresor(0, 3, 2));
         elementDTOS.add(getTresor(1, 3, 3));
-        elementDTOS.add(getAventurier(NOM_AVENTURIER, 1, 1, "S", "AADADAGGA", 0));
+        elementDTOS.add(getAventurier(AVENTURIER_NAME, 1, 1, "S", "AADADAGGA", 0));
         return elementDTOS;
     }
 

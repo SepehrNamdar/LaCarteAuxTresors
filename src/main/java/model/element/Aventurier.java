@@ -3,6 +3,7 @@ package model.element;
 import model.carte.Axe;
 import model.carte.TypeAxe;
 
+import static model.carte.Carte.getTresors;
 import static model.carte.TypeAxe.AVENTURIER;
 import static model.element.Orientation.*;
 
@@ -42,6 +43,12 @@ public class Aventurier extends Element {
         } else if (currentOrientation == OUEST) {
             axe = new Axe(axe.getAxeHorizontal() - 1, axe.getAxeVertical());
         }
+        getTresors().forEach(tresor -> {
+            if (getAxe().equals(tresor.getAxe())) {
+                tresor.reduceNbTresor();
+                this.increaseNbTresor();
+            }
+        });
     }
 
     @Override

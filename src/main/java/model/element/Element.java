@@ -45,12 +45,6 @@ public abstract class Element {
         for (String movement : movements) {
             if (AVANCER.getWay().equals(movement)) {
                 avancer();
-                getTresors().forEach(tresor -> {
-                    if (getAxe().equals(tresor.getAxe())) {
-                        tresor.reduceNbTresor();
-                        this.increaseNbTresor();
-                    }
-                });
             } else if (DROITE.getWay().equals(movement)) {
                 turnRight();
             } else if (GAUCHE.getWay().equals(movement)) {

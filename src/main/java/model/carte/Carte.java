@@ -134,14 +134,6 @@ public class Carte {
         return plan[axe.getAxeHorizontal()][axe.getAxeVertical()] == MONTAGNE;
     }
 
-    public void turnLeft(Element element) {
-        element.turnLeft();
-    }
-
-    public void turnRight(Element element) {
-        element.turnRight();
-    }
-
     public List<Element> getElements() {
         return elements;
     }

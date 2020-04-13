@@ -5,7 +5,6 @@ import model.carte.TypeAxe;
 
 import java.util.Objects;
 
-import static model.carte.Carte.getTresors;
 import static model.element.Movement.*;
 
 public abstract class Element {

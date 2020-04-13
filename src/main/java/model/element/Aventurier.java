@@ -3,6 +3,7 @@ package model.element;
 import model.carte.Axe;
 import model.carte.TypeAxe;
 
+import static model.carte.Carte.getObstacles;
 import static model.carte.Carte.getTresors;
 import static model.carte.TypeAxe.AVENTURIER;
 import static model.element.Orientation.*;
@@ -35,20 +36,40 @@ public class Aventurier extends Element {
     @Override
     public void avancer() {
         if (currentOrientation == SUD) {
-            axe = new Axe(axe.getAxeHorizontal(), axe.getAxeVertical() + 1);
+            Axe axeToGo = new Axe(axe.getAxeHorizontal(), axe.getAxeVertical() + 1);
+            move(axeToGo);
         } else if (currentOrientation == NORD) {
-            axe = new Axe(axe.getAxeHorizontal(), axe.getAxeVertical() - 1);
+            Axe axeToGo = new Axe(axe.getAxeHorizontal(), axe.getAxeVertical() - 1);
+            move(axeToGo);
         } else if (currentOrientation == EST) {
-            axe = new Axe(axe.getAxeHorizontal() + 1, axe.getAxeVertical());
+            Axe axeToGo = new Axe(axe.getAxeHorizontal() + 1, axe.getAxeVertical());
+            move(axeToGo);
         } else if (currentOrientation == OUEST) {
-            axe = new Axe(axe.getAxeHorizontal() - 1, axe.getAxeVertical());
+            Axe axeToGo = new Axe(axe.getAxeHorizontal() - 1, axe.getAxeVertical());
+            move(axeToGo);
         }
+        updateNbTresors();
+    }
+
+    private void updateNbTresors() {
         getTresors().forEach(tresor -> {
             if (getAxe().equals(tresor.getAxe())) {
                 tresor.reduceNbTresor();
                 this.increaseNbTresor();
             }
         });
+    }
+
+    private void move(Axe axeToGo) {
+        if (getObstacles().isEmpty()) {
+            axe = axeToGo;
+        } else {
+            getObstacles().forEach(obstacle -> {
+                if (!axeToGo.equals(obstacle.getAxe())) {
+                    axe = axeToGo;
+                }
+            });
+        }
     }
 
     @Override
